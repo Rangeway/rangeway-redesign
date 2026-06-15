@@ -460,6 +460,8 @@ section {
   overflow: hidden;
   position: relative;
   background: var(--color-cream-dim);
+  min-width: 0;
+  max-width: 100%;
 }
 
 .frame img {
@@ -472,6 +474,8 @@ section {
   position: relative;
   isolation: isolate;
   background: var(--color-ink);
+  min-width: 0;
+  max-width: 100%;
 }
 
 .duotone img {
