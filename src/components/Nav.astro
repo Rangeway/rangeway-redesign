@@ -1,0 +1,339 @@
+---
+import PathMark from "./PathMark.astro";
+---
+
+<div class="nav-wrap" data-nav>
+  <div class="container">
+    <div class="nav-inner">
+      <a class="nav-brand" href="/" aria-label="Rangeway home">
+        <PathMark size={26} color="#FBF7F1" accent="#F4A855" />
+        <span class="nav-brand-text">Rangeway</span>
+      </a>
+
+      <ul class="nav-links" aria-label="Primary">
+        <li><a href="/network">The Network</a></li>
+        <li><a href="/our-story">Our Story</a></li>
+        <li><a href="/team">Team</a></li>
+        <li><a href="/partners">Partners</a></li>
+        <li><a href="/investors">Investors</a></li>
+        <li><a href="https://newsroom.rangeway.co" target="_blank" rel="noopener">Newsroom</a></li>
+        <li><a href="/contact">Contact</a></li>
+        <li class="nav-social" aria-label="Social">
+          <a href="https://instagram.com/RangewayEV" aria-label="Instagram" target="_blank" rel="noopener">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="5" />
+              <circle cx="12" cy="12" r="4" />
+              <circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none" />
+            </svg>
+          </a>
+          <a href="https://www.linkedin.com/company/rangewayenergy" aria-label="LinkedIn" target="_blank" rel="noopener">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M4.98 3.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM3 9h4v12H3V9zm7 0h3.8v1.7h.06c.53-1 1.83-2.06 3.77-2.06 4.03 0 4.77 2.65 4.77 6.1V21h-4v-5.4c0-1.3-.03-2.98-1.82-2.98-1.82 0-2.1 1.42-2.1 2.88V21h-4V9z" />
+            </svg>
+          </a>
+          <a href="https://x.com/RangewayEV" aria-label="X" target="_blank" rel="noopener">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M18.244 2H21l-6.52 7.45L22 22h-6.77l-5.3-6.93L3.75 22H1l7-8L1.55 2h6.93l4.8 6.34L18.24 2zm-2.37 18h1.86L7.21 4h-2L15.87 20z" />
+            </svg>
+          </a>
+        </li>
+      </ul>
+
+      <button class="nav-toggle" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu" data-toggle>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="3" y1="7" x2="21" y2="7" />
+          <line x1="3" y1="12" x2="21" y2="12" />
+          <line x1="3" y1="17" x2="21" y2="17" />
+        </svg>
+      </button>
+    </div>
+
+    <div class="nav-mobile" id="mobile-menu" hidden data-mobile>
+      <a href="/network">The Network</a>
+      <a href="/our-story">Our Story</a>
+      <a href="/team">Team</a>
+      <a href="/partners">Partners</a>
+      <a href="/investors">Investors</a>
+      <a href="https://newsroom.rangeway.co" target="_blank" rel="noopener">Newsroom</a>
+      <a href="/contact">Contact</a>
+      <div class="nav-mobile__social">
+        <a href="https://instagram.com/RangewayEV" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.linkedin.com/company/rangewayenergy" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://x.com/RangewayEV" target="_blank" rel="noopener">X</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .nav-wrap {
+    position: fixed;
+    top: 22px;
+    left: 0;
+    right: 0;
+    z-index: 60;
+    pointer-events: none;
+    transition: top var(--dur-med) var(--ease-out), transform var(--dur-med) var(--ease-out);
+  }
+
+  .nav-inner {
+    pointer-events: auto;
+    min-height: 68px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0;
+    padding: 0;
+    color: var(--color-charcoal);
+    filter: drop-shadow(0 20px 50px rgba(17, 13, 12, 0.18));
+  }
+
+  .nav-wrap.is-scrolled {
+    top: 12px;
+  }
+
+  .nav-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+    min-height: 68px;
+    padding: 0 22px;
+    background: rgba(23, 21, 20, 0.94);
+    color: var(--color-white);
+    font-family: var(--font-heading);
+    font-weight: 700;
+    border: 1px solid rgba(245, 241, 235, 0.18);
+    border-right: 0;
+    border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+  }
+
+  .nav-brand-text {
+    font-size: 1.18rem;
+    letter-spacing: 0;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    min-height: 68px;
+    padding: 0 10px;
+    background: rgba(251, 247, 241, 0.9);
+    border: 1px solid rgba(45, 45, 45, 0.12);
+    border-left: 0;
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+  }
+
+  .nav-links a {
+    display: inline-flex;
+    padding: 14px 12px;
+    border-radius: var(--radius-sm);
+    color: rgba(45, 45, 45, 0.74);
+    font-size: 0.9rem;
+    line-height: 1;
+    font-weight: 700;
+    transition: color var(--dur-fast) var(--ease-standard),
+      background var(--dur-fast) var(--ease-standard);
+  }
+
+  .nav-links a:hover {
+    color: var(--color-ink);
+    background: rgba(244, 168, 85, 0.16);
+  }
+
+  .nav-social {
+    display: inline-flex;
+    gap: 6px;
+    padding-left: 10px;
+    margin-left: 6px;
+    border-left: 1px solid rgba(45, 45, 45, 0.12);
+  }
+
+  .nav-social a {
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    border-radius: var(--radius-sm);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(45, 45, 45, 0.58);
+  }
+
+  .nav-social a:hover {
+    color: var(--color-ink);
+    background: rgba(244, 168, 85, 0.16);
+  }
+
+  .nav-toggle {
+    display: none;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-sm);
+    border: 1px solid rgba(45, 45, 45, 0.14);
+    background: rgba(251, 247, 241, 0.9);
+    color: var(--color-charcoal);
+    align-items: center;
+    justify-content: center;
+  }
+
+  .nav-mobile {
+    pointer-events: auto;
+    margin-top: 10px;
+    padding: 16px;
+    border-radius: var(--radius-sm);
+    background: rgba(23, 21, 20, 0.97);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .nav-mobile[hidden] {
+    display: none;
+  }
+
+  .nav-mobile > a {
+    display: block;
+    padding: 14px 16px;
+    color: rgba(255, 255, 255, 0.86);
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 1.05rem;
+    border-radius: var(--radius-sm);
+  }
+
+  .nav-mobile > a:hover {
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--color-white);
+  }
+
+  .nav-mobile__social {
+    display: flex;
+    gap: var(--space-5);
+    padding: var(--space-4) 16px 4px;
+    margin-top: var(--space-2);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .nav-mobile__social a {
+    padding: 0;
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.55);
+    font-weight: 600;
+  }
+
+  .nav-mobile__social a:hover {
+    color: var(--color-warm);
+    background: transparent;
+  }
+
+  @media (max-width: 1180px) {
+    .nav-links {
+      display: none;
+    }
+
+    .nav-toggle {
+      display: inline-flex;
+      margin-left: auto;
+      background: var(--color-warm);
+      color: var(--color-charcoal);
+      border-color: rgba(23, 21, 20, 0.22);
+    }
+
+    .nav-brand {
+      border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+    }
+
+    .nav-toggle {
+      min-height: 68px;
+      width: 68px;
+      position: fixed;
+      top: 22px;
+      right: clamp(20px, 4vw, 56px);
+      border-radius: var(--radius-sm);
+      border-left: 1px solid rgba(23, 21, 20, 0.22);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+  }
+
+  @media (max-width: 560px) {
+    .nav-wrap {
+      top: 12px;
+    }
+
+    .nav-brand {
+      padding: 0 16px;
+    }
+
+    .nav-brand-text {
+      font-size: 1.05rem;
+    }
+
+    .nav-toggle {
+      top: 12px;
+      left: 184px;
+      right: auto;
+    }
+  }
+</style>
+
+<script>
+  const wrap = document.querySelector<HTMLElement>(".nav-wrap");
+  const toggle = document.querySelector<HTMLButtonElement>("[data-toggle]");
+  const mobile = document.querySelector<HTMLElement>("[data-mobile]");
+
+  if (wrap) {
+    const onScroll = () => {
+      if (window.scrollY > 40) {
+        wrap.classList.add("is-scrolled");
+      } else {
+        wrap.classList.remove("is-scrolled");
+      }
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+  }
+
+  if (toggle && mobile) {
+    const setOpen = (open: boolean) => {
+      mobile.hidden = !open;
+      toggle.setAttribute("aria-expanded", String(open));
+      document.body.style.overflow = open ? "hidden" : "";
+    };
+
+    toggle.addEventListener("click", (e) => {
+      e.stopPropagation();
+      setOpen(mobile.hidden);
+    });
+
+    // Close on tap outside
+    document.addEventListener("click", (e) => {
+      if (mobile.hidden) return;
+      const target = e.target as Node;
+      if (!mobile.contains(target) && !toggle.contains(target)) {
+        setOpen(false);
+      }
+    });
+
+    // Close when a menu link is tapped
+    mobile.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => setOpen(false));
+    });
+
+    // Close on Escape
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && !mobile.hidden) setOpen(false);
+    });
+  }
+</script>

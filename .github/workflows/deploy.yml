@@ -1,0 +1,46 @@
+name: Build & publish for VPS pull-deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-pages
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Build
+        run: |
+          npm ci
+          npm run build
+
+      # The VPS polls the deploy-dist branch every 2 minutes and rsyncs it
+      # into /var/www/rangeway-pages (rangeway-deploy.timer on the server).
+      # CI never connects to the VPS: Hostinger's network edge intermittently
+      # drops inbound connections from GitHub's shared runner IP ranges, so
+      # push-based SSH deploys were randomly failing.
+      - name: Publish dist to deploy-dist branch
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cd dist
+          git init -q -b deploy-dist
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -q -m "deploy ${GITHUB_SHA}"
+          git push -q --force "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" deploy-dist

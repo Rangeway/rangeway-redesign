@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://redesign.rangeway.co/sitemap-index.xml

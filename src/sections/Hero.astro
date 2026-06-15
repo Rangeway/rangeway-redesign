@@ -1,0 +1,212 @@
+---
+const desktopImage = "/images/hero-mountain-waystation.png";
+const mobileImage = "/images/hero-mountain-waystation-mobile.png";
+const heroAlt = "A Rangeway Waystation at dusk with sunset-lit mountains behind, lounge interior glowing through the glass facade, and a Rivian charging under the timber canopy";
+---
+
+<section class="hero">
+  <div class="hero__media">
+    <picture>
+      <source media="(max-width: 720px)" srcset={mobileImage} />
+      <img src={desktopImage} alt={heroAlt} fetchpriority="high" />
+    </picture>
+    <div class="hero__scrim"></div>
+  </div>
+
+  <div class="hero__inner container">
+    <p class="eyebrow hero__eyebrow">America's First Hospitality-Driven EV Charging Network</p>
+    <h1 class="hero__headline">Travel Farther, <br />Stop Better.</h1>
+    <p class="hero__lede">
+      Hospitality operators run every location, and the stop, not the charger, is the point.
+    </p>
+    <div class="hero__ctas">
+      <a class="btn btn-warm" href="/network">
+        Discover the Network
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="5" y1="12" x2="19" y2="12" />
+          <polyline points="13 6 19 12 13 18" />
+        </svg>
+      </a>
+      <a class="btn btn-ghost" href="/our-story">Our Story</a>
+    </div>
+  </div>
+
+  <a class="hero__scroll" href="#positioning" aria-label="Scroll to next section">
+    <span>Scroll</span>
+    <span class="hero__scroll-line"></span>
+  </a>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    min-height: 100svh;
+    display: flex;
+    align-items: flex-end;
+    color: var(--color-white);
+    overflow: hidden;
+    isolation: isolate;
+    background: var(--color-ink);
+    padding: 134px 0 clamp(48px, 7vw, 86px);
+  }
+
+  .hero__media {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+  }
+
+  .hero__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 62%;
+    transform: scale(1.02);
+  }
+
+  .hero__scrim {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, rgba(17, 13, 12, 0.3) 0%, rgba(17, 13, 12, 0.12) 34%, rgba(17, 13, 12, 0.86) 100%),
+      linear-gradient(90deg, rgba(17, 13, 12, 0.68) 0%, rgba(17, 13, 12, 0.18) 42%, rgba(17, 13, 12, 0.34) 100%),
+      radial-gradient(circle at 16% 18%, rgba(244, 168, 85, 0.2), transparent 36%);
+  }
+
+  .hero__inner {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.55fr);
+    gap: clamp(32px, 6vw, 92px);
+    align-items: end;
+  }
+
+  .hero__eyebrow {
+    color: var(--color-white);
+    opacity: 0.92;
+    margin: 0 0 clamp(22px, 3vw, 36px);
+    grid-column: 1 / -1;
+  }
+
+  .hero__eyebrow::before {
+    background: var(--color-warm);
+    opacity: 1;
+  }
+
+  .hero__headline {
+    color: var(--color-white);
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: var(--fs-display);
+    line-height: 0.84;
+    letter-spacing: -0.07em;
+    margin: 0;
+    max-width: 8.2ch;
+    text-wrap: balance;
+  }
+
+  .hero__lede {
+    grid-column: 2;
+    margin: 0 0 var(--space-5);
+    padding-top: var(--space-5);
+    border-top: 1px solid rgba(245, 241, 235, 0.34);
+    font-size: clamp(1.05rem, 1.25vw, 1.2rem);
+    line-height: 1.65;
+    max-width: 520px;
+    color: rgba(255, 255, 255, 0.84);
+  }
+
+  .hero__ctas {
+    grid-column: 2;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    align-items: center;
+  }
+
+  .hero__scroll {
+    position: absolute;
+    right: clamp(20px, 4vw, 56px);
+    bottom: 28px;
+    left: auto;
+    transform: none;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.78rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 600;
+    z-index: 2;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .hero__scroll-line {
+    width: 1px;
+    height: 32px;
+    background: rgba(255, 255, 255, 0.4);
+    animation: heroBob 2.6s var(--ease-standard) infinite;
+    transform-origin: top;
+  }
+
+  @keyframes heroBob {
+    0%, 100% {
+      transform: scaleY(1);
+    }
+    50% {
+      transform: scaleY(0.4);
+    }
+  }
+
+  @media (max-width: 720px) {
+    .hero {
+      align-items: flex-end;
+      min-height: 92svh;
+      padding-top: 112px;
+    }
+
+    .hero__inner {
+      grid-template-columns: 1fr;
+      gap: var(--space-5);
+    }
+
+    .hero__lede,
+    .hero__ctas {
+      grid-column: 1;
+    }
+
+    .hero__scroll {
+      display: none;
+    }
+    .hero__headline br {
+      display: none;
+    }
+    .hero__headline {
+      font-size: clamp(4.2rem, 21vw, 7rem);
+      max-width: 7ch;
+    }
+    .hero__media img {
+      object-position: center center;
+    }
+
+    .hero__lede {
+      padding-top: var(--space-4);
+    }
+
+    .hero__eyebrow {
+      display: block;
+      line-height: 1.8;
+      max-width: 32ch;
+    }
+
+    .hero__eyebrow::before {
+      display: block;
+      width: 34px;
+      margin-bottom: 10px;
+    }
+  }
+</style>
