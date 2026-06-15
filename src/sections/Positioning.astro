@@ -1,8 +1,7 @@
 ---
 ---
 
-<section id="positioning" class="positioning">
-  <div class="positioning__wash"></div>
+<section id="positioning" class="positioning section">
   <div class="container positioning__inner">
     <div class="positioning__grid">
       <figure class="positioning__media reveal">
@@ -28,19 +27,7 @@
 
 <style>
   .positioning {
-    background: var(--surface-alt);
-    padding: clamp(92px, 12vw, 174px) 0;
     position: relative;
-    overflow: hidden;
-    isolation: isolate;
-  }
-
-  .positioning__wash {
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(circle at 85% 20%, rgba(244, 168, 85, 0.1), transparent 45%);
-    pointer-events: none;
-    z-index: -1;
   }
 
   .positioning__grid {
@@ -55,7 +42,7 @@
     align-self: stretch;
     min-height: 420px;
     overflow: hidden;
-    border-radius: var(--radius-sm);
+    border: var(--rule) solid var(--color-ink);
   }
 
   .positioning__media img {
@@ -68,13 +55,12 @@
   .positioning__quote {
     margin: 0;
     font-family: var(--font-heading);
-    font-weight: 700;
+    font-weight: 800;
     font-size: clamp(1.9rem, 3.8vw, 3.1rem);
-    line-height: 1.18;
-    letter-spacing: -0.035em;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
     color: var(--color-text);
     max-width: 20ch;
-    text-wrap: balance;
   }
 
   .positioning__quote em {

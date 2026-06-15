@@ -118,12 +118,12 @@ const amenities = [
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 0 clamp(28px, 4vw, 64px);
-    border-top: 1px solid var(--color-border-strong);
+    border-top: var(--rule-bold) solid var(--color-ink);
   }
 
   .amenity {
-    padding: var(--space-5) 0;
-    border-bottom: 1px solid var(--color-border);
+    padding: var(--space-6) 0;
+    border-bottom: var(--rule) solid var(--color-ink);
   }
 
   .amenity h3 {
@@ -145,7 +145,7 @@ const amenities = [
 
   .gallery-grid__item {
     overflow: hidden;
-    border-radius: var(--radius-sm);
+    border: var(--rule) solid var(--color-ink);
   }
 
   .gallery-grid__item--lg {

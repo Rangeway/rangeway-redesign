@@ -6,7 +6,7 @@ import PathMark from "./PathMark.astro";
   <div class="container">
     <div class="nav-inner">
       <a class="nav-brand" href="/" aria-label="Rangeway home">
-        <PathMark size={26} color="#FBF7F1" accent="#F4A855" />
+        <PathMark size={24} color="#171514" accent="#F4A855" />
         <span class="nav-brand-text">Rangeway</span>
       </a>
 
@@ -66,134 +66,134 @@ import PathMark from "./PathMark.astro";
 </div>
 
 <style>
+  /* Solid edge-to-edge bar with a hard bottom rule (no floating pill, no blur) */
   .nav-wrap {
     position: fixed;
-    top: 22px;
+    top: 0;
     left: 0;
     right: 0;
     z-index: 60;
-    pointer-events: none;
-    transition: top var(--dur-med) var(--ease-out), transform var(--dur-med) var(--ease-out);
+    background: var(--color-cream);
+    border-bottom: var(--rule-bold) solid var(--color-ink);
   }
 
   .nav-inner {
-    pointer-events: auto;
-    min-height: 68px;
+    min-height: var(--nav-height);
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 0;
-    padding: 0;
-    color: var(--color-charcoal);
-    filter: drop-shadow(0 20px 50px rgba(17, 13, 12, 0.18));
-  }
-
-  .nav-wrap.is-scrolled {
-    top: 12px;
+    gap: var(--space-5);
+    color: var(--color-ink);
   }
 
   .nav-brand {
     display: inline-flex;
     align-items: center;
     gap: var(--space-3);
-    min-height: 68px;
-    padding: 0 22px;
-    background: rgba(23, 21, 20, 0.94);
-    color: var(--color-white);
+    color: var(--color-ink);
     font-family: var(--font-heading);
-    font-weight: 700;
-    border: 1px solid rgba(245, 241, 235, 0.18);
-    border-right: 0;
-    border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+    font-weight: 800;
   }
 
   .nav-brand-text {
-    font-size: 1.18rem;
-    letter-spacing: 0;
+    font-size: 1.12rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
   }
 
   .nav-links {
     display: flex;
     align-items: center;
-    gap: 2px;
+    gap: var(--space-5);
     list-style: none;
     padding: 0;
     margin: 0;
-    min-height: 68px;
-    padding: 0 10px;
-    background: rgba(251, 247, 241, 0.9);
-    border: 1px solid rgba(45, 45, 45, 0.12);
-    border-left: 0;
-    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
   }
 
   .nav-links a {
     display: inline-flex;
-    padding: 14px 12px;
-    border-radius: var(--radius-sm);
-    color: rgba(45, 45, 45, 0.74);
-    font-size: 0.9rem;
+    position: relative;
+    padding: 6px 0;
+    color: rgba(45, 45, 45, 0.66);
+    font-family: var(--font-body);
+    font-size: 0.76rem;
     line-height: 1;
     font-weight: 700;
-    transition: color var(--dur-fast) var(--ease-standard),
-      background var(--dur-fast) var(--ease-standard);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: color var(--dur-fast) var(--ease-standard);
+  }
+
+  .nav-links a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -4px;
+    height: var(--rule-bold);
+    background: var(--color-warm);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--dur-fast) var(--ease-standard);
   }
 
   .nav-links a:hover {
     color: var(--color-ink);
-    background: rgba(244, 168, 85, 0.16);
+  }
+
+  .nav-links a:hover::after {
+    transform: scaleX(1);
   }
 
   .nav-social {
     display: inline-flex;
-    gap: 6px;
-    padding-left: 10px;
-    margin-left: 6px;
-    border-left: 1px solid rgba(45, 45, 45, 0.12);
+    gap: var(--space-2);
+    padding-left: var(--space-5);
+    margin-left: var(--space-2);
+    border-left: var(--rule) solid var(--color-ink);
   }
 
   .nav-social a {
     width: 34px;
     height: 34px;
     padding: 0;
-    border-radius: var(--radius-sm);
+    border: var(--rule) solid transparent;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    color: rgba(45, 45, 45, 0.58);
+    color: var(--color-ink);
+    transition: background var(--dur-fast) var(--ease-standard),
+      border-color var(--dur-fast) var(--ease-standard);
   }
 
   .nav-social a:hover {
     color: var(--color-ink);
-    background: rgba(244, 168, 85, 0.16);
+    background: var(--color-warm);
+    border-color: var(--color-ink);
   }
 
   .nav-toggle {
     display: none;
-    width: 44px;
-    height: 44px;
-    border-radius: var(--radius-sm);
-    border: 1px solid rgba(45, 45, 45, 0.14);
-    background: rgba(251, 247, 241, 0.9);
-    color: var(--color-charcoal);
+    width: 46px;
+    height: 46px;
+    border: var(--rule) solid var(--color-ink);
+    background: var(--color-warm);
+    color: var(--color-ink);
     align-items: center;
     justify-content: center;
   }
 
   .nav-mobile {
-    pointer-events: auto;
-    margin-top: 10px;
-    padding: 16px;
-    border-radius: var(--radius-sm);
-    background: rgba(23, 21, 20, 0.97);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    padding: var(--space-4) clamp(20px, 4vw, 56px) var(--space-6);
+    background: var(--color-ink);
+    border-bottom: var(--rule-bold) solid var(--color-warm);
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 0;
   }
 
   .nav-mobile[hidden] {
@@ -202,39 +202,38 @@ import PathMark from "./PathMark.astro";
 
   .nav-mobile > a {
     display: block;
-    padding: 14px 16px;
-    color: rgba(255, 255, 255, 0.86);
+    padding: 16px 0;
+    color: var(--color-cream);
     font-family: var(--font-heading);
-    font-weight: 600;
-    font-size: 1.05rem;
-    border-radius: var(--radius-sm);
+    font-weight: 800;
+    font-size: 1.4rem;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+    border-bottom: var(--rule) solid rgba(255, 255, 255, 0.14);
   }
 
   .nav-mobile > a:hover {
-    background: rgba(255, 255, 255, 0.06);
-    color: var(--color-white);
+    color: var(--color-warm);
   }
 
   .nav-mobile__social {
     display: flex;
     gap: var(--space-5);
-    padding: var(--space-4) 16px 4px;
-    margin-top: var(--space-2);
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: var(--space-5);
+    margin-top: var(--space-4);
   }
 
   .nav-mobile__social a {
     padding: 0;
-    font-size: 0.78rem;
-    letter-spacing: 0.12em;
+    font-size: 0.74rem;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.55);
-    font-weight: 600;
+    color: rgba(255, 255, 255, 0.6);
+    font-weight: 700;
   }
 
   .nav-mobile__social a:hover {
     color: var(--color-warm);
-    background: transparent;
   }
 
   @media (max-width: 1180px) {
@@ -245,45 +244,12 @@ import PathMark from "./PathMark.astro";
     .nav-toggle {
       display: inline-flex;
       margin-left: auto;
-      background: var(--color-warm);
-      color: var(--color-charcoal);
-      border-color: rgba(23, 21, 20, 0.22);
-    }
-
-    .nav-brand {
-      border-radius: var(--radius-sm) 0 0 var(--radius-sm);
-    }
-
-    .nav-toggle {
-      min-height: 68px;
-      width: 68px;
-      position: fixed;
-      top: 22px;
-      right: clamp(20px, 4vw, 56px);
-      border-radius: var(--radius-sm);
-      border-left: 1px solid rgba(23, 21, 20, 0.22);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
     }
   }
 
   @media (max-width: 560px) {
-    .nav-wrap {
-      top: 12px;
-    }
-
-    .nav-brand {
-      padding: 0 16px;
-    }
-
     .nav-brand-text {
-      font-size: 1.05rem;
-    }
-
-    .nav-toggle {
-      top: 12px;
-      left: 184px;
-      right: auto;
+      font-size: 1rem;
     }
   }
 </style>

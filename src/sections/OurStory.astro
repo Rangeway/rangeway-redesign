@@ -40,8 +40,7 @@
     position: relative;
     aspect-ratio: 16 / 11;
     overflow: hidden;
-    border-radius: var(--radius-sm);
-    box-shadow: none;
+    border: var(--rule) solid var(--color-ink);
   }
 
   .our-story__media img {
@@ -54,18 +53,16 @@
     position: absolute;
     left: 0;
     bottom: 0;
-    padding: 7px 11px;
-    border-radius: 0 var(--radius-sm) 0 0;
-    background: rgba(24, 21, 20, 0.7);
-    color: var(--color-white);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    font-family: var(--font-heading);
+    padding: 8px 12px;
+    background: var(--color-warm);
+    color: var(--color-ink);
+    font-family: var(--font-body);
     font-size: 0.72rem;
-    letter-spacing: 0.08em;
-    font-weight: 600;
+    letter-spacing: 0.14em;
+    font-weight: 700;
     text-transform: uppercase;
-    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-top: var(--rule) solid var(--color-ink);
+    border-right: var(--rule) solid var(--color-ink);
   }
 
   .our-story__text h2 {

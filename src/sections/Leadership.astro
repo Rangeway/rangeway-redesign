@@ -93,7 +93,7 @@ const leaders = [
     margin: 0;
     display: flex;
     flex-direction: column;
-    border-top: 1px solid var(--color-border-strong);
+    border-top: var(--rule-bold) solid var(--color-ink);
   }
 
   .leader {
@@ -101,21 +101,19 @@ const leaders = [
     grid-template-columns: 104px minmax(180px, 0.5fr) minmax(0, 1fr);
     gap: clamp(18px, 3vw, 44px);
     padding: var(--space-5) 0;
-    border-bottom: 1px solid var(--color-border);
+    border-bottom: var(--rule) solid var(--color-ink);
     align-items: center;
-    transition: transform var(--dur-fast) var(--ease-standard),
-      border-color var(--dur-fast) var(--ease-standard);
+    transition: transform var(--dur-fast) var(--ease-standard);
   }
 
   .leader:hover {
-    transform: translateX(4px);
-    border-color: rgba(232, 146, 58, 0.38);
+    transform: translateX(6px);
   }
 
   .leader__photo {
     width: 88px;
     height: 88px;
-    border-radius: var(--radius-sm);
+    border: var(--rule) solid var(--color-ink);
     overflow: hidden;
     background: var(--surface-alt);
   }
@@ -136,7 +134,9 @@ const leaders = [
   }
 
   .leader__name {
-    font-size: clamp(1.25rem, 2.6vw, 2.2rem);
+    font-size: clamp(1.25rem, 2.6vw, 2.1rem);
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
     margin: 0;
   }
 

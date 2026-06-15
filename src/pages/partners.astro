@@ -196,12 +196,12 @@ const partnerGroups = [
     grid-template-columns: 1fr 2fr;
     gap: var(--space-8);
     padding: var(--space-7) 0;
-    border-bottom: 1px solid var(--color-border);
+    border-bottom: var(--rule) solid var(--color-ink);
     align-items: start;
   }
 
   .partner-row:first-child {
-    border-top: 1px solid var(--color-border);
+    border-top: var(--rule-bold) solid var(--color-ink);
   }
 
   .partner-row__label {
@@ -212,14 +212,15 @@ const partnerGroups = [
 
   .partner-row__mark {
     flex-shrink: 0;
-    width: 48px;
-    height: 48px;
-    border-radius: var(--radius-sm);
+    width: 56px;
+    height: 56px;
+    border: var(--rule) solid var(--color-ink);
     overflow: hidden;
-    background: var(--surface-alt);
+    background: var(--color-white);
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 6px;
   }
 
   .partner-row__mark img {
@@ -239,7 +240,9 @@ const partnerGroups = [
 
   .partner-row h3 {
     font-size: clamp(1.6rem, 2.4vw, 2rem);
-    font-weight: 700;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
     margin: 0;
   }
 

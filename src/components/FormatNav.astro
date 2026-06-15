@@ -28,11 +28,9 @@ const formats = [
 
 <style>
   .format-nav {
-    background: rgba(251, 247, 241, 0.74);
-    border-bottom: 1px solid var(--color-border-strong);
+    background: var(--color-cream);
+    border-bottom: var(--rule-bold) solid var(--color-ink);
     padding: 0;
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
   }
 
   .format-nav__inner {
@@ -43,12 +41,12 @@ const formats = [
   }
 
   .format-nav__label {
-    font-family: var(--font-heading);
-    font-size: 0.75rem;
+    font-family: var(--font-body);
+    font-size: 0.72rem;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--color-text-muted);
-    font-weight: 600;
+    font-weight: 700;
   }
 
   .format-nav ul {
@@ -61,18 +59,24 @@ const formats = [
   }
 
   .format-nav a {
-    font-family: var(--font-heading);
-    font-size: 0.95rem;
-    font-weight: 500;
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
     color: var(--color-text-muted);
     padding: var(--space-4) var(--space-5);
-    border-left: 1px solid var(--color-border);
+    border-left: var(--rule) solid var(--color-ink);
     border-bottom: 0;
+  }
+
+  .format-nav li:first-child a {
+    border-left: 0;
   }
 
   .format-nav a:hover,
   .format-nav a.is-current {
-    color: var(--color-text);
-    background: rgba(244, 168, 85, 0.14);
+    color: var(--color-ink);
+    background: var(--color-warm);
   }
 </style>
