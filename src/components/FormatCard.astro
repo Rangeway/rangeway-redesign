@@ -94,6 +94,17 @@ const { name, tagline, description, image, imageAlt, href, pill, compact = false
     opacity: 0;
   }
 
+  /* No hover (touch): show full color, no duotone to get stuck in */
+  @media (hover: none) {
+    .fmt-card__media img {
+      filter: none;
+      mix-blend-mode: normal;
+    }
+    .fmt-card__media::after {
+      opacity: 0;
+    }
+  }
+
   .fmt-card__pill {
     position: absolute;
     top: 0;

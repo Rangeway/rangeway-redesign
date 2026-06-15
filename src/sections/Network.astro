@@ -156,6 +156,17 @@ const formats = [
     opacity: 0;
   }
 
+  /* No hover (touch): show full color, not the stuck duotone state */
+  @media (hover: none) {
+    .network-format__media img {
+      filter: none;
+      mix-blend-mode: normal;
+    }
+    .network-format__media::after {
+      opacity: 0;
+    }
+  }
+
   .network-format__body {
     display: grid;
     grid-template-columns: minmax(110px, 0.4fr) minmax(0, 1fr) minmax(200px, 1fr);
