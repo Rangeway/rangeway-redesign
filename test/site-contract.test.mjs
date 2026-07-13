@@ -245,6 +245,17 @@ test("Company hero globally targets its child image while keeping the veil scope
   assert.doesNotMatch(story, /:global\(\.story-photo-masthead__veil\)/);
 });
 
+test("Company hero uses the desert mountain charging plaza media", () => {
+  const story = read("src/pages/our-story.astro");
+  const hero = story.match(/<section class="story-photo-masthead">[\s\S]*?<\/section>/)?.[0] ?? "";
+
+  assert.match(
+    hero,
+    /<ResponsiveImage[\s\S]*src="\/images\/network-hero\.webp"[\s\S]*srcSmall="\/images\/network-hero-640\.webp"[\s\S]*alt="Concept rendering of a Rangeway charging plaza with a timber solar canopy and glass-walled lounge in a desert mountain landscape"[\s\S]*width=\{2200\}[\s\S]*height=\{1200\}[\s\S]*position="center 58%"/,
+  );
+  assert.doesNotMatch(hero, /hero-mountain-waystation/);
+});
+
 test("company people are visible once and limited to the approved roster", () => {
   const data = read("src/data/site-content.ts");
   const field = read("src/components/PeopleField.astro");
