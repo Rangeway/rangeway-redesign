@@ -1,0 +1,101 @@
+---
+interface Format {
+  name: string;
+  context: string;
+  operatingModel: string;
+  summary: string;
+  href: string;
+}
+
+interface Props {
+  formats: readonly Format[];
+}
+
+const { formats } = Astro.props;
+
+const details = [
+  {
+    label: "Indoor comfort",
+    values: ["Climate-controlled reset", "Staffed driver’s lounge", "Central clubhouse"],
+  },
+  {
+    label: "Hospitality model",
+    values: ["Automated and unstaffed", "Trailkeepers on site", "Lookouts + clubhouse"],
+  },
+  {
+    label: "Food approach",
+    values: ["Local provisions", "Cafe service", "Destination provisions"],
+  },
+  {
+    label: "Travel rhythm",
+    values: ["Regional-route reset", "High-traffic corridor stop", "Overnight destination pace"],
+  },
+] as const;
+---
+
+<div class="format-compare">
+  <div class="format-compare__header" aria-hidden="true">
+    <p>Experience layer</p>
+    {formats.map((format, index) => (
+      <a href={format.href}><span>0{index + 1}</span>{format.name}</a>
+    ))}
+  </div>
+
+  <div class="format-compare__mobile-head">
+    <p class="eyebrow">Compare the formats</p>
+    <p>Every label describes the design model, not current site availability.</p>
+  </div>
+
+  {details.map((detail) => (
+    <div class="format-compare__row">
+      <h3>{detail.label}</h3>
+      {detail.values.map((value, index) => (
+        <div>
+          <p class="format-compare__mobile-name">{formats[index].name}</p>
+          <p>{value}</p>
+        </div>
+      ))}
+    </div>
+  ))}
+
+  <p class="format-compare__note">
+    Specific amenities, charging equipment, and operating details are configured by project and
+    published only when verified.
+  </p>
+</div>
+
+<style>
+  .format-compare { border-top: 2px solid var(--navy-deep); }
+  .format-compare__header,
+  .format-compare__row {
+    display: grid;
+    grid-template-columns: minmax(150px, .75fr) repeat(3, minmax(180px, 1fr));
+  }
+
+  .format-compare__header { background: var(--navy-deep); color: white; }
+  .format-compare__header > p,
+  .format-compare__header > a { margin: 0; padding: 22px; border-right: 1px solid rgba(255, 255, 255, .2); }
+  .format-compare__header > p { font: 500 .62rem var(--font-mono); letter-spacing: .09em; text-transform: uppercase; color: var(--sun); }
+  .format-compare__header > a { display: flex; justify-content: space-between; font: 700 1.05rem var(--font-display); }
+  .format-compare__header span { font: 500 .61rem var(--font-mono); color: var(--sun); }
+  .format-compare__row { border-bottom: 1px solid rgba(20, 43, 53, .28); }
+  .format-compare__row h3,
+  .format-compare__row > div { margin: 0; padding: 25px 22px; border-right: 1px solid rgba(20, 43, 53, .2); }
+  .format-compare__row h3 { font: 600 .68rem/1.35 var(--font-mono); letter-spacing: .07em; text-transform: uppercase; color: var(--oxide); }
+  .format-compare__row p { margin: 0; }
+  .format-compare__mobile-name,
+  .format-compare__mobile-head { display: none; }
+  .format-compare__note { max-width: 82ch; margin: 22px 0 0; color: var(--slate); font-size: .84rem; }
+
+  @media (max-width: 760px) {
+    .format-compare__header { display: none; }
+    .format-compare__mobile-head { display: block; padding: 24px 0; border-bottom: 1px solid rgba(20, 43, 53, .28); }
+    .format-compare__mobile-head p:last-child { margin: 8px 0 0; color: var(--slate); font-size: .88rem; }
+    .format-compare__row { grid-template-columns: 1fr; padding: 24px 0; }
+    .format-compare__row h3,
+    .format-compare__row > div { padding: 0; border: 0; }
+    .format-compare__row h3 { margin-bottom: 18px; }
+    .format-compare__row > div { display: grid; grid-template-columns: 108px 1fr; gap: 15px; padding: 10px 0; }
+    .format-compare__mobile-name { display: block; font: 600 .62rem var(--font-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--oxide); }
+  }
+</style>

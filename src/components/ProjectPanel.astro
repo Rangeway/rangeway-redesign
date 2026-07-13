@@ -1,0 +1,59 @@
+---
+interface Project {
+  place: string;
+  region: string;
+  corridor: string;
+  activity: string;
+  href: string;
+  linkLabel: string;
+}
+
+interface Props {
+  project: Project;
+  number: string;
+}
+
+const { project, number } = Astro.props;
+---
+
+<article class="project-panel">
+  <div class="project-panel__meta">
+    <span>{number}</span>
+    <p>{project.region}</p>
+  </div>
+  <div class="project-panel__body">
+    <p>{project.corridor}</p>
+    <h3>{project.place}</h3>
+    <p>{project.activity}</p>
+  </div>
+  <a href={project.href} target="_blank" rel="noopener noreferrer" aria-label={`${project.linkLabel}, opens in a new tab`}>
+    Public brief <span aria-hidden="true">↗</span>
+  </a>
+</article>
+
+<style>
+  .project-panel {
+    display: grid;
+    grid-template-columns: minmax(110px, .4fr) minmax(260px, 1.6fr) auto;
+    gap: clamp(24px, 4vw, 64px);
+    align-items: start;
+    padding: clamp(28px, 4vw, 56px) 0;
+    border-top: 1px solid rgba(20, 43, 53, .28);
+  }
+
+  .project-panel:last-child { border-bottom: 1px solid rgba(20, 43, 53, .28); }
+  .project-panel p { margin: 0; }
+  .project-panel__meta { display: flex; gap: 16px; font: 500 .65rem var(--font-mono); letter-spacing: .08em; text-transform: uppercase; }
+  .project-panel__meta span { color: var(--oxide); }
+  .project-panel__meta p { color: var(--slate); }
+  .project-panel__body > p:first-child { font: 500 .66rem var(--font-mono); letter-spacing: .09em; text-transform: uppercase; color: var(--oxide); }
+  .project-panel h3 { margin: 10px 0 18px; font-size: clamp(2.1rem, 4vw, 4.5rem); }
+  .project-panel__body > p:last-child { max-width: 55ch; color: var(--slate); }
+  .project-panel > a { padding-top: 3px; font: 600 .66rem var(--font-mono); letter-spacing: .07em; text-transform: uppercase; border-bottom: 1px solid currentColor; }
+
+  @media (max-width: 720px) {
+    .project-panel { grid-template-columns: 1fr auto; }
+    .project-panel__body { grid-column: 1 / 3; }
+    .project-panel > a { grid-column: 2; grid-row: 1; }
+  }
+</style>

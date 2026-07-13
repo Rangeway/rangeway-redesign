@@ -1,0 +1,173 @@
+---
+// HERO: Basecamp is framed as a staffed service day, with Trailkeepers forming the page's human axis.
+import OperatingFacts from "../../components/OperatingFacts.astro";
+import ResponsiveImage from "../../components/ResponsiveImage.astro";
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import { FORMATS } from "../../data/site-content";
+
+const format = FORMATS[1];
+const facts = [
+  { label: "Operating model", value: "Staffed", detail: "Trailkeepers shape the hospitality experience." },
+  { label: "Primary rhythm", value: "Corridor pause", detail: "More support for families and longer travel days." },
+  { label: "Food model", value: "Cafe service", detail: "A fuller stop than the Waystation format." },
+] as const;
+---
+
+<SiteLayout
+  title="Basecamp · Rangeway"
+  description="Basecamp is Rangeway’s staffed flagship format with Trailkeepers, cafe service, and a driver’s lounge."
+  class="basecamp-page"
+>
+  <article data-composition="basecamp-service">
+    <section class="basecamp-cover" aria-labelledby="basecamp-title">
+      <ResponsiveImage
+        src={format.image}
+        srcSmall={format.imageSmall}
+        alt="A Rangeway Basecamp charging canopy and driver’s lounge in the high desert"
+        width={1230}
+        height={848}
+        sizes="100vw"
+        class="basecamp-cover__image"
+        position="center 57%"
+        loading="eager"
+      />
+      <div class="basecamp-cover__veil"></div>
+      <div class="basecamp-cover__topline"><span>Format 02</span><span>{format.context}</span><span>{format.operatingModel}</span></div>
+      <div class="basecamp-cover__copy">
+        <p class="eyebrow eyebrow--sun">A staffed flagship for the long day</p>
+        <h1 id="basecamp-title">Basecamp</h1>
+        <p>
+          A fuller Rangeway stop designed around a driver’s lounge, cafe service, and Trailkeepers
+          who help the place feel cared for.
+        </p>
+      </div>
+    </section>
+
+    <section class="trailkeeper-intro" aria-labelledby="trailkeeper-title">
+      <div class="trailkeeper-intro__title">
+        <p class="eyebrow">The human layer</p>
+        <h2 id="trailkeeper-title">Trailkeepers turn a stop into hospitality.</h2>
+      </div>
+      <div class="trailkeeper-intro__copy">
+        <p class="trailkeeper-intro__lede">
+          Basecamp is staffed. Trailkeepers support the day around the charging session: welcoming
+          travelers, caring for shared spaces, and helping the stop run as a place rather than a row
+          of equipment.
+        </p>
+        <p>
+          The role is intentionally service-oriented. Equipment, hours, and staffing details remain
+          specific to each public project.
+        </p>
+      </div>
+    </section>
+
+    <OperatingFacts facts={facts} label="Basecamp operating facts" tone="dark" />
+
+    <section class="service-day" aria-labelledby="service-day-title">
+      <header>
+        <p class="eyebrow eyebrow--sun">Anatomy of the visit</p>
+        <h2 id="service-day-title">A service day, not a stopwatch.</h2>
+      </header>
+      <div class="service-day__sequence">
+        <article><span>Arrival</span><strong>Orient</strong><p>A legible transition from the corridor into the charging and hospitality spaces.</p></article>
+        <article><span>During the session</span><strong>Settle in</strong><p>Use the staffed lounge, cafe service, and space designed for families and longer days.</p></article>
+        <article><span>Before departure</span><strong>Reset</strong><p>Gather the travel day, then move back to the route when the visit is complete.</p></article>
+      </div>
+    </section>
+
+    <section class="basecamp-interior" aria-labelledby="interior-title">
+      <div class="basecamp-interior__copy">
+        <p class="eyebrow">Inside Basecamp</p>
+        <h2 id="interior-title">A lounge that earns the pause.</h2>
+        <p>
+          Broad windows, comfortable seating, work surfaces, food service, and a staff presence give
+          a longer charging stop a clearer purpose.
+        </p>
+        <ul>
+          <li><span>01</span>Staffed driver’s lounge</li>
+          <li><span>02</span>Cafe service</li>
+          <li><span>03</span>Family-friendly space</li>
+          <li><span>04</span>Climate-controlled comfort</li>
+        </ul>
+      </div>
+      <ResponsiveImage
+        src="/images/basecamp-interior.webp"
+        srcSmall="/images/basecamp-interior-640.webp"
+        alt="A warm Rangeway driver’s lounge with broad windows and comfortable seating"
+        width={2200}
+        height={1200}
+        sizes="(max-width: 820px) 100vw, 62vw"
+        class="basecamp-interior__image"
+        position="center 60%"
+      />
+    </section>
+
+    <section class="basecamp-next" aria-labelledby="basecamp-next-title">
+      <p class="eyebrow eyebrow--sun">The slower end of the network</p>
+      <h2 id="basecamp-next-title">When the stop becomes the destination.</h2>
+      <p>Summit extends Rangeway’s hospitality model with Lookouts, a central clubhouse, and off-grid energy.</p>
+      <a class="button button--cream" href="/network/summit">Explore Summit</a>
+    </section>
+  </article>
+</SiteLayout>
+
+<style>
+  .basecamp-cover { position: relative; min-height: 970px; padding-top: 112px; background: var(--navy-deep); color: white; }
+  .basecamp-cover__image, .basecamp-cover__veil { position: absolute; inset: 0; }
+  .basecamp-cover__veil { background: linear-gradient(180deg, rgba(20, 43, 53, .25), rgba(20, 43, 53, .18) 36%, rgba(20, 43, 53, .9)); }
+  .basecamp-cover__topline { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin: 0 var(--page-pad); padding: 20px 0; border-top: 1px solid rgba(255, 255, 255, .55); border-bottom: 1px solid rgba(255, 255, 255, .55); font: 500 .62rem var(--font-mono); letter-spacing: .09em; text-transform: uppercase; }
+  .basecamp-cover__topline span:nth-child(2) { text-align: center; }
+  .basecamp-cover__topline span:last-child { text-align: right; }
+  .basecamp-cover__copy { position: absolute; z-index: 1; left: var(--page-pad); right: var(--page-pad); bottom: clamp(55px, 8vw, 110px); display: grid; grid-template-columns: 1fr .45fr; gap: 45px; align-items: end; }
+  .basecamp-cover__copy .eyebrow { grid-column: 1 / 3; }
+  .basecamp-cover h1 { margin: 0; font-size: clamp(5.5rem, 14vw, 14rem); line-height: .76; }
+  .basecamp-cover__copy > p:last-child { max-width: 42ch; margin: 0 0 8px; color: rgba(255, 255, 255, .82); font-size: 1.1rem; }
+
+  .trailkeeper-intro { display: grid; grid-template-columns: 1.2fr .8fr; gap: clamp(50px, 9vw, 150px); padding: var(--section-pad) var(--page-pad); background: var(--cream); }
+  .trailkeeper-intro h2 { max-width: 11ch; margin: 0; font-size: clamp(3.8rem, 7.5vw, 7.8rem); }
+  .trailkeeper-intro__copy { align-self: end; }
+  .trailkeeper-intro__lede { font-size: clamp(1.2rem, 1.8vw, 1.55rem); }
+  .trailkeeper-intro__copy > p:last-child { max-width: 43ch; color: var(--slate); }
+  :global(.basecamp-page .operating-facts) { --fact-count: 3; }
+
+  .service-day { display: grid; grid-template-columns: .7fr 1.3fr; gap: clamp(46px, 8vw, 130px); padding: var(--section-pad) var(--page-pad); background: var(--oxide); color: white; }
+  .service-day header { position: sticky; top: 32px; align-self: start; }
+  .service-day h2 { margin: 0; font-size: clamp(3.5rem, 6vw, 6.4rem); }
+  .service-day__sequence { counter-reset: service; }
+  .service-day__sequence article { position: relative; min-height: 250px; padding: 30px 0 50px 100px; border-top: 1px solid rgba(255, 255, 255, .38); }
+  .service-day__sequence article:last-child { border-bottom: 1px solid rgba(255, 255, 255, .38); }
+  .service-day__sequence article::before { counter-increment: service; content: "0" counter(service); position: absolute; left: 0; top: 30px; color: var(--sun); font: 500 .66rem var(--font-mono); }
+  .service-day__sequence span { font: 500 .64rem var(--font-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--sun); }
+  .service-day__sequence strong { display: block; margin: 42px 0 14px; font: 700 clamp(2.4rem, 4vw, 4.6rem) var(--font-display); }
+  .service-day__sequence p { max-width: 42ch; margin: 0; color: rgba(255, 255, 255, .76); }
+
+  .basecamp-interior { display: grid; grid-template-columns: minmax(340px, .72fr) minmax(0, 1.28fr); min-height: 840px; background: var(--warm-white); }
+  .basecamp-interior__copy { align-self: center; padding: clamp(55px, 7vw, 115px); }
+  .basecamp-interior h2 { margin-bottom: 28px; font-size: clamp(3.2rem, 5.7vw, 6rem); }
+  .basecamp-interior__copy > p:not(.eyebrow) { max-width: 42ch; color: var(--slate); }
+  .basecamp-interior ul { margin: 45px 0 0; padding: 0; list-style: none; border-top: 1px solid rgba(20, 43, 53, .3); }
+  .basecamp-interior li { display: flex; gap: 20px; padding: 16px 0; border-bottom: 1px solid rgba(20, 43, 53, .3); font: 600 .74rem var(--font-mono); text-transform: uppercase; }
+  .basecamp-interior li span { color: var(--oxide); }
+  .basecamp-interior__image { min-height: 840px; }
+
+  .basecamp-next { display: grid; grid-template-columns: .45fr 1fr .45fr; gap: 36px; align-items: end; padding: var(--section-pad) var(--page-pad); background: var(--navy); color: white; }
+  .basecamp-next h2 { margin: 0; font-size: clamp(3.8rem, 7.7vw, 8rem); }
+  .basecamp-next > p:not(.eyebrow) { max-width: 40ch; margin: 0 0 8px; color: rgba(255, 255, 255, .7); }
+  .basecamp-next .button { justify-self: end; }
+
+  @media (max-width: 820px) {
+    .basecamp-cover { min-height: 830px; }
+    .basecamp-cover__topline { margin-inline: 20px; grid-template-columns: 1fr auto; }
+    .basecamp-cover__topline span:nth-child(2) { display: none; }
+    .basecamp-cover__copy { left: 20px; right: 20px; grid-template-columns: 1fr; }
+    .basecamp-cover__copy .eyebrow { grid-column: auto; }
+    .basecamp-cover h1 { font-size: clamp(4.8rem, 25vw, 7rem); }
+    .trailkeeper-intro, .service-day, .basecamp-interior, .basecamp-next { grid-template-columns: 1fr; }
+    .trailkeeper-intro, .service-day, .basecamp-next { padding-inline: 20px; }
+    .service-day header { position: static; }
+    .service-day__sequence article { min-height: 0; padding-left: 52px; }
+    .basecamp-interior__copy { padding: 76px 20px; }
+    .basecamp-interior__image { min-height: 520px; }
+    .basecamp-next .button { justify-self: start; }
+  }
+</style>

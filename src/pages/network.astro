@@ -1,0 +1,226 @@
+---
+// HERO: The network opens as a measured road-to-stop transition, then resolves into an honest format instrument panel.
+import FormatCompare from "../components/FormatCompare.astro";
+import ProjectPanel from "../components/ProjectPanel.astro";
+import ResponsiveImage from "../components/ResponsiveImage.astro";
+import RouteBoard from "../components/RouteBoard.astro";
+import SiteLayout from "../layouts/SiteLayout.astro";
+import { EXTERNAL_LINKS, FORMATS, PARTNER_GROUPS, PROJECTS } from "../data/site-content";
+---
+
+<SiteLayout
+  title="The Network · Rangeway"
+  description="Explore Rangeway’s three hospitality-driven charging formats and public project work."
+  class="network-page"
+>
+  <section class="network-intro" aria-labelledby="network-title">
+    <div class="network-intro__index">
+      <p class="eyebrow eyebrow--sun">The Rangeway network</p>
+      <span>01 · Experience</span>
+      <span>02 · Formats</span>
+      <span>03 · Public work</span>
+    </div>
+    <div class="network-intro__statement">
+      <h1 id="network-title">The road gets better at the stop.</h1>
+      <p>
+        Rangeway is building an experience system for electric travel: fast charging wrapped in
+        indoor comfort, useful time, and a clear return to the road.
+      </p>
+      <a class="button button--sun" href="#formats">Compare the three formats</a>
+    </div>
+  </section>
+
+  <figure class="network-place">
+    <ResponsiveImage
+      src="/images/network-hero.webp"
+      srcSmall="/images/network-hero-640.webp"
+      alt="A Rangeway charging place and lounge set against a mountain landscape"
+      width={2200}
+      height={1200}
+      sizes="100vw"
+      class="network-place__image"
+      position="center 58%"
+      loading="eager"
+    />
+    <figcaption><span>Experience system</span> A considered pause between two parts of the trip.</figcaption>
+  </figure>
+
+  <section class="network-promises" aria-labelledby="promise-title">
+    <header>
+      <p class="eyebrow">The operating promise</p>
+      <h2 id="promise-title">Built around the traveler, not only the charger.</h2>
+    </header>
+    <ol>
+      <li><span>01</span><h3>Comfort indoors</h3><p>A climate-controlled place to sit, work, regroup, and use a clean restroom.</p></li>
+      <li><span>02</span><h3>Useful time</h3><p>Wi-Fi, food appropriate to the format, and space shaped around a real travel day.</p></li>
+      <li><span>03</span><h3>Forward momentum</h3><p>A legible arrival and an easy transition back to the route once the stop is complete.</p></li>
+    </ol>
+  </section>
+
+  <section class="comfort-guarantee" aria-labelledby="comfort-title">
+    <div>
+      <p class="eyebrow eyebrow--sun">Rangeway standard 001</p>
+      <h2 id="comfort-title">Indoor Comfort Guarantee</h2>
+    </div>
+    <p>
+      Every Rangeway format is designed around access to climate-controlled indoor comfort. The
+      footprint and service model change, but the traveler is never treated as an accessory to the
+      charging equipment.
+    </p>
+  </section>
+
+  <section class="network-formats" id="formats" aria-labelledby="network-formats-title">
+    <header>
+      <p class="eyebrow">One standard · three travel rhythms</p>
+      <h2 id="network-formats-title">Choose the pace,<br />then understand the place.</h2>
+      <p>
+        These labels explain the intended operating model. They do not imply that a particular
+        service is active at an unannounced project.
+      </p>
+    </header>
+    <nav class="network-formats__jump" aria-label="Format detail pages">
+      <a href="/network/waystation"><span>01</span>Waystation</a>
+      <a href="/network/basecamp"><span>02</span>Basecamp</a>
+      <a href="/network/summit"><span>03</span>Summit</a>
+    </nav>
+    <FormatCompare formats={FORMATS} />
+  </section>
+
+  <section class="network-technical" aria-labelledby="technical-title">
+    <div class="network-technical__copy">
+      <p class="eyebrow eyebrow--sun">The layer beneath the lounge</p>
+      <h2 id="technical-title">Power, structure, software, and hospitality—configured by project.</h2>
+      <p>
+        Rangeway coordinates physical structures, energy systems, driver support, and amenities as
+        one experience. Specific partner roles and site configurations are described only where the
+        public record supports them.
+      </p>
+      <a class="button button--cream" href="/partners">Explore partner capabilities</a>
+    </div>
+    <div class="network-technical__roles">
+      {PARTNER_GROUPS.map((group, index) => (
+        <article>
+          <span>0{index + 1}</span>
+          <h3>{group.title}</h3>
+          <p>{group.promise}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <div id="projects"><RouteBoard /></div>
+
+  <section class="project-briefs" aria-labelledby="project-briefs-title">
+    <header>
+      <p class="eyebrow">Public project record</p>
+      <h2 id="project-briefs-title">What Rangeway has said, in full context.</h2>
+      <p>
+        Project links lead to dedicated public pages or announcements. Language here stays tied to
+        published development activity, without substituting projections for operating facts.
+      </p>
+    </header>
+    <div class="project-briefs__list">
+      {PROJECTS.map((project, index) => (
+        <ProjectPanel project={project} number={`0${index + 1}`} />
+      ))}
+    </div>
+  </section>
+
+  <section class="network-close" aria-labelledby="network-close-title">
+    <div>
+      <p class="eyebrow eyebrow--sun">Current activity</p>
+      <h2 id="network-close-title">Follow the network as the work becomes public.</h2>
+    </div>
+    <div>
+      <p>Read project announcements and longer Field Notes, or talk directly with the Rangeway team.</p>
+      <div class="button-row">
+        <a class="button button--sun" href={EXTERNAL_LINKS.newsroom} target="_blank" rel="noopener noreferrer">Visit the newsroom</a>
+        <a class="button button--outline-light" href="/contact">Contact Rangeway</a>
+      </div>
+    </div>
+  </section>
+</SiteLayout>
+
+<style>
+  .network-intro {
+    display: grid;
+    grid-template-columns: minmax(210px, .42fr) minmax(0, 1.58fr);
+    min-height: 780px;
+    padding: clamp(150px, 16vw, 245px) var(--page-pad) clamp(72px, 8vw, 120px);
+    background: var(--navy-deep);
+    color: white;
+  }
+
+  .network-intro__index { display: flex; flex-direction: column; gap: 9px; padding-top: 14px; }
+  .network-intro__index .eyebrow { margin-bottom: auto; }
+  .network-intro__index span { font: 500 .63rem var(--font-mono); letter-spacing: .08em; text-transform: uppercase; color: rgba(255, 255, 255, .55); }
+  .network-intro__statement { display: grid; grid-template-columns: 1fr minmax(260px, .42fr); gap: 38px; align-items: end; }
+  .network-intro h1 { grid-column: 1 / 3; margin: 0; max-width: 11ch; font-size: clamp(4.5rem, 10.5vw, 10.5rem); line-height: .86; }
+  .network-intro__statement > p { max-width: 44ch; margin: 0; color: rgba(255, 255, 255, .78); font-size: 1.1rem; }
+  .network-intro .button { justify-self: end; }
+
+  .network-place { position: relative; margin: 0; min-height: min(74vw, 920px); background: var(--navy); }
+  .network-place__image { position: absolute; inset: 0; }
+  .network-place figcaption { position: absolute; left: var(--page-pad); right: var(--page-pad); bottom: 0; display: flex; justify-content: space-between; gap: 28px; margin: 0; padding: 18px 0; border-top: 1px solid rgba(255, 255, 255, .58); color: white; font-size: .86rem; }
+  .network-place figcaption span { font: 500 .64rem var(--font-mono); letter-spacing: .09em; text-transform: uppercase; }
+
+  .network-promises { padding: var(--section-pad) var(--page-pad); background: var(--cream); }
+  .network-promises > header { display: grid; grid-template-columns: .6fr 1.4fr; gap: 36px; align-items: start; margin-bottom: clamp(60px, 8vw, 116px); }
+  .network-promises h2 { max-width: 12ch; margin: 0; font-size: clamp(3.4rem, 7.5vw, 7.8rem); }
+  .network-promises ol { display: grid; grid-template-columns: repeat(3, 1fr); margin: 0; padding: 0; list-style: none; border-top: 1px solid rgba(20, 43, 53, .35); border-left: 1px solid rgba(20, 43, 53, .35); }
+  .network-promises li { min-height: 320px; padding: clamp(24px, 4vw, 52px); border-right: 1px solid rgba(20, 43, 53, .35); border-bottom: 1px solid rgba(20, 43, 53, .35); }
+  .network-promises li span { font: 500 .65rem var(--font-mono); color: var(--oxide); }
+  .network-promises h3 { margin: 82px 0 18px; font-size: clamp(1.8rem, 3vw, 3rem); }
+  .network-promises li p { max-width: 33ch; margin: 0; color: var(--slate); }
+
+  .comfort-guarantee { display: grid; grid-template-columns: 1.25fr .75fr; gap: 60px; align-items: end; padding: clamp(70px, 9vw, 132px) var(--page-pad); background: var(--oxide); color: white; }
+  .comfort-guarantee h2 { max-width: 10ch; margin: 0; font-size: clamp(4rem, 8.5vw, 8.8rem); }
+  .comfort-guarantee > p { max-width: 45ch; margin: 0 0 12px; color: rgba(255, 255, 255, .82); font-size: clamp(1.05rem, 1.6vw, 1.3rem); }
+
+  .network-formats { padding: var(--section-pad) var(--page-pad); background: var(--warm-white); }
+  .network-formats > header { display: grid; grid-template-columns: .48fr 1.12fr .4fr; gap: 34px; align-items: end; margin-bottom: clamp(62px, 8vw, 110px); }
+  .network-formats h2 { margin: 0; font-size: clamp(3.5rem, 7vw, 7.2rem); }
+  .network-formats header > p:last-child { max-width: 38ch; margin: 0 0 8px; color: var(--slate); }
+  .network-formats__jump { display: grid; grid-template-columns: repeat(3, 1fr); margin-bottom: 22px; border-top: 1px solid rgba(20, 43, 53, .28); border-left: 1px solid rgba(20, 43, 53, .28); }
+  .network-formats__jump a { display: flex; justify-content: space-between; padding: 18px 20px; border-right: 1px solid rgba(20, 43, 53, .28); border-bottom: 1px solid rgba(20, 43, 53, .28); font: 700 1rem var(--font-display); }
+  .network-formats__jump span { font: 500 .62rem var(--font-mono); color: var(--oxide); }
+
+  .network-technical { display: grid; grid-template-columns: .9fr 1.1fr; gap: clamp(50px, 8vw, 130px); padding: var(--section-pad) var(--page-pad); background: var(--navy); color: white; }
+  .network-technical__copy h2 { margin-bottom: 30px; font-size: clamp(3.1rem, 5.6vw, 6.2rem); }
+  .network-technical__copy > p:not(.eyebrow) { max-width: 45ch; margin-bottom: 32px; color: rgba(255, 255, 255, .7); }
+  .network-technical__roles { border-top: 1px solid rgba(255, 255, 255, .25); }
+  .network-technical__roles article { display: grid; grid-template-columns: 38px minmax(130px, .6fr) 1fr; gap: 18px; padding: 26px 0; border-bottom: 1px solid rgba(255, 255, 255, .25); }
+  .network-technical__roles span { font: 500 .64rem var(--font-mono); color: var(--sun); }
+  .network-technical__roles h3 { margin: 0; font-size: 1.35rem; }
+  .network-technical__roles p { margin: 0; color: rgba(255, 255, 255, .64); font-size: .88rem; }
+
+  .project-briefs { display: grid; grid-template-columns: .62fr 1.38fr; gap: clamp(40px, 8vw, 130px); padding: var(--section-pad) var(--page-pad); background: var(--warm-white); }
+  .project-briefs > header h2 { max-width: 10ch; margin-bottom: 28px; font-size: clamp(3rem, 5vw, 5.8rem); }
+  .project-briefs > header > p:last-child { max-width: 40ch; color: var(--slate); }
+
+  .network-close { display: grid; grid-template-columns: 1.1fr .9fr; gap: 60px; align-items: end; padding: var(--section-pad) var(--page-pad); background: var(--navy-deep); color: white; }
+  .network-close h2 { max-width: 11ch; margin: 0; font-size: clamp(3.8rem, 7vw, 7.4rem); }
+  .network-close > div:last-child > p { max-width: 42ch; margin-bottom: 34px; color: rgba(255, 255, 255, .72); }
+
+  @media (max-width: 820px) {
+    .network-intro { grid-template-columns: 1fr; min-height: 740px; padding-inline: 20px; }
+    .network-intro__index { display: none; }
+    .network-intro__statement { grid-template-columns: 1fr; align-content: end; }
+    .network-intro h1 { grid-column: auto; font-size: clamp(4rem, 19vw, 6rem); }
+    .network-intro .button { justify-self: start; }
+    .network-place { min-height: 590px; }
+    .network-place figcaption { left: 20px; right: 20px; flex-direction: column; gap: 5px; }
+    .network-promises, .network-formats, .network-technical, .project-briefs, .network-close { padding-inline: 20px; }
+    .network-promises > header, .comfort-guarantee, .network-formats > header, .network-technical, .project-briefs, .network-close { grid-template-columns: 1fr; }
+    .network-promises ol { grid-template-columns: 1fr; }
+    .network-promises li { min-height: 240px; }
+    .network-promises h3 { margin-top: 48px; }
+    .comfort-guarantee { gap: 34px; padding-inline: 20px; }
+    .comfort-guarantee h2 { font-size: clamp(3.6rem, 17vw, 5.4rem); }
+    .network-formats > header > p:last-child { grid-column: auto; }
+    .network-formats__jump { grid-template-columns: 1fr; }
+    .network-technical__roles article { grid-template-columns: 32px 1fr; }
+    .network-technical__roles p { grid-column: 2; }
+    .project-briefs { gap: 45px; }
+  }
+</style>
