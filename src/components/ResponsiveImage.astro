@@ -1,0 +1,38 @@
+---
+interface Props {
+  src: string;
+  srcSmall?: string;
+  alt: string;
+  width: number;
+  height: number;
+  sizes: string;
+  class?: string;
+  position?: string;
+  loading?: "eager" | "lazy";
+}
+
+const {
+  src,
+  srcSmall,
+  alt,
+  width,
+  height,
+  sizes,
+  class: className,
+  position = "center",
+  loading = "lazy",
+} = Astro.props;
+---
+
+<picture class:list={["responsive-image", className]} style={`--image-position: ${position}`}>
+  {srcSmall && <source media="(max-width: 720px)" srcset={srcSmall} />}
+  <img
+    src={src}
+    alt={alt}
+    width={width}
+    height={height}
+    sizes={sizes}
+    loading={loading}
+    decoding="async"
+  />
+</picture>

@@ -1,0 +1,47 @@
+---
+import { EXTERNAL_LINKS, SITE } from "../data/site-content";
+---
+
+<footer class="site-footer">
+  <div class="site-footer__top">
+    <a class="site-footer__brand" href="/" aria-label="Rangeway home">
+      <img src="/images/logo/rangeway-lockup-white.svg" width="438" height="86" alt="Rangeway" loading="lazy" />
+    </a>
+    <p>Better charging places for the roads between here and there.</p>
+  </div>
+
+  <div class="site-footer__grid">
+    <div>
+      <p class="footer-label">Explore</p>
+      <a href="/network">The network</a>
+      <a href="/#projects">Where we’re building</a>
+      <a href={EXTERNAL_LINKS.fieldNotes} target="_blank" rel="noopener noreferrer">Field Notes</a>
+      <a href={EXTERNAL_LINKS.newsroom} target="_blank" rel="noopener noreferrer">Newsroom</a>
+    </div>
+    <div>
+      <p class="footer-label">Company</p>
+      <a href="/our-story">Our story</a>
+      <a href="/team">Team</a>
+      <a href="/partners">Partners</a>
+      <a href="/investors">Investors</a>
+      <a href="/commitments">Commitments</a>
+    </div>
+    <div>
+      <p class="footer-label">Connect</p>
+      <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
+      <a href={`tel:${SITE.phone}`}>{SITE.phoneDisplay}</a>
+      <a href="/contact">Contact the team</a>
+      <a href={EXTERNAL_LINKS.careers} target="_blank" rel="noopener noreferrer">Careers</a>
+    </div>
+    <div class="site-footer__address">
+      <p class="footer-label">Office</p>
+      <address>{SITE.legalName}<br />2661 Market Street<br />STE 85787<br />San Francisco, CA 94114</address>
+    </div>
+  </div>
+
+  <div class="site-footer__base">
+    <p>© {new Date().getFullYear()} {SITE.legalName}</p>
+    <div><a href="/privacy">Privacy</a><a href="/terms">Terms</a></div>
+    <p>Built for the long way around.</p>
+  </div>
+</footer>
