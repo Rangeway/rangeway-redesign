@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 import test from "node:test";
 
@@ -88,4 +89,33 @@ test("format pages are truthful and compositionally distinct", () => {
   assert.match(waystation, /data-composition="waystation-flow"/);
   assert.match(basecamp, /data-composition="basecamp-service"/);
   assert.match(summit, /data-composition="summit-destination"/);
+});
+
+test("Waystation title stays viewport-safe and essential hospitality makes no hours claim", () => {
+  const waystation = read("src/pages/network/waystation.astro");
+  const leadRule = waystation.match(/\.waystation-lead\s*\{(?<rule>[^}]*)\}/s)?.groups?.rule ?? "";
+  const titleRule = waystation.match(/\.waystation-lead h1\s*\{(?<rule>[^}]*)\}/s)?.groups?.rule ?? "";
+
+  assert.doesNotMatch(leadRule, /overflow\s*:\s*hidden/i);
+  assert.match(waystation, /\.waystation-lead__copy\s*\{[^}]*min-width\s*:\s*0/s);
+  assert.match(titleRule, /max-width\s*:\s*100%/);
+  assert.match(titleRule, /font-size\s*:\s*clamp\([^,]+,[^,]+,\s*7rem\)/);
+  assert.match(waystation, /@media \(max-width: 820px\)[\s\S]*\.waystation-lead h1\s*\{[^}]*font-size\s*:\s*clamp\([^,]+,[^,]+,\s*4rem\)/);
+  assert.doesNotMatch(waystation, />\s*24\s*</);
+  assert.doesNotMatch(waystation, /24\s*(?:hours?|\/\s*7)|availability/i);
+});
+
+test("format comparison links remain exposed to source and built accessibility trees", () => {
+  const compare = read("src/components/FormatCompare.astro");
+
+  assert.doesNotMatch(compare, /format-compare__header"\s+aria-hidden="true"/);
+  assert.match(compare, /format-compare__header[\s\S]*<a href=\{format\.href\}/);
+
+  execFileSync("npm", ["run", "build", "--silent"], {
+    cwd: new URL("../", import.meta.url),
+    stdio: "pipe",
+  });
+  const built = read("dist/network/index.html");
+  assert.doesNotMatch(built, /format-compare__header[^>]*aria-hidden="true"/);
+  assert.match(built, /format-compare__header[\s\S]*href="\/network\/waystation"/);
 });
