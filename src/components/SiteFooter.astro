@@ -32,6 +32,25 @@ import { EXTERNAL_LINKS, SITE } from "../data/site-content";
       <a href={`tel:${SITE.phone}`}>{SITE.phoneDisplay}</a>
       <a href="/contact">Contact the team</a>
       <a href={EXTERNAL_LINKS.careers} target="_blank" rel="noopener noreferrer">Careers</a>
+      <nav class="site-footer__social" aria-label="Follow Rangeway">
+        <a class="site-footer__social-link" href={EXTERNAL_LINKS.instagram} target="_blank" rel="noopener noreferrer" aria-label="Rangeway on Instagram, opens in a new tab">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <rect x="3.25" y="3.25" width="17.5" height="17.5" rx="5" fill="none" stroke="currentColor" stroke-width="2" />
+            <circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2" />
+            <circle cx="17.4" cy="6.7" r="1.15" fill="currentColor" />
+          </svg>
+        </a>
+        <a class="site-footer__social-link" href={EXTERNAL_LINKS.linkedin} target="_blank" rel="noopener noreferrer" aria-label="Rangeway on LinkedIn, opens in a new tab">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path fill="currentColor" d="M5.2 8.35H2.05V21H5.2V8.35ZM3.63 2A1.83 1.83 0 1 0 3.63 5.66 1.83 1.83 0 0 0 3.63 2ZM21.95 13.74C21.95 9.93 19.92 8.16 17.22 8.16A4.08 4.08 0 0 0 13.54 10.18H13.5V8.35H10.48V21H13.63V14.74C13.63 13.09 13.94 11.49 15.99 11.49 18.01 11.49 18.03 13.38 18.03 14.85V21H21.18L21.95 13.74Z" />
+          </svg>
+        </a>
+        <a class="site-footer__social-link" href={EXTERNAL_LINKS.x} target="_blank" rel="noopener noreferrer" aria-label="Rangeway on X, opens in a new tab">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path fill="currentColor" d="M18.24 2.25H21.55L14.32 10.51 22.83 21.75H16.17L10.96 14.93 4.99 21.75H1.68L9.41 12.92 1.25 2.25H8.08L12.79 8.48 18.24 2.25ZM17.08 19.77H18.91L7.08 4.13H5.12L17.08 19.77Z" />
+          </svg>
+        </a>
+      </nav>
     </div>
     <div class="site-footer__address">
       <p class="footer-label">Office</p>

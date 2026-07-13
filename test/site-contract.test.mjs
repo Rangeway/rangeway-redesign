@@ -68,6 +68,22 @@ test("the published preview origin is redesign.rangeway.co", () => {
   assert.match(readme, /non-production/i);
 });
 
+test("the shared footer exposes the approved social channels as accessible icon links", () => {
+  const footer = read("src/components/SiteFooter.astro");
+
+  assert.match(footer, /<nav class="site-footer__social" aria-label="Follow Rangeway">/);
+  for (const [key, label] of [
+    ["instagram", "Instagram"],
+    ["linkedin", "LinkedIn"],
+    ["x", "X"],
+  ]) {
+    assert.match(footer, new RegExp(`href=\\{EXTERNAL_LINKS\\.${key}\\}`));
+    assert.match(footer, new RegExp(`aria-label="Rangeway on ${label}, opens in a new tab"`));
+  }
+  assert.equal((footer.match(/class="site-footer__social-link"/g) ?? []).length, 3);
+  assert.equal((footer.match(/<svg\b/g) ?? []).length, 3);
+});
+
 test("homepage feedback keeps proof, disclosures, and partner marks attached to their intended surfaces", () => {
   const home = read("src/pages/index.astro");
   const css = read("src/styles/global.css");
