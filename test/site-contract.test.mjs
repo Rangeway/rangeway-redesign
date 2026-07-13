@@ -58,6 +58,16 @@ test("fresh operating homepage contract", () => {
   assert.doesNotMatch(css, /\.reveal[^}]*opacity\s*:\s*0/s);
 });
 
+test("the published preview origin is redesign.rangeway.co", () => {
+  const astroConfig = read("astro.config.mjs");
+  const readme = read("README.md");
+
+  assert.match(astroConfig, /site:\s*"https:\/\/redesign\.rangeway\.co"/);
+  assert.doesNotMatch(astroConfig, /preview\.rangeway\.invalid/);
+  assert.match(readme, /https:\/\/redesign\.rangeway\.co/);
+  assert.match(readme, /non-production/i);
+});
+
 test("homepage feedback keeps proof, disclosures, and partner marks attached to their intended surfaces", () => {
   const home = read("src/pages/index.astro");
   const css = read("src/styles/global.css");

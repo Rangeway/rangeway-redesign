@@ -134,6 +134,7 @@ test("built reviewed openings remain purpose-specific and reject split-story/inv
 test("contact remains a native POST and legal anchors survive static rendering", () => {
   const contact = byPath["contact/index.html"];
   assert.match(contact, /<form[^>]*action="https:\/\/formsubmit\.co\/hello@rangeway\.co"[^>]*method="POST"/);
+  assert.match(contact, /name="_next" value="https:\/\/redesign\.rangeway\.co\/contact\/thanks\/"/);
   const contactFormScript = contact.match(/<form class="contact-form"[\s\S]*?<\/form><script[^>]*>(?<script>[\s\S]*?)<\/script>/)?.groups?.script ?? "";
   assert.ok(contactFormScript, "contact form enhancement is present");
   assert.doesNotMatch(contactFormScript, /preventDefault|fetch\(/);
