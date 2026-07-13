@@ -1,0 +1,16 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+---
+
+<SiteLayout title="Message received · Rangeway" description="Thank you for writing to Rangeway." class="utility-family utility-family--thanks">
+  <section class="utility-state"><p class="utility-state__code">Contact / Received</p><div class="utility-state__mark" aria-hidden="true">✓</div><h1>Message received.</h1><p>Thank you for writing. A person on the Rangeway team will read your note and reply within two business days. Investor and partnership notes may move faster.</p><div class="button-row"><a class="button button--sun" href="/">Back to the start</a><a class="button button--outline-light" href="/network">Explore the network</a></div></section>
+</SiteLayout>
+
+<style>
+  .utility-state { display: grid; place-content: center; min-height: 760px; padding: 150px 20px 90px; background: var(--navy-deep); color: white; text-align: center; }
+  .utility-state__code { color: var(--sun); font: 600 .67rem var(--font-mono); letter-spacing: .1em; text-transform: uppercase; }
+  .utility-state__mark { display: grid; width: 86px; height: 86px; place-items: center; margin: 28px auto; border: 2px solid var(--sun); border-radius: 50%; color: var(--sun); font-size: 2rem; }
+  .utility-state h1 { margin: 0 0 28px; font-size: clamp(3.8rem,8vw,8rem); }
+  .utility-state > p:not(.utility-state__code) { max-width: 50ch; margin: 0 auto 34px; color: rgba(255,255,255,.72); }
+  .utility-state .button-row { justify-content: center; }
+</style>

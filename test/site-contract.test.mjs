@@ -119,3 +119,94 @@ test("format comparison links remain exposed to source and built accessibility t
   assert.doesNotMatch(built, /format-compare__header[^>]*aria-hidden="true"/);
   assert.match(built, /format-compare__header[\s\S]*href="\/network\/waystation"/);
 });
+
+test("company and utility families preserve distinct purposes", () => {
+  const story = read("src/pages/our-story.astro");
+  const team = read("src/pages/team.astro");
+  const partners = read("src/pages/partners.astro");
+  const investors = read("src/pages/investors.astro");
+  const commitments = read("src/pages/commitments.astro");
+  const thanks = read("src/pages/contact/thanks.astro");
+  const notFound = read("src/pages/404.astro");
+
+  assert.match(story, /story-family/);
+  assert.match(story, /RouteBoard/);
+  assert.match(team, /PeopleField/);
+  assert.match(partners, /PartnerField/);
+  assert.match(investors, /investor-family/);
+  assert.ok(investors.indexOf("The thesis") < investors.indexOf("Operating evidence"));
+  assert.ok(investors.indexOf("Operating evidence") < investors.indexOf("Project pipeline"));
+  assert.ok(investors.indexOf("Project pipeline") < investors.indexOf("Recognition"));
+  assert.ok(investors.indexOf("Recognition") < investors.indexOf("Request the investor briefing"));
+  for (const anchor of ["environment", "communities", "inclusion", "people", "accountability"]) {
+    assert.match(commitments, new RegExp(`(?:id:\\s*|id=)\"${anchor}\"`));
+  }
+  assert.match(commitments, /href={`#\$\{chapter\.id\}`}/);
+  assert.match(thanks, /utility-family/);
+  assert.match(notFound, /utility-family/);
+
+  const all = `${story}\n${team}\n${partners}\n${investors}\n${commitments}\n${thanks}\n${notFound}`;
+  assert.doesNotMatch(all, /PageHero|index-row|reveal/);
+});
+
+test("company people are visible once and limited to the approved roster", () => {
+  const data = read("src/data/site-content.ts");
+  const field = read("src/components/PeopleField.astro");
+  const team = read("src/pages/team.astro");
+
+  assert.match(field, /TEAM\.map/);
+  assert.match(field, /<article/);
+  assert.match(field, /<h2>{person\.name}<\/h2>/);
+  assert.match(team, /<PeopleField/);
+  for (const approved of ["Zak Winnick", "Luke Schuette", "Theo Reichgelt", "Stephanie McGreevy"]) {
+    assert.equal((data.match(new RegExp(approved, "g")) ?? []).length, 1);
+  }
+  assert.doesNotMatch(`${data}\n${field}\n${team}`, /James|Jim Regan|Raul Dominguez|Paul Devon/i);
+});
+
+test("partner family leads with visible logos and role context", () => {
+  const field = read("src/components/PartnerField.astro");
+  const partners = read("src/pages/partners.astro");
+
+  assert.match(partners, /<PartnerField/);
+  assert.match(field, /PARTNER_GROUPS\.map/);
+  assert.match(field, /partner\.logo/);
+  assert.match(field, /partner\.role/);
+  assert.match(field, /Site-specific configurations vary by project phase/);
+  assert.doesNotMatch(field, /partner-row|index-row|reveal/);
+});
+
+test("contact form keeps a native POST fallback and accessible enhancement", () => {
+  const contact = read("src/components/ContactForm.astro");
+  const page = read("src/pages/contact.astro");
+
+  assert.match(contact, /method="POST"/);
+  assert.match(contact, /action="https:\/\/formsubmit\.co\/hello@rangeway\.co"/);
+  assert.match(contact, /aria-live="polite"/);
+  assert.doesNotMatch(contact, /preventDefault/);
+  for (const interest of ["EV Driver", "Potential Partner", "Investor", "Careers", "Media", "Other"]) {
+    assert.match(contact, new RegExp(interest));
+  }
+  for (const email of ["hello", "media", "careers", "investors", "partners"]) {
+    assert.match(page, new RegExp(`${email}@rangeway\\.co`));
+  }
+});
+
+test("legal layout provides anchors and a readable measure", () => {
+  const legal = read("src/components/LegalLayout.astro");
+  const privacy = read("src/pages/privacy.astro");
+  const terms = read("src/pages/terms.astro");
+
+  assert.match(legal, /title: string/);
+  assert.match(legal, /effectiveDate: string/);
+  assert.match(legal, /aria-label="On this page"/);
+  assert.match(legal, /max-width:\s*(6[2-9]|7[0-6])ch/);
+  assert.match(privacy, /<LegalLayout/);
+  assert.match(terms, /<LegalLayout/);
+  assert.match(privacy, /id="information-we-collect"/);
+  assert.match(privacy, /CCPA/);
+  assert.match(privacy, /GDPR/);
+  assert.match(terms, /id="forward-looking-statements"/);
+  assert.match(terms, /State of Delaware/);
+  assert.match(`${privacy}\n${terms}`, /April 21, 2026/);
+});

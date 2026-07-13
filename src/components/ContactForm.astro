@@ -1,0 +1,63 @@
+---
+interface Props {
+  defaultInterest?: string;
+  subject?: string;
+}
+
+const { defaultInterest = "", subject = "New Rangeway Website Inquiry" } = Astro.props;
+const thanksUrl = new URL("/contact/thanks/", Astro.site).toString();
+const interests = ["EV Driver", "Potential Partner", "Investor", "Careers", "Media", "Other"];
+---
+
+<form class="contact-form" action="https://formsubmit.co/hello@rangeway.co" method="POST" data-contact-form>
+  <input type="hidden" name="_subject" value={subject} />
+  <input type="hidden" name="_template" value="table" />
+  <input type="hidden" name="_captcha" value="true" />
+  <input type="hidden" name="_next" value={thanksUrl} />
+  <input class="contact-form__honey" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+  <div class="contact-form__pair">
+    <label><span>Name</span><input type="text" name="name" required autocomplete="name" /></label>
+    <label><span>Email</span><input type="email" name="email" required autocomplete="email" /></label>
+  </div>
+  <label>
+    <span>Interest</span>
+    <select name="interest" required>
+      <option value="" selected={!defaultInterest}>Select one</option>
+      {interests.map((interest) => <option value={interest} selected={defaultInterest === interest}>{interest}</option>)}
+    </select>
+  </label>
+  <label><span>Message</span><textarea name="message" rows={6} required></textarea></label>
+  <div class="contact-form__actions">
+    <button class="button button--sun" type="submit" data-submit>Send message</button>
+    <p data-status aria-live="polite">Native secure form submission. No account required.</p>
+  </div>
+</form>
+
+<style>
+  .contact-form { display: flex; flex-direction: column; gap: 28px; }
+  .contact-form__pair { display: grid; grid-template-columns: repeat(2,1fr); gap: 24px; }
+  .contact-form label { display: flex; flex-direction: column; gap: 9px; color: var(--slate); font: 600 .67rem var(--font-mono); letter-spacing: .09em; text-transform: uppercase; }
+  .contact-form input, .contact-form select, .contact-form textarea { width: 100%; border: 0; border-bottom: 2px solid rgba(20,43,53,.38); border-radius: 0; padding: 11px 2px 13px; background: transparent; color: var(--navy-deep); font: 500 1.06rem var(--font-body); text-transform: none; }
+  .contact-form input:focus, .contact-form select:focus, .contact-form textarea:focus { outline: 3px solid var(--sun); outline-offset: 4px; border-bottom-color: var(--oxide); }
+  .contact-form textarea { min-height: 150px; resize: vertical; }
+  .contact-form__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 18px; }
+  .contact-form__actions p { max-width: 30ch; margin: 0; color: var(--slate); font-size: .84rem; }
+  .contact-form__honey { position: absolute; left: -10000px; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+  @media (max-width: 620px) { .contact-form__pair { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLFormElement>("[data-contact-form]").forEach((form) => {
+    const button = form.querySelector<HTMLButtonElement>("[data-submit]");
+    const status = form.querySelector<HTMLElement>("[data-status]");
+    form.addEventListener("submit", () => {
+      if (button) { button.disabled = true; button.textContent = "Sending…"; }
+      if (status) status.textContent = "Routing your note. A confirmation page will appear next.";
+    });
+    window.addEventListener("pageshow", () => {
+      if (button) { button.disabled = false; button.textContent = "Send message"; }
+      if (status) status.textContent = "Native secure form submission. No account required.";
+    });
+  });
+</script>

@@ -1,0 +1,24 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import PartnerField from "../components/PartnerField.astro";
+---
+
+<SiteLayout title="Partners · Rangeway" description="The structures, energy, driver systems, and amenities partners enabling Rangeway." class="partner-family">
+  <section class="partners-intro">
+    <p class="eyebrow eyebrow--sun">Partners / Operating system</p>
+    <h1>The experience is built together.</h1>
+    <p>Rangeway is a brand and operating company. Technology, infrastructure, structural, and service partners make the driver experience possible.</p>
+  </section>
+  <section class="partners-system"><PartnerField /></section>
+  <section class="partners-action"><p>For technology, energy, and service partnerships.</p><a class="button button--sun" href="mailto:partners@rangeway.co?subject=Partnership%20Inquiry">partners@rangeway.co</a></section>
+</SiteLayout>
+
+<style>
+  .partners-intro { display: grid; grid-template-columns: .38fr 1.12fr .5fr; gap: 40px; align-items: end; min-height: 700px; padding: 190px var(--page-pad) 86px; background: var(--navy); color: white; }
+  .partners-intro h1 { margin: 0; font-size: clamp(4.2rem,8.5vw,9rem); }
+  .partners-intro > p:last-child { color: rgba(255,255,255,.68); }
+  .partners-system { padding: 42px var(--page-pad) var(--section-pad); background: var(--navy-deep); color: white; }
+  .partners-action { display: flex; align-items: center; justify-content: space-between; gap: 30px; padding: 54px var(--page-pad); background: var(--oxide); color: white; }
+  .partners-action p { margin: 0; font: 700 clamp(1.3rem,2.5vw,2.6rem) var(--font-display); }
+  @media (max-width: 820px) { .partners-intro { grid-template-columns: 1fr; min-height: 650px; padding: 150px 20px 70px; } .partners-system { padding-inline: 20px; } .partners-action { flex-direction: column; align-items: flex-start; padding-inline: 20px; } }
+</style>

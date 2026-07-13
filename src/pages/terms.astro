@@ -1,0 +1,55 @@
+---
+import LegalLayout from "../components/LegalLayout.astro";
+
+const sections = [
+  ["about-the-site", "About the Site"], ["forward-looking-statements", "Forward-looking statements"],
+  ["eligibility", "Eligibility"], ["permitted-use", "Permitted use"], ["intellectual-property", "Intellectual property"],
+  ["user-submissions", "User submissions"], ["third-party-links", "Third-party links"], ["warranties", "Warranties"],
+  ["liability", "Liability"], ["indemnification", "Indemnification"], ["governing-law", "Governing law"], ["changes", "Changes"], ["contact", "Contact"],
+].map(([id, label]) => ({ id, label }));
+---
+
+<LegalLayout title="Terms of Service" effectiveDate="April 21, 2026" description="The terms governing access to and use of rangeway.co and related subdomains." sections={sections}>
+  <p>Rangeway Energy, Inc. ("Rangeway," "we," "us," or "our") operates the website at rangeway.co and related subdomains (collectively, the "Site"). These Terms of Service ("Terms") govern your access to and use of the Site. By accessing or using the Site, you agree to be bound by these Terms.</p>
+
+  <h2 id="about-the-site">1. About the Site</h2>
+  <p>The Site provides information about Rangeway, including our network of EV charging and hospitality locations, partners, team, and business. The Site is informational in nature. It does not facilitate bookings, purchases, account creation, or financial transactions.</p>
+
+  <h2 id="forward-looking-statements">2. Forward-Looking Statements</h2>
+  <p>The Site contains forward-looking statements about Rangeway's business, including planned site locations, network formats, partnerships, and target opening dates. These statements reflect our current plans and beliefs but are not binding commitments. Actual outcomes may differ due to site permitting, construction timelines, partner negotiations, financing conditions, regulatory approvals, and other factors. Nothing on the Site should be relied upon as a promise of future operations, specific site openings, or financial performance.</p>
+
+  <h2 id="eligibility">3. Eligibility</h2>
+  <p>The Site is not directed to children under 13, and we do not knowingly collect information from children under 13. By using the Site, you represent that you are at least 13 years old.</p>
+
+  <h2 id="permitted-use">4. Permitted Use</h2>
+  <p>You may access and use the Site for personal, non-commercial purposes. You may not:</p>
+  <ul><li>Copy, reproduce, distribute, or create derivative works from Site content without our written permission, except as permitted by applicable fair use or fair dealing principles</li><li>Use any automated means (bots, scrapers, crawlers) to access the Site in ways that interfere with its normal operation</li><li>Attempt to gain unauthorized access to any part of the Site, its servers, or related systems</li><li>Use the Site to transmit malware, spam, or other harmful content</li><li>Use the Site in any way that violates applicable law</li></ul>
+
+  <h2 id="intellectual-property">5. Intellectual Property</h2>
+  <p>All content on the Site, including text, images, graphics, logos, and the Rangeway name and marks, is the property of Rangeway Energy, Inc. or its licensors and is protected by U.S. and international intellectual property laws. Partner logos and marks displayed on the Site are the property of their respective owners and are used with permission.</p>
+
+  <h2 id="user-submissions">6. User Submissions</h2>
+  <p>If you contact us through the Site (for example, by submitting the contact form or subscribing to Field Notes), you grant us permission to use the information you provide to respond to you, route your inquiry internally, and maintain ordinary business records. We do not publish, share, or sell your submissions. Our use of personal information is further described in our <a href="/privacy">Privacy Policy</a>.</p>
+
+  <h2 id="third-party-links">7. Third-Party Links and Services</h2>
+  <p>The Site links to third-party websites and uses third-party services (including our partners, newsletter platform, and analytics provider). We are not responsible for the content, policies, or practices of third-party sites or services. Your use of any third-party site or service is at your own risk and subject to the terms and policies of that third party.</p>
+
+  <h2 id="warranties">8. Disclaimer of Warranties</h2>
+  <p class="legal-caps">The Site is provided "as is" and "as available." Rangeway makes no warranties, express or implied, regarding the Site, its content, or its availability. We disclaim all implied warranties, including warranties of merchantability, fitness for a particular purpose, and non-infringement, to the fullest extent permitted by law.</p>
+
+  <h2 id="liability">9. Limitation of Liability</h2>
+  <p class="legal-caps">To the fullest extent permitted by law, Rangeway and its officers, directors, employees, agents, and affiliates shall not be liable for any indirect, incidental, special, consequential, or punitive damages, or for any loss of profits, data, or goodwill, arising out of or related to your use of the Site, even if we have been advised of the possibility of such damages. Our total liability to you for any claim related to the Site shall not exceed one hundred U.S. dollars ($100).</p>
+
+  <h2 id="indemnification">10. Indemnification</h2>
+  <p>You agree to indemnify and hold harmless Rangeway and its officers, directors, employees, and agents from any claims, damages, losses, liabilities, and expenses (including reasonable attorneys' fees) arising out of your use of the Site, your violation of these Terms, or your violation of any rights of another.</p>
+
+  <h2 id="governing-law">11. Governing Law and Venue</h2>
+  <p>These Terms are governed by the laws of the State of Delaware, without regard to its conflict-of-laws principles. Any dispute arising out of or relating to these Terms or your use of the Site shall be brought exclusively in the state or federal courts located in Delaware, and you consent to the personal jurisdiction of those courts.</p>
+
+  <h2 id="changes">12. Changes to These Terms</h2>
+  <p>We may update these Terms from time to time. If we make material changes, we will update the Effective Date at the top of this page and, where appropriate, notify users through the Site. Your continued use of the Site after changes become effective constitutes your acceptance of the revised Terms.</p>
+
+  <h2 id="contact">13. Contact</h2>
+  <p>For questions about these Terms, contact us at:</p>
+  <address>Rangeway Energy, Inc.<br />2661 Market Street, STE 85787<br />San Francisco, CA 94114<br /><a href="mailto:legal@rangeway.co">legal@rangeway.co</a></address>
+</LegalLayout>

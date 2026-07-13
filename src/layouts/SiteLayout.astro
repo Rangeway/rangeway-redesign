@@ -11,6 +11,7 @@ interface Props {
 }
 
 const { title, description = DEFAULT_DESCRIPTION, class: pageClass = "" } = Astro.props;
+const pageFamily = pageClass.trim().split(/\s+/)[0] || "site-page";
 ---
 
 <!doctype html>
@@ -32,7 +33,7 @@ const { title, description = DEFAULT_DESCRIPTION, class: pageClass = "" } = Astr
   </head>
   <body class={pageClass}>
     <SiteHeader />
-    <main id="main-content"><slot /></main>
+    <main id="main-content" class={pageClass} data-page-family={pageFamily}><slot /></main>
     <SiteFooter />
   </body>
 </html>

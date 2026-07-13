@@ -1,0 +1,19 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+---
+
+<SiteLayout title="Off the map · Rangeway" description="The page you're looking for isn't here." class="utility-family utility-family--404">
+  <section class="off-map"><div class="off-map__route" aria-hidden="true"><span></span><i></i><strong>404</strong></div><div><p class="eyebrow eyebrow--sun">Off the map</p><h1>That stop isn't on the map.</h1><p>The page you're looking for moved, retired, or never existed. There are plenty of other roads worth taking.</p><div class="button-row"><a class="button button--sun" href="/">Back to the start</a><a class="button button--outline-light" href="/network">Explore the network</a></div></div></section>
+</SiteLayout>
+
+<style>
+  .off-map { display: grid; grid-template-columns: .55fr 1.45fr; gap: 70px; align-items: center; min-height: 760px; padding: 150px var(--page-pad) 90px; background: var(--oxide); color: white; }
+  .off-map__route { position: relative; min-height: 420px; border-left: 2px solid var(--sun); }
+  .off-map__route span, .off-map__route i { position: absolute; left: -13px; width: 24px; height: 24px; border: 2px solid var(--sun); border-radius: 50%; background: var(--oxide); }
+  .off-map__route span { top: 0; }
+  .off-map__route i { bottom: 0; }
+  .off-map__route strong { position: absolute; left: 26px; top: 50%; color: rgba(255,255,255,.16); font: 800 clamp(7rem,18vw,18rem)/1 var(--font-display); transform: translateY(-50%); }
+  .off-map h1 { max-width: 10ch; margin: 0 0 32px; font-size: clamp(4rem,8vw,8.4rem); }
+  .off-map > div:last-child > p:not(.eyebrow) { max-width: 47ch; color: rgba(255,255,255,.74); }
+  @media (max-width: 820px) { .off-map { grid-template-columns: 1fr; padding-inline: 20px; } .off-map__route { min-height: 180px; } }
+</style>
