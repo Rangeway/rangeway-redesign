@@ -1,215 +1,96 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
-import PageHero from "../components/PageHero.astro";
-
-const values = [
-  {
-    num: "01",
-    title: "The stop should be worth the time.",
-    body: "If a driver has to wait, we have a responsibility to make the wait good. That is the thesis. Everything else follows."
-  },
-  {
-    num: "02",
-    title: "Hospitality is a decision, not a feature.",
-    body: "Every element of a Rangeway location is evaluated like a hotel operator would evaluate it, from lighting to lobby to lavatory."
-  },
-  {
-    num: "03",
-    title: "Build where drivers actually go.",
-    body: "We plan corridors, not maps. A site is only worth building if it shortens a real trip for a real driver."
-  },
-  {
-    num: "04",
-    title: "The network should feel like one company.",
-    body: "A quiet roadside stop and a weekend destination should feel made by the same hands, with the same voice and the same care."
-  }
-];
+import SiteLayout from "../layouts/SiteLayout.astro";
+import ResponsiveImage from "../components/ResponsiveImage.astro";
+import RouteBoard from "../components/RouteBoard.astro";
 ---
 
-<BaseLayout
-  title="Our Story · Rangeway"
-  description="Rangeway was founded by a hospitality operator with deep experience at flagship properties. We are rebuilding EV charging as hospitality."
-  image="/images/basecamp-interior.jpg"
->
-  <PageHero
-    eyebrow="Our Story"
-    title="Hospitality DNA meets EV passion."
-    lede="Rangeway is not a charging company with amenities. It is a hospitality company that happens to charge vehicles."
-    image="/images/basecamp-interior.jpg"
-    imageAlt="Interior of a Rangeway driver's lounge"
-  />
-
-  <section class="section">
-    <div class="container-narrow prose-lg reveal">
-      <p>
-        Rangeway was founded by a hospitality operator who has spent his career at luxury resorts,
-        wellness retreats, and flagship urban hotels. That is an unusual background for an EV
-        charging company, and that is the point.
-      </p>
-      <p>
-        It is also only half of the story. Rangeway's founder is equally rooted in the EV driver
-        community, as a club director and co-founder. The instincts behind every Rangeway decision
-        come from years of running guest experiences at the highest level, and from countless
-        conversations with drivers on real road trips.
-      </p>
-      <p>
-        That combination is the conviction behind Rangeway. The EV charging industry has treated
-        charging as a utility problem. We believe it is a hospitality problem. Drivers are guests.
-        Stops are experiences. The wait is the product. We know which stops have broken the trip,
-        which lounges never existed, and which corridors have been left behind. We have been the
-        drivers stopping at them.
-      </p>
-      <p>
-        So we are building the answer on our own terms. Every location is designed as a place you
-        would choose, not a place you tolerate. Every format, whatever its size, holds the same
-        hospitality standard. The scale shifts with the road. The care does not.
-      </p>
+<SiteLayout title="Our Story · Rangeway" description="Rangeway brings hospitality operating experience and EV-driver perspective to the charging stop." class="story-family">
+  <!-- HERO: A road-width thesis interrupts a visual timeline of the company in motion. -->
+  <section class="story-photo-masthead">
+    <ResponsiveImage class="story-photo-masthead__image" src="/images/network-hero.webp" srcSmall="/images/network-hero-640.webp" alt="Concept rendering of a Rangeway charging plaza with a timber solar canopy and glass-walled lounge in a desert mountain landscape" width={2200} height={1200} sizes="100vw" loading="eager" position="center 58%" />
+    <p class="concept-label concept-label--hero">Concept rendering</p>
+    <div class="story-photo-masthead__veil" aria-hidden="true"></div>
+    <div class="story-photo-masthead__copy">
+      <p class="eyebrow eyebrow--sun">Our story / Roadside hospitality</p>
+      <h1>Hospitality is how the road gets better.</h1>
+      <p>Rangeway is a hospitality company that happens to charge vehicles.</p>
+      <blockquote>The point is not to interrupt the journey. It is to make the journey feel cared for.</blockquote>
     </div>
   </section>
 
-  <section class="section section-cream">
-    <div class="container">
-      <div class="reveal" style="max-width: 640px; margin-bottom: var(--space-8);">
-        <p class="eyebrow">What we believe</p>
-        <h2>Four ideas the network is built on.</h2>
-      </div>
-
-      <div class="values">
-        {values.map((v) => (
-          <article class="value reveal">
-            <span class="value__num">/{v.num}</span>
-            <h3>{v.title}</h3>
-            <p>{v.body}</p>
-          </article>
-        ))}
-      </div>
+  <section class="story-origin">
+    <p class="story-origin__marker">Origin / Operating point of view</p>
+    <div class="story-origin__statement">
+      <p>Drivers are guests.</p><p>Stops are experiences.</p><p>The wait is the product.</p>
+    </div>
+    <div class="story-origin__copy">
+      <p>Rangeway was founded from an unusual combination: years spent operating luxury resorts, wellness retreats, and flagship urban hotels, alongside firsthand experience in the EV-driver community.</p>
+      <p>The charging industry has largely treated the stop as a utility problem. We see a hospitality problem: light, shelter, clean facilities, calm service, and a place that respects the time between arrival and departure.</p>
+      <p>Every Rangeway format is designed as a place a traveler would choose, not merely tolerate. The scale changes with the road. The care does not.</p>
     </div>
   </section>
 
-  <section class="section team-strip">
-    <div class="container">
-      <div class="team-strip__heading reveal">
-        <p class="eyebrow">The team</p>
-        <h2>The people behind Rangeway.</h2>
-        <p class="prose-lg muted" style="margin-top: var(--space-4); max-width: 52ch;">
-          We are a small group of hospitality operators, energy veterans, and EV community
-          organizers, building the network together.
-        </p>
-      </div>
-      <div style="margin-top: var(--space-6);">
-        <a class="btn btn-link" href="/team">
-          Meet the team
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="5" y1="12" x2="19" y2="12" />
-            <polyline points="13 6 19 12 13 18" />
-          </svg>
-        </a>
-      </div>
+  <section class="story-beliefs">
+    <header><p class="eyebrow">Operating beliefs</p><h2>Four decisions behind every stop.</h2></header>
+    <div class="story-beliefs__field">
+      <article><span>01</span><h3>Make the wait good.</h3><p>If a driver has to wait, the stop has a responsibility to make that time useful and comfortable.</p></article>
+      <article><span>02</span><h3>Operate the details.</h3><p>Lighting, lavatories, provisions, seating, and service are operating decisions, not decorative features.</p></article>
+      <article><span>03</span><h3>Plan real corridors.</h3><p>We build around routes people actually drive and the communities those roads connect.</p></article>
+      <article><span>04</span><h3>Hold one standard.</h3><p>Waystation, Basecamp, and Summit should feel made by the same company and held to the same promise.</p></article>
     </div>
   </section>
 
-  <section class="section section-dark where-dark">
-    <div class="container-narrow reveal">
-      <p class="eyebrow" style="color: var(--color-warm);">Where we're going</p>
-      <h2>The road ahead.</h2>
-      <ul class="where-dark__list">
-        <li>California: an off-grid oasis rising in the high desert.</li>
-        <li>Montana: a first retreat breaking ground in Big Sky Country.</li>
-        <li>St. Louis: two destinations taking shape in the Gateway City.</li>
-        <li><a href="/investors">Qualified investors</a> can review the full pipeline under NDA.</li>
-      </ul>
-      <div class="where-dark__cta">
-        <a class="btn btn-warm" href="/investors">Request investor briefing</a>
-        <a class="btn btn-outline" href="https://fieldnotes.rangeway.co" target="_blank" rel="noopener">Subscribe to Field Notes</a>
-      </div>
-    </div>
+  <section class="story-current">
+    <header><p class="eyebrow eyebrow--sun">Current work</p><h2>The story is being built in public.</h2><p>Rangeway is developing projects, building partnerships, publishing Field Notes, raising capital, and hiring. The first locations remain in development.</p></header>
+    <RouteBoard title="Three regions. One operating standard." intro="Follow the public project surfaces for sourced updates from Bozeman, Mojave / Antelope Valley, and St. Louis." />
   </section>
-</BaseLayout>
+
+  <section class="story-team-handoff">
+    <p class="eyebrow">The people</p>
+    <h2>Different disciplines.<br />One guest standard.</h2>
+    <div><p>Hospitality operations, design and construction, growth, policy, and public capital come together around a simple brief: make the stop better.</p><a class="button button--sun" href="/team">Meet the team</a></div>
+  </section>
+</SiteLayout>
 
 <style>
-  .values {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0 clamp(28px, 4vw, 64px);
-    border-top: var(--rule-bold) solid var(--color-ink);
-  }
-
-  .value {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-3);
-    padding: var(--space-6) 0;
-    border-bottom: var(--rule) solid var(--color-ink);
-  }
-
-  .value__num {
-    font-family: var(--font-heading);
-    font-size: clamp(1.4rem, 2vw, 2rem);
-    letter-spacing: -0.01em;
-    color: var(--color-warm);
-    font-weight: 800;
-  }
-
-  .value h3 {
-    font-size: 1.35rem;
-    line-height: 1.25;
-  }
-
-  .value p {
-    color: var(--color-text-muted);
-    margin: 0;
-    max-width: 52ch;
-  }
-
-  .team-strip__heading {
-    max-width: 620px;
-  }
-
-  .where-dark__list {
-    list-style: none;
-    padding: 0;
-    margin: var(--space-5) 0 0;
-    max-width: 68ch;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-3);
-  }
-
-  .where-dark__list li {
-    position: relative;
-    padding-left: var(--space-5);
-    font-size: var(--fs-body);
-    line-height: 1.6;
-    opacity: 0.92;
-  }
-
-  .where-dark__list li::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0.55em;
-    width: 9px;
-    height: 9px;
-    background: var(--color-warm);
-  }
-
-  .where-dark__list a {
-    color: var(--color-warm);
-    font-weight: 600;
-    text-decoration: underline;
-    text-underline-offset: 3px;
-  }
-
-  .where-dark__cta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-4);
-    margin-top: var(--space-7);
-  }
-
-  @media (max-width: 900px) {
-    .values {
-      grid-template-columns: 1fr;
-    }
+  .story-photo-masthead { position: relative; min-height: min(1000px,100svh); background: var(--navy-deep); color: white; overflow: hidden; }
+  :global(.story-photo-masthead__image), .story-photo-masthead__veil { position: absolute; inset: 0; }
+  .story-photo-masthead__veil { background: linear-gradient(180deg,rgba(9,26,32,.16) 18%,rgba(9,26,32,.88) 94%), linear-gradient(90deg,rgba(9,26,32,.58),transparent 72%); }
+  .story-photo-masthead__copy { position: relative; z-index: 1; display: flex; min-height: inherit; flex-direction: column; justify-content: flex-end; padding: 190px var(--page-pad) 68px; }
+  .story-photo-masthead h1 { max-width: 11ch; margin: 0 0 26px; font-size: clamp(4.5rem,9.2vw,9.8rem); }
+  .story-photo-masthead__copy > p:not(.eyebrow) { max-width: 38ch; margin: 0; color: rgba(255,255,255,.76); font-size: 1.12rem; }
+  .story-photo-masthead blockquote { align-self: flex-end; width: min(520px,46vw); margin: -30px 0 0; padding: 24px 0 0; border-top: 3px solid var(--sun); font: 700 clamp(1.35rem,2.4vw,2.5rem)/1.08 var(--font-display); letter-spacing: -.04em; }
+  .story-origin { display: grid; grid-template-columns: .5fr 1.1fr .8fr; gap: clamp(30px,5vw,90px); padding: var(--section-pad) var(--page-pad); background: var(--cream); }
+  .story-origin__marker { color: var(--oxide); font: 600 .65rem var(--font-mono); letter-spacing: .1em; text-transform: uppercase; }
+  .story-origin__statement p { margin: 0; font: 700 clamp(2.7rem,5vw,5.8rem)/.92 var(--font-display); letter-spacing: -.06em; }
+  .story-origin__statement p:nth-child(2) { color: var(--oxide); }
+  .story-origin__copy { padding-top: 12px; color: var(--slate); }
+  .story-beliefs { padding: var(--section-pad) var(--page-pad); background: var(--warm-white); }
+  .story-beliefs > header { display: grid; grid-template-columns: .55fr 1.45fr; max-width: 1440px; margin: 0 auto 70px; }
+  .story-beliefs h2 { max-width: 10ch; font-size: clamp(3.5rem,7vw,7.3rem); }
+  .story-beliefs__field { display: grid; grid-template-columns: repeat(12,1fr); gap: 18px; max-width: 1440px; margin: auto; }
+  .story-beliefs article { grid-column: span 3; min-height: 370px; padding: 26px; border-top: 5px solid var(--sun); background: var(--navy); color: white; }
+  .story-beliefs article:nth-child(even) { transform: translateY(48px); background: var(--cream); color: var(--navy-deep); }
+  .story-beliefs article span { font: 500 .7rem var(--font-mono); color: var(--oxide); }
+  .story-beliefs article h3 { margin: 120px 0 18px; font-size: 2rem; }
+  .story-beliefs article p { color: inherit; opacity: .7; font-size: .92rem; }
+  .story-current { padding-top: var(--section-pad); background: var(--navy-deep); color: white; }
+  .story-current > header { display: grid; grid-template-columns: .45fr 1fr .7fr; gap: 40px; align-items: end; padding: 0 var(--page-pad) 38px; }
+  .story-current h2 { margin: 0; font-size: clamp(3rem,5vw,5.8rem); }
+  .story-current header > p:last-child { color: rgba(255,255,255,.68); }
+  .story-current :global(.route-board) { padding-top: 70px; }
+  .story-team-handoff { display: grid; grid-template-columns: .35fr 1.1fr .55fr; gap: 38px; align-items: end; padding: var(--section-pad) var(--page-pad); background: var(--oxide); color: white; }
+  .story-team-handoff h2 { margin: 0; font-size: clamp(3.4rem,6.7vw,7rem); }
+  .story-team-handoff > div p { color: rgba(255,255,255,.78); }
+  @media (max-width: 820px) {
+    .story-photo-masthead { min-height: 820px; }
+    .story-photo-masthead__copy { padding: 140px 20px 46px; }
+    .story-photo-masthead blockquote { align-self: flex-start; width: 100%; margin-top: 42px; }
+    .story-origin, .story-current > header, .story-team-handoff { grid-template-columns: 1fr; padding-inline: 20px; }
+    .story-beliefs { padding-inline: 20px; }
+    .story-beliefs > header { grid-template-columns: 1fr; }
+    .story-beliefs__field { display: block; }
+    .story-beliefs article { min-height: 300px; margin-bottom: 14px; }
+    .story-beliefs article:nth-child(even) { transform: none; }
   }
 </style>

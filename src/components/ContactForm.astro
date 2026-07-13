@@ -1,136 +1,90 @@
 ---
 interface Props {
-  compact?: boolean;
+  defaultInterest?: string;
+  subject?: string;
 }
-const { compact = false } = Astro.props;
+
+const { defaultInterest = "", subject = "New Rangeway Website Inquiry" } = Astro.props;
+const thanksUrl = new URL("/contact/thanks/", Astro.site).toString();
+const interests = ["EV Driver", "Potential Partner", "Investor", "Careers", "Media", "Other"];
 ---
 
-<form
-  class={compact ? "contact-form contact-form--compact" : "contact-form"}
-  action="https://formsubmit.co/hello@rangeway.co"
-  method="POST"
->
-  <input type="hidden" name="_subject" value="New Rangeway Website Inquiry" />
+<form class="contact-form" action="https://formsubmit.co/hello@rangeway.co" method="POST" data-contact-form data-state="idle" aria-busy="false">
+  <input type="hidden" name="_subject" value={subject} />
   <input type="hidden" name="_template" value="table" />
-  <input type="hidden" name="_captcha" value="false" />
-  <input type="text" name="_honey" class="contact-form__honey" tabindex="-1" autocomplete="off" aria-hidden="true" />
+  <input type="hidden" name="_captcha" value="true" />
+  <input type="hidden" name="_next" value={thanksUrl} />
+  <input class="contact-form__honey" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" />
 
-  <div class="contact-form__row">
-    <label>
-      <span>Name</span>
-      <input type="text" name="name" required autocomplete="name" />
-    </label>
-    <label>
-      <span>Email</span>
-      <input type="email" name="email" required autocomplete="email" />
-    </label>
+  <div class="contact-form__pair">
+    <label><span>Name</span><input type="text" name="name" required autocomplete="name" /></label>
+    <label><span>Email</span><input type="email" name="email" required autocomplete="email" /></label>
   </div>
-
   <label>
     <span>Interest</span>
     <select name="interest" required>
-      <option value="">Select one</option>
-      <option>EV Driver</option>
-      <option>Potential Partner</option>
-      <option>Investor</option>
-      <option>Careers</option>
-      <option>Media</option>
-      <option>Other</option>
+      <option value="" selected={!defaultInterest}>Select one</option>
+      {interests.map((interest) => <option value={interest} selected={defaultInterest === interest}>{interest}</option>)}
     </select>
   </label>
-
-  <label>
-    <span>Message</span>
-    <textarea name="message" rows={5} required></textarea>
-  </label>
-
-  <button type="submit" class="btn btn-warm">Send message</button>
+  <label><span>Message</span><textarea name="message" rows={6} required></textarea></label>
+  <div class="contact-form__actions">
+    <button class="button button--sun" type="submit" data-submit>Send message</button>
+    <p data-status role="status" aria-live="polite">Native secure form submission. No account required.</p>
+  </div>
 </form>
 
 <style>
-  .contact-form {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-4);
-    width: 100%;
-    max-width: 560px;
-  }
-
-  .contact-form__row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-4);
-  }
-
-  .contact-form label {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    font-family: var(--font-heading);
-    font-size: 0.78rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    font-weight: 600;
-    color: inherit;
-    opacity: 0.9;
-  }
-
-  .contact-form input,
-  .contact-form select,
-  .contact-form textarea {
-    font-family: var(--font-body);
-    font-size: 1rem;
-    padding: 13px 14px;
-    border-radius: 0;
-    border: var(--rule) solid var(--color-ink);
-    background: var(--surface-raised);
-    color: var(--color-text);
-    width: 100%;
-    transition: border-color 0.2s var(--ease-out),
-      background 0.2s var(--ease-out),
-      box-shadow 0.2s var(--ease-out);
-    text-transform: none;
-    letter-spacing: 0;
-    font-weight: 400;
-  }
-
-  .contact-form input::placeholder,
-  .contact-form textarea::placeholder {
-    color: var(--color-text-muted);
-    opacity: 0.6;
-  }
-
-  .contact-form input:focus,
-  .contact-form select:focus,
-  .contact-form textarea:focus {
-    outline: none;
-    border-color: var(--color-warm-deep);
-    background: var(--color-white);
-    box-shadow: 0 0 0 2px var(--color-warm);
-  }
-
-  .contact-form textarea {
-    resize: vertical;
-    min-height: 120px;
-  }
-
-  .contact-form button {
-    align-self: flex-start;
-    margin-top: var(--space-3);
-  }
-
-  .contact-form__honey {
-    position: absolute;
-    left: -10000px;
-    width: 1px;
-    height: 1px;
-    opacity: 0;
-    pointer-events: none;
-  }
-
-  @media (max-width: 560px) {
-    .contact-form__row {
-      grid-template-columns: 1fr;
-    }
-  }
+  .contact-form { display: flex; flex-direction: column; gap: 28px; }
+  .contact-form__pair { display: grid; grid-template-columns: repeat(2,1fr); gap: 24px; }
+  .contact-form label { display: flex; flex-direction: column; gap: 9px; color: var(--slate); font: 600 .67rem var(--font-mono); letter-spacing: .09em; text-transform: uppercase; }
+  .contact-form input, .contact-form select, .contact-form textarea { width: 100%; border: 0; border-bottom: 2px solid rgba(20,43,53,.38); border-radius: 0; padding: 11px 2px 13px; background: transparent; color: var(--navy-deep); font: 500 1.06rem var(--font-body); text-transform: none; }
+  .contact-form input:focus, .contact-form select:focus, .contact-form textarea:focus { outline: 3px solid var(--sun); outline-offset: 4px; border-bottom-color: var(--oxide); }
+  .contact-form textarea { min-height: 150px; resize: vertical; }
+  .contact-form__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 18px; }
+  .contact-form__actions p { max-width: 30ch; margin: 0; color: var(--slate); font-size: .84rem; }
+  .contact-form__honey { position: absolute; left: -10000px; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+  @media (max-width: 620px) { .contact-form__pair { grid-template-columns: 1fr; } }
 </style>
+
+<script>
+  const SUBMISSION_TIMEOUT_MS = 12000;
+
+  document.querySelectorAll<HTMLFormElement>("[data-contact-form]").forEach((form) => {
+    const button = form.querySelector<HTMLButtonElement>("[data-submit]");
+    const status = form.querySelector<HTMLElement>("[data-status]");
+    const idleStatus = status?.textContent ?? "Native secure form submission. No account required.";
+    let submissionTimeout: number | undefined;
+
+    const setSubmissionState = (state: "idle" | "submitting" | "error", message: string) => {
+      form.dataset.state = state;
+      form.setAttribute("aria-busy", state === "submitting" ? "true" : "false");
+      if (status) status.textContent = message;
+    };
+
+    const restoreSubmission = (message = idleStatus, state: "idle" | "error" = "idle") => {
+      if (submissionTimeout) window.clearTimeout(submissionTimeout);
+      submissionTimeout = undefined;
+      if (button) { button.disabled = false; button.textContent = "Send message"; }
+      setSubmissionState(state, message);
+    };
+
+    form.addEventListener("submit", () => {
+      if (submissionTimeout) window.clearTimeout(submissionTimeout);
+      if (button) { button.disabled = true; button.textContent = "Sending…"; }
+      setSubmissionState("submitting", "Routing your note. A confirmation page will appear next.");
+      submissionTimeout = window.setTimeout(() => {
+        restoreSubmission("We could not confirm delivery. Your message is still here; check your connection and try again.", "error");
+      }, SUBMISSION_TIMEOUT_MS);
+    });
+    window.addEventListener("offline", () => {
+      if (form.dataset.state === "submitting") {
+        restoreSubmission("Your connection is offline. Your message is still here; reconnect and try again.", "error");
+      }
+    });
+    window.addEventListener("pageshow", () => restoreSubmission());
+    window.addEventListener("pagehide", () => {
+      if (submissionTimeout) window.clearTimeout(submissionTimeout);
+    });
+  });
+</script>

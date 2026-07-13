@@ -1,26 +1,259 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
-import Hero from "../sections/Hero.astro";
-import Positioning from "../sections/Positioning.astro";
-import Network from "../sections/Network.astro";
-import ComfortGuarantee from "../sections/ComfortGuarantee.astro";
-import OurStory from "../sections/OurStory.astro";
-import WhereGoing from "../sections/WhereGoing.astro";
-import Leadership from "../sections/Leadership.astro";
-import Partners from "../sections/Partners.astro";
+// HERO: A cinematic charging place gives way to a live-feeling route board spanning west to east.
+import ResponsiveImage from "../components/ResponsiveImage.astro";
+import RouteBoard from "../components/RouteBoard.astro";
+import SiteLayout from "../layouts/SiteLayout.astro";
+import { ACTIVITY, EXTERNAL_LINKS, FORMATS, PARTNER_GROUPS } from "../data/site-content";
 ---
 
-<BaseLayout
-  title="Rangeway · Travel farther, stop better."
-  description="America's first hospitality-driven EV charging network. Designed by hospitality operators, with the stop as the product."
-  bodyClass="has-hero"
+<SiteLayout
+  title="Rangeway · Travel farther. Stop better."
+  description="Rangeway is designing hospitality-driven EV charging places around the people making the trip."
+  class="home-page"
 >
-  <Hero />
-  <Positioning />
-  <Network />
-  <ComfortGuarantee />
-  <OurStory />
-  <WhereGoing />
-  <Leadership />
-  <Partners />
-</BaseLayout>
+  <section class="home-hero" aria-labelledby="home-hero-title">
+    <ResponsiveImage
+      src="/images/hero-mountain-waystation.webp"
+      srcSmall="/images/hero-mountain-waystation-640.webp"
+      alt="Concept rendering of a Rangeway Waystation in Bozeman, Montana, with a timber solar canopy, glass lounge, EV chargers, and mountain backdrop"
+      width={1672}
+      height={941}
+      sizes="100vw"
+      class="home-hero__image"
+      position="center 58%"
+      loading="eager"
+    />
+    <p class="concept-label concept-label--hero">Concept rendering</p>
+    <div class="home-hero__veil"></div>
+    <div class="home-hero__content">
+      <p class="eyebrow eyebrow--sun">Hospitality-driven EV charging</p>
+      <h1 id="home-hero-title">Travel farther.<br />Stop better.</h1>
+      <div class="home-hero__bottom">
+        <p>
+          Rangeway is designing charging places around the people making the trip—good light,
+          real comfort, and an easier return to the road.
+        </p>
+        <div class="button-row">
+          <a class="button button--sun" href="#projects">See where we’re building</a>
+          <a class="button button--glass" href="#experience">Explore the experience</a>
+        </div>
+      </div>
+    </div>
+    <a class="home-hero__scroll" href="#proof"><span>Scroll to proof</span><i aria-hidden="true"></i></a>
+  </section>
+
+  <section class="proof-rail" id="proof" aria-label="Rangeway operating proof">
+    <div><strong>03</strong><span>network formats</span></div>
+    <div><strong>03</strong><span>public project regions</span></div>
+  </section>
+
+  <section class="stop-product" id="experience" aria-labelledby="stop-product-title">
+    <div class="stop-product__image-wrap">
+      <ResponsiveImage
+        src="/images/basecamp-interior.webp"
+        srcSmall="/images/basecamp-interior-640.webp"
+        alt="Concept rendering of a Rangeway lounge with seating, a cafe counter, fireplace, and forest views"
+        width={1024}
+        height={1024}
+        sizes="(max-width: 900px) 100vw, 68vw"
+        class="stop-product__image"
+        position="center 60%"
+      />
+      <p class="concept-label">Concept rendering</p>
+      <p class="image-note">Inside the charging stop</p>
+    </div>
+    <div class="stop-product__statement">
+      <p class="eyebrow">The Rangeway standard</p>
+      <h2 id="stop-product-title">The stop<br />is the product.</h2>
+      <p class="stop-product__lede">
+        Charging time is travel time. We design it with the same care as the road on either side.
+      </p>
+      <ul class="standards-list">
+        <li><span>01</span><strong>Indoor comfort</strong><p>A climate-controlled place to reset, not a parking-lot afterthought.</p></li>
+        <li><span>02</span><strong>Useful time</strong><p>Seating, Wi-Fi, food, and room for the shape of a real travel day.</p></li>
+        <li><span>03</span><strong>Easy momentum</strong><p>A clear arrival, a considered pause, and a simple return to the road.</p></li>
+      </ul>
+    </div>
+  </section>
+
+  <div id="projects"><RouteBoard /></div>
+
+  <section class="formats" aria-labelledby="formats-title">
+    <header class="formats__head">
+      <p class="eyebrow">One standard · three scales</p>
+      <h2 id="formats-title">The right stop<br />for the road.</h2>
+      <p>
+        From a fast regional reset to an overnight destination, the footprint changes while the
+        hospitality standard holds.
+      </p>
+    </header>
+
+    <article class="format format--waystation">
+      <div class="format__label"><span>01</span><p>{FORMATS[0].context}</p></div>
+      <div class="format__waystation-media">
+        <ResponsiveImage
+          src={FORMATS[0].image}
+          srcSmall={FORMATS[0].imageSmall}
+          alt="Concept rendering of a compact Rangeway Waystation with solar canopy, chargers, and glass lounge beside a desert highway"
+          width={768}
+          height={810}
+          sizes="(max-width: 800px) 100vw, 48vw"
+          class="format__image"
+          position="center 54%"
+        />
+        <p class="concept-label">Concept rendering</p>
+      </div>
+      <div class="format__copy">
+        <p class="format__model">{FORMATS[0].operatingModel}</p>
+        <h3>{FORMATS[0].name}</h3>
+        <p>{FORMATS[0].summary}</p>
+        <a class="text-link" href={FORMATS[0].href}>Explore Waystation <span aria-hidden="true">→</span></a>
+      </div>
+    </article>
+
+    <article class="format format--basecamp">
+      <ResponsiveImage
+        src={FORMATS[1].image}
+        srcSmall={FORMATS[1].imageSmall}
+        alt="Concept rendering of a Rangeway Basecamp with solar charging canopy, lounge, and battery storage beside a desert highway"
+        width={1230}
+        height={848}
+        sizes="100vw"
+        class="format__image"
+        position="center 57%"
+      />
+      <p class="concept-label">Concept rendering</p>
+      <div class="format__basecamp-panel">
+        <div class="format__label"><span>02</span><p>{FORMATS[1].context}</p></div>
+        <p class="format__model">{FORMATS[1].operatingModel}</p>
+        <h3>{FORMATS[1].name}</h3>
+        <p>{FORMATS[1].summary}</p>
+        <a class="text-link" href={FORMATS[1].href}>Explore Basecamp <span aria-hidden="true">→</span></a>
+      </div>
+    </article>
+
+    <article class="format format--summit">
+      <div class="format__summit-title">
+        <div class="format__label"><span>03</span><p>{FORMATS[2].context}</p></div>
+        <h3>{FORMATS[2].name}</h3>
+      </div>
+      <div class="format__summit-media">
+        <ResponsiveImage
+          src={FORMATS[2].image}
+          srcSmall={FORMATS[2].imageSmall}
+          alt="Concept rendering of a Rangeway Summit clubhouse and solar charging canopy in a desert mountain landscape"
+          width={2200}
+          height={1200}
+          sizes="(max-width: 800px) 100vw, 68vw"
+          class="format__image"
+          position="center 55%"
+        />
+        <p class="concept-label">Concept rendering</p>
+      </div>
+      <div class="format__summit-copy">
+        <p class="format__model">{FORMATS[2].operatingModel}</p>
+        <p>{FORMATS[2].summary}</p>
+        <a class="text-link" href={FORMATS[2].href}>Explore Summit <span aria-hidden="true">→</span></a>
+      </div>
+    </article>
+  </section>
+
+  <section class="partner-proof" aria-labelledby="partner-proof-title">
+    <header>
+      <p class="eyebrow eyebrow--sun">Built as an operating system</p>
+      <h2 id="partner-proof-title">The experience is visible.<br />The infrastructure runs deep.</h2>
+      <p>
+        Rangeway brings structures, power, software, and amenities into one driver experience.
+        Configurations vary by project phase.
+      </p>
+      <a class="button button--cream" href="/partners">Meet our partners</a>
+    </header>
+    <div class="partner-proof__grid">
+      {PARTNER_GROUPS.map((group, index) => (
+        <article>
+          <p class="partner-proof__number">0{index + 1}</p>
+          <h3>{group.title}</h3>
+          <p>{group.promise}</p>
+          <div class="partner-proof__logos">
+            {group.partners.slice(0, 2).map((partner) => (
+              <a
+                href={partner.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Visit ${partner.name} website (opens in a new tab)`}
+              >
+                <img
+                  src={partner.name === "LoüTeq"
+                    ? "/images/partners/louteq-white.png"
+                    : partner.name === "Ekoenergetyka"
+                      ? "/images/partners/eko-trans.webp"
+                      : partner.logo}
+                  class:list={[
+                    "partner-proof__logo",
+                    {
+                      "partner-proof__logo--screen": partner.name === "Carbon DC",
+                      "partner-proof__logo--invert": partner.name === "Ekoenergetyka",
+                      "partner-proof__logo--reverse": partner.name === "ChargeMate",
+                      "partner-proof__logo--pebble": partner.name === "Pebble",
+                    },
+                  ]}
+                  alt={`${partner.name} logo`}
+                  width={partner.name === "Ekoenergetyka" ? 512 : partner.logoWidth}
+                  height={partner.name === "Ekoenergetyka" ? 512 : partner.logoHeight}
+                  loading="lazy"
+                />
+              </a>
+            ))}
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="current-activity" aria-labelledby="activity-title">
+    <div class="current-activity__intro">
+      <p class="eyebrow">Current activity</p>
+      <h2 id="activity-title">Follow the work,<br />not a concept clock.</h2>
+      <p>
+        Public project announcements, company updates, and Field Notes show Rangeway taking shape
+        without pretending the first location is already open.
+      </p>
+    </div>
+    <article class="activity-story">
+      <ResponsiveImage
+        src="/images/basecamp-stlouis-arch.webp"
+        srcSmall="/images/basecamp-stlouis-arch-640.webp"
+        alt="Concept rendering of a Rangeway Basecamp lounge and chargers with the Gateway Arch and timber tower in St. Louis"
+        width={832}
+        height={834}
+        sizes="(max-width: 800px) 100vw, 56vw"
+        class="activity-story__image"
+        position="center 58%"
+      />
+      <p class="concept-label">Concept rendering</p>
+      <div class="activity-story__copy">
+        <p>{ACTIVITY[0].date} · {ACTIVITY[0].type}</p>
+        <h3>{ACTIVITY[0].title}</h3>
+        <a class="text-link" href={ACTIVITY[0].href} target="_blank" rel="noopener noreferrer">Read the announcement <span aria-hidden="true">↗</span></a>
+      </div>
+    </article>
+    <div class="activity-links">
+      <a href={EXTERNAL_LINKS.newsroom} target="_blank" rel="noopener noreferrer"><span>Newsroom</span><strong>Company and project updates</strong><i aria-hidden="true">↗</i></a>
+      <a href={EXTERNAL_LINKS.fieldNotes} target="_blank" rel="noopener noreferrer"><span>Field Notes</span><strong>Notes from the road ahead</strong><i aria-hidden="true">↗</i></a>
+    </div>
+  </section>
+
+  <section class="closing-action" aria-labelledby="closing-title">
+    <div>
+      <p class="eyebrow eyebrow--sun">The next good stop</p>
+      <h2 id="closing-title">Built in public.<br />Designed for the road.</h2>
+    </div>
+    <div>
+      <p>See the public project work, learn how the network is designed, or talk directly with the Rangeway team.</p>
+      <div class="button-row">
+        <a class="button button--sun" href="#projects">See the projects</a>
+        <a class="button button--outline-light" href="/contact">Contact Rangeway</a>
+      </div>
+    </div>
+  </section>
+</SiteLayout>

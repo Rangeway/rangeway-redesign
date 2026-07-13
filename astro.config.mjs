@@ -1,13 +1,9 @@
-import { defineConfig } from 'astro/config';
+import { defineConfig } from "astro/config";
 
 export default defineConfig({
-  site: 'https://redesign.rangeway.co',
-  output: 'static',
-  trailingSlash: 'ignore',
+  output: "static",
+  site: "https://redesign.rangeway.co",
   build: {
-    format: 'directory'
+    format: "directory",
   },
-  redirects: {
-    '/summit': '/network/summit'
-  }
 });

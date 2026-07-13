@@ -1,0 +1,107 @@
+---
+import { NAV_LINKS } from "../data/site-content";
+
+const leftLinks = NAV_LINKS.slice(0, 3);
+const rightLinks = NAV_LINKS.slice(3);
+---
+
+<header class="site-header">
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <div class="site-header__capsule">
+    <nav class="site-header__nav site-header__nav--left" aria-label="Primary navigation">
+      {leftLinks.map((link) => (
+        <a href={link.href} target={link.external ? "_blank" : undefined} rel={link.external ? "noopener noreferrer" : undefined}>
+          {link.label}{link.external && <span class="sr-only"> (opens in a new tab)</span>}
+        </a>
+      ))}
+    </nav>
+
+    <a class="site-header__brand" href="/" aria-label="Rangeway home">
+      <img src="/images/logo/rangeway-lockup-charcoal.svg" width="240" height="56" alt="Rangeway" />
+    </a>
+
+    <nav class="site-header__nav site-header__nav--right" aria-label="Secondary navigation">
+      {rightLinks.map((link) => (
+        <a href={link.href} target={link.external ? "_blank" : undefined} rel={link.external ? "noopener noreferrer" : undefined}>
+          {link.label}{link.external && <span class="sr-only"> (opens in a new tab)</span>}
+        </a>
+      ))}
+    </nav>
+
+    <details class="site-header__mobile-menu">
+      <summary>
+        <span>Menu</span>
+        <span class="site-header__menu-icon" aria-hidden="true"><i></i><i></i></span>
+      </summary>
+      <nav aria-label="Mobile navigation">
+        {NAV_LINKS.map((link) => (
+          <a href={link.href} target={link.external ? "_blank" : undefined} rel={link.external ? "noopener noreferrer" : undefined}>
+            <span>{link.label}{link.external && <span class="sr-only"> (opens in a new tab)</span>}</span>
+            {link.external && <span aria-hidden="true">↗</span>}
+          </a>
+        ))}
+      </nav>
+    </details>
+  </div>
+</header>
+
+<script>
+  const mobileMenuQuery = window.matchMedia("(max-width: 820px)");
+
+  document.querySelectorAll<HTMLDetailsElement>(".site-header__mobile-menu").forEach((menu) => {
+    const summary = menu.querySelector<HTMLElement>("summary");
+    if (!summary) return;
+
+    const links = () => Array.from(menu.querySelectorAll<HTMLAnchorElement>("nav a[href]"));
+    const closeMenu = () => {
+      if (!menu.open) return;
+      menu.open = false;
+      summary.focus();
+    };
+
+    menu.addEventListener("toggle", () => {
+      if (!menu.open || !mobileMenuQuery.matches) return;
+      window.requestAnimationFrame(() => {
+        const first = links()[0];
+        if (first) first.focus();
+      });
+    });
+
+    menu.addEventListener("keydown", (event) => {
+      if (!menu.open || !mobileMenuQuery.matches) return;
+      if (event.key === "Escape") {
+        event.preventDefault();
+        closeMenu();
+        return;
+      }
+      if (event.key !== "Tab") return;
+
+      const menuLinks = links();
+      const first = menuLinks[0];
+      const last = menuLinks.at(-1);
+      if (!first || !last) return;
+
+      if (event.shiftKey && (document.activeElement === first || document.activeElement === summary)) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        summary.focus();
+      }
+    });
+
+    document.addEventListener("focusin", (event) => {
+      if (!menu.open || !mobileMenuQuery.matches || menu.contains(event.target as Node)) return;
+      const first = links()[0];
+      if (first) first.focus();
+    });
+
+    document.addEventListener("pointerdown", (event) => {
+      if (menu.open && !menu.contains(event.target as Node)) closeMenu();
+    });
+
+    mobileMenuQuery.addEventListener("change", (event) => {
+      if (!event.matches) menu.open = false;
+    });
+  });
+</script>

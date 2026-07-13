@@ -1,0 +1,70 @@
+---
+interface Fact {
+  label: string;
+  value: string;
+  detail?: string;
+}
+
+interface Props {
+  facts: readonly Fact[];
+  label?: string;
+  tone?: "light" | "dark" | "sun";
+}
+
+const { facts, label = "Operating facts", tone = "light" } = Astro.props;
+---
+
+<section class:list={["operating-facts", `operating-facts--${tone}`]} aria-label={label}>
+  {facts.map((fact, index) => (
+    <article class="operating-facts__item">
+      <p class="operating-facts__index">{String(index + 1).padStart(2, "0")}</p>
+      <p class="operating-facts__label">{fact.label}</p>
+      <strong>{fact.value}</strong>
+      {fact.detail && <p class="operating-facts__detail">{fact.detail}</p>}
+    </article>
+  ))}
+</section>
+
+<style>
+  .operating-facts {
+    display: grid;
+    grid-template-columns: repeat(var(--fact-count, 3), minmax(0, 1fr));
+    border-top: 1px solid color-mix(in srgb, currentColor 28%, transparent);
+    border-left: 1px solid color-mix(in srgb, currentColor 28%, transparent);
+  }
+
+  .operating-facts__item {
+    min-height: 210px;
+    padding: clamp(22px, 3vw, 38px);
+    border-right: 1px solid color-mix(in srgb, currentColor 28%, transparent);
+    border-bottom: 1px solid color-mix(in srgb, currentColor 28%, transparent);
+  }
+
+  .operating-facts__index,
+  .operating-facts__label {
+    margin: 0;
+    font: 500 .64rem/1.35 var(--font-mono);
+    letter-spacing: .1em;
+    text-transform: uppercase;
+  }
+
+  .operating-facts__index { color: var(--oxide); }
+  .operating-facts__label { margin: 32px 0 8px; opacity: .62; }
+
+  .operating-facts strong {
+    display: block;
+    font: 700 clamp(1.3rem, 2.2vw, 2.25rem)/1.08 var(--font-display);
+    letter-spacing: -.035em;
+  }
+
+  .operating-facts__detail { max-width: 32ch; margin: 15px 0 0; opacity: .7; font-size: .9rem; }
+  .operating-facts--dark { background: var(--navy-deep); color: white; }
+  .operating-facts--dark .operating-facts__index { color: var(--sun); }
+  .operating-facts--sun { background: var(--sun); color: var(--navy-deep); }
+
+  @media (max-width: 760px) {
+    .operating-facts { grid-template-columns: 1fr; }
+    .operating-facts__item { min-height: 0; }
+    .operating-facts__label { margin-top: 20px; }
+  }
+</style>

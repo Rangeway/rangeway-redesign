@@ -1,25 +1,20 @@
 {
-  "name": "rangeway-redesign",
-  "type": "module",
+  "name": "rangeway-ionna-operating",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "start": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
+    "test": "node --test test/*.test.mjs",
     "check": "astro check",
-    "astro": "astro"
+    "build": "astro build",
+    "preview": "astro preview"
   },
   "dependencies": {
-    "astro": "^6.1.6",
-    "sharp": "^0.33.5"
+    "astro": "^7.0.8"
   },
   "devDependencies": {
-    "@astrojs/check": "^0.9.8",
-    "typescript": "^5.6.3"
-  },
-  "overrides": {
-    "yaml": "^2.8.3"
+    "@astrojs/check": "^0.9.4",
+    "typescript": "^5.8.3"
   }
 }
