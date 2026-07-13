@@ -171,7 +171,13 @@ import { ACTIVITY, EXTERNAL_LINKS, FORMATS, PARTNER_GROUPS } from "../data/site-
           <p>{group.promise}</p>
           <div class="partner-proof__logos">
             {group.partners.slice(0, 2).map((partner) => (
-              <img src={partner.logo} alt={`${partner.name} logo`} loading="lazy" />
+              <img
+                src={partner.logo}
+                alt={`${partner.name} logo`}
+                width={partner.logoWidth}
+                height={partner.logoHeight}
+                loading="lazy"
+              />
             ))}
           </div>
         </article>

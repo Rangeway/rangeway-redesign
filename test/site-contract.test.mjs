@@ -105,6 +105,15 @@ test("Waystation title stays viewport-safe and essential hospitality makes no ho
   assert.doesNotMatch(waystation, /24\s*(?:hours?|\/\s*7)|availability/i);
 });
 
+test("Basecamp mobile heading stays inside the 360px content box", () => {
+  const basecamp = read("src/pages/network/basecamp.astro");
+  const mobileRule = basecamp.match(/@media \(max-width: 820px\)[\s\S]*?\.basecamp-cover h1\s*\{(?<rule>[^}]*)\}/)?.groups?.rule ?? "";
+
+  assert.match(mobileRule, /max-width\s*:\s*100%/);
+  assert.match(mobileRule, /font-size\s*:\s*clamp\(3\.8rem,\s*18vw,\s*5\.4rem\)/);
+  assert.doesNotMatch(mobileRule, /25vw|7rem/);
+});
+
 test("format comparison links remain exposed to source and built accessibility trees", () => {
   const compare = read("src/components/FormatCompare.astro");
 
@@ -174,6 +183,44 @@ test("partner family leads with visible logos and role context", () => {
   assert.match(field, /partner\.role/);
   assert.match(field, /Site-specific configurations vary by project phase/);
   assert.doesNotMatch(field, /partner-row|index-row|reveal/);
+});
+
+test("deferred asset cleanup removes duplicate font CSS and reserves partner logo space", () => {
+  const css = read("src/styles/global.css");
+  const data = read("src/data/site-content.ts");
+  const field = read("src/components/PartnerField.astro");
+  const home = read("src/pages/index.astro");
+  const charcoalLogo = read("public/images/logo/rangeway-lockup-charcoal.svg");
+  const whiteLogo = read("public/images/logo/rangeway-lockup-white.svg");
+
+  assert.doesNotMatch(css, /@import\s+url\(["']?https:\/\/fonts\.googleapis\.com/i);
+  assert.equal((data.match(/logoWidth:\s*\d+/g) ?? []).length, 11);
+  assert.equal((data.match(/logoHeight:\s*\d+/g) ?? []).length, 11);
+  for (const source of [field, home]) {
+    assert.match(source, /width=\{partner\.logoWidth\}/);
+    assert.match(source, /height=\{partner\.logoHeight\}/);
+  }
+  assert.doesNotMatch(`${charcoalLogo}\n${whiteLogo}`, /[ \t]+$/m);
+});
+
+test("the mobile menu enhances native navigation with focus trap and restoration", () => {
+  const header = read("src/components/SiteHeader.astro");
+  const css = read("src/styles/global.css");
+
+  assert.match(header, /<details class="site-header__mobile-menu"/);
+  assert.match(header, /<summary>/);
+  assert.match(header, /<nav aria-label="Mobile navigation">/);
+  assert.doesNotMatch(header, /<(?:details|nav)[^>]*(?:hidden|inert|aria-hidden="true")/i);
+  assert.match(header, /addEventListener\("keydown"/);
+  assert.match(header, /event\.key === "Escape"/);
+  assert.match(header, /event\.key !== "Tab"/);
+  assert.match(header, /first\.focus\(\)/);
+  assert.match(header, /last\.focus\(\)/);
+  assert.match(header, /summary\.focus\(\)/);
+  assert.match(header, /menu\.open = false/);
+  assert.match(css, /\.skip-link:focus\s*\{[^}]*transform:\s*none/);
+  assert.match(css, /:focus-visible\s*\{[^}]*outline:/);
+  assert.match(css, /@media \(prefers-reduced-motion: reduce\)/);
 });
 
 test("contact form keeps a native POST fallback and accessible enhancement", () => {
@@ -277,4 +324,21 @@ test("interrupted native contact submissions recover without clearing values", (
   assert.match(contact, /We could not confirm delivery\. Your message is still here; check your connection and try again\./);
   assert.match(contact, /button\.disabled = false/);
   assert.doesNotMatch(contact, /form\.reset\(|preventDefault/);
+});
+
+test("contact success, failure, and timeout states remain semantic without replacing native POST", () => {
+  const contact = read("src/components/ContactForm.astro");
+  const thanks = read("src/pages/contact/thanks.astro");
+
+  assert.match(contact, /data-state="idle"/);
+  assert.match(contact, /data-status role="status" aria-live="polite"/);
+  assert.match(contact, /const setSubmissionState =/);
+  assert.match(contact, /form\.dataset\.state = state/);
+  assert.match(contact, /form\.setAttribute\("aria-busy", state === "submitting" \? "true" : "false"\)/);
+  assert.match(contact, /window\.addEventListener\("offline"/);
+  assert.match(contact, /Your connection is offline\. Your message is still here; reconnect and try again\./);
+  assert.match(contact, /We could not confirm delivery\. Your message is still here; check your connection and try again\./);
+  assert.match(thanks, /data-submission-result="success"/);
+  assert.match(thanks, /role="status"/);
+  assert.doesNotMatch(contact, /preventDefault|fetch\(/);
 });

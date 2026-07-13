@@ -132,35 +132,35 @@ export const PARTNER_GROUPS = [
     title: "Structures",
     promise: "Low-carbon structures and place-making systems.",
     partners: [
-      { name: "LoüTeq", role: "Structural and building partner", logo: "/images/partners/louteq.png", href: "https://louteq.com" },
+      { name: "LoüTeq", role: "Structural and building partner", logo: "/images/partners/louteq.png", logoWidth: 601, logoHeight: 192, href: "https://louteq.com" },
     ],
   },
   {
     title: "Energy",
     promise: "Charging, storage, solar, and project-specific power architecture.",
     partners: [
-      { name: "Carbon DC", role: "Energy infrastructure", logo: "/images/partners/carbondc.png", href: "https://carbondc.io" },
-      { name: "Ekoenergetyka", role: "Ultra-fast charging hardware", logo: "/images/partners/ekoenergetyka.png", href: "https://ekoenergetyka.com/america/" },
-      { name: "Electric Era", role: "Charging hardware and storage", logo: "/images/partners/electric-era-trans.png", href: "https://electricera.tech" },
-      { name: "HyWatts", role: "Modular power systems", logo: "/images/partners/hywatts.webp", href: "https://hywatts.com" },
+      { name: "Carbon DC", role: "Energy infrastructure", logo: "/images/partners/carbondc.png", logoWidth: 180, logoHeight: 180, href: "https://carbondc.io" },
+      { name: "Ekoenergetyka", role: "Ultra-fast charging hardware", logo: "/images/partners/ekoenergetyka.png", logoWidth: 180, logoHeight: 180, href: "https://ekoenergetyka.com/america/" },
+      { name: "Electric Era", role: "Charging hardware and storage", logo: "/images/partners/electric-era-trans.png", logoWidth: 4326, logoHeight: 2976, href: "https://electricera.tech" },
+      { name: "HyWatts", role: "Modular power systems", logo: "/images/partners/hywatts.webp", logoWidth: 2048, logoHeight: 1703, href: "https://hywatts.com" },
     ],
   },
   {
     title: "Driver systems",
     promise: "Support, session handling, operations, and maintenance tools.",
     partners: [
-      { name: "ChargeMate", role: "Driver support", logo: "/images/partners/chargemate.jpg", href: "https://chargemate.ai" },
-      { name: "Juice", role: "Session technology", logo: "/images/partners/juice.png", href: "https://js.eco" },
-      { name: "Monta", role: "Charge point management", logo: "/images/partners/monta.png", href: "https://monta.com" },
-      { name: "WattsUp", role: "Predictive maintenance", logo: "/images/partners/wattsup.png", href: "https://wattsupev.io/" },
+      { name: "ChargeMate", role: "Driver support", logo: "/images/partners/chargemate.jpg", logoWidth: 200, logoHeight: 200, href: "https://chargemate.ai" },
+      { name: "Juice", role: "Session technology", logo: "/images/partners/juice.png", logoWidth: 48, logoHeight: 48, href: "https://js.eco" },
+      { name: "Monta", role: "Charge point management", logo: "/images/partners/monta.png", logoWidth: 256, logoHeight: 256, href: "https://monta.com" },
+      { name: "WattsUp", role: "Predictive maintenance", logo: "/images/partners/wattsup.png", logoWidth: 32, logoHeight: 32, href: "https://wattsupev.io/" },
     ],
   },
   {
     title: "Amenities",
     promise: "Comfort, food, and the physical experience around the charge.",
     partners: [
-      { name: "Pebble", role: "Mobile driver lounges", logo: "/images/partners/pebble-trans.png", href: "https://pebblelife.com" },
-      { name: "Rivian", role: "Early-site amenity vehicles", logo: "/images/partners/rivian.png", href: "https://rivian.com" },
+      { name: "Pebble", role: "Mobile driver lounges", logo: "/images/partners/pebble-trans.png", logoWidth: 1024, logoHeight: 681, href: "https://pebblelife.com" },
+      { name: "Rivian", role: "Early-site amenity vehicles", logo: "/images/partners/rivian.png", logoWidth: 1375, logoHeight: 1334, href: "https://rivian.com" },
     ],
   },
 ] as const;

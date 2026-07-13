@@ -9,7 +9,7 @@ const thanksUrl = new URL("/contact/thanks/", Astro.site).toString();
 const interests = ["EV Driver", "Potential Partner", "Investor", "Careers", "Media", "Other"];
 ---
 
-<form class="contact-form" action="https://formsubmit.co/hello@rangeway.co" method="POST" data-contact-form>
+<form class="contact-form" action="https://formsubmit.co/hello@rangeway.co" method="POST" data-contact-form data-state="idle" aria-busy="false">
   <input type="hidden" name="_subject" value={subject} />
   <input type="hidden" name="_template" value="table" />
   <input type="hidden" name="_captcha" value="true" />
@@ -30,7 +30,7 @@ const interests = ["EV Driver", "Potential Partner", "Investor", "Careers", "Med
   <label><span>Message</span><textarea name="message" rows={6} required></textarea></label>
   <div class="contact-form__actions">
     <button class="button button--sun" type="submit" data-submit>Send message</button>
-    <p data-status aria-live="polite">Native secure form submission. No account required.</p>
+    <p data-status role="status" aria-live="polite">Native secure form submission. No account required.</p>
   </div>
 </form>
 
@@ -56,20 +56,31 @@ const interests = ["EV Driver", "Potential Partner", "Investor", "Careers", "Med
     const idleStatus = status?.textContent ?? "Native secure form submission. No account required.";
     let submissionTimeout: number | undefined;
 
-    const restoreSubmission = (message = idleStatus) => {
+    const setSubmissionState = (state: "idle" | "submitting" | "error", message: string) => {
+      form.dataset.state = state;
+      form.setAttribute("aria-busy", state === "submitting" ? "true" : "false");
+      if (status) status.textContent = message;
+    };
+
+    const restoreSubmission = (message = idleStatus, state: "idle" | "error" = "idle") => {
       if (submissionTimeout) window.clearTimeout(submissionTimeout);
       submissionTimeout = undefined;
       if (button) { button.disabled = false; button.textContent = "Send message"; }
-      if (status) status.textContent = message;
+      setSubmissionState(state, message);
     };
 
     form.addEventListener("submit", () => {
       if (submissionTimeout) window.clearTimeout(submissionTimeout);
       if (button) { button.disabled = true; button.textContent = "Sending…"; }
-      if (status) status.textContent = "Routing your note. A confirmation page will appear next.";
+      setSubmissionState("submitting", "Routing your note. A confirmation page will appear next.");
       submissionTimeout = window.setTimeout(() => {
-        restoreSubmission("We could not confirm delivery. Your message is still here; check your connection and try again.");
+        restoreSubmission("We could not confirm delivery. Your message is still here; check your connection and try again.", "error");
       }, SUBMISSION_TIMEOUT_MS);
+    });
+    window.addEventListener("offline", () => {
+      if (form.dataset.state === "submitting") {
+        restoreSubmission("Your connection is offline. Your message is still here; reconnect and try again.", "error");
+      }
     });
     window.addEventListener("pageshow", () => restoreSubmission());
     window.addEventListener("pagehide", () => {

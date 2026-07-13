@@ -132,7 +132,43 @@ test("built reviewed openings remain purpose-specific and reject split-story/inv
 test("contact remains a native POST and legal anchors survive static rendering", () => {
   const contact = byPath["contact/index.html"];
   assert.match(contact, /<form[^>]*action="https:\/\/formsubmit\.co\/hello@rangeway\.co"[^>]*method="POST"/);
-  assert.doesNotMatch(contact, /preventDefault/);
+  const contactFormScript = contact.match(/<form class="contact-form"[\s\S]*?<\/form><script[^>]*>(?<script>[\s\S]*?)<\/script>/)?.groups?.script ?? "";
+  assert.ok(contactFormScript, "contact form enhancement is present");
+  assert.doesNotMatch(contactFormScript, /preventDefault|fetch\(/);
   for (const id of ["information-we-collect", "california-rights", "gdpr-rights"]) assert.match(byPath["privacy/index.html"], new RegExp(`id="${id}"`));
   for (const id of ["forward-looking-statements", "governing-law", "contact"]) assert.match(byPath["terms/index.html"], new RegExp(`id="${id}"`));
+});
+
+test("built pages keep no-JavaScript navigation, reduced-motion safety, and stable media geometry", () => {
+  const css = readdirSync(new URL("_astro/", root), { recursive: true })
+    .filter((path) => path.endsWith(".css"))
+    .map((path) => readFileSync(new URL(`_astro/${String(path)}`, root), "utf8"))
+    .join("\n");
+
+  assert.match(css, /@media \(prefers-reduced-motion:\s*reduce\)/);
+  assert.match(css, /animation-duration:\s*\.01ms\s*!important/);
+  assert.doesNotMatch(css, /@import[^;]*fonts\.googleapis\.com/i);
+
+  for (const { path, html } of htmlFiles) {
+    const menu = html.match(/<details class="site-header__mobile-menu"[\s\S]*?<\/details>/)?.[0] ?? "";
+    assert.match(menu, /<summary>/, `${path} keeps a native menu disclosure`);
+    assert.match(menu, /<nav aria-label="Mobile navigation">/, `${path} keeps static mobile navigation`);
+    assert.equal((menu.match(/<a\b/g) ?? []).length, 7, `${path} exposes all seven mobile links without JavaScript`);
+    assert.equal((html.match(/fonts\.googleapis\.com\/css2/g) ?? []).length, 1, `${path} loads the shared Google stylesheet once`);
+
+    for (const image of html.match(/<img\b[^>]*>/g) ?? []) {
+      assert.match(image, /\bwidth="\d+"/, `${path} image reserves intrinsic width`);
+      assert.match(image, /\bheight="\d+"/, `${path} image reserves intrinsic height`);
+    }
+  }
+
+  const contact = byPath["contact/index.html"];
+  assert.match(contact, /<input[^>]*type="email"[^>]*required/);
+  assert.match(contact, /<select[^>]*required/);
+  assert.match(contact, /<textarea[^>]*required/);
+  assert.match(contact, /data-state="idle"[^>]*aria-busy="false"/);
+  const contactFormScript = contact.match(/<form class="contact-form"[\s\S]*?<\/form><script[^>]*>(?<script>[\s\S]*?)<\/script>/)?.groups?.script ?? "";
+  assert.ok(contactFormScript, "contact form enhancement is present");
+  assert.doesNotMatch(contactFormScript, /preventDefault\(\)|fetch\(/);
+  assert.match(byPath["contact/thanks/index.html"], /data-submission-result="success"/);
 });
