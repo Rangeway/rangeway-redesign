@@ -1,5 +1,7 @@
 import assert from "node:assert/strict";
+import { execFileSync } from "node:child_process";
 import { readdirSync, readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
 import test from "node:test";
 
 const root = new URL("../dist/", import.meta.url);
@@ -171,4 +173,64 @@ test("built pages keep no-JavaScript navigation, reduced-motion safety, and stab
   assert.ok(contactFormScript, "contact form enhancement is present");
   assert.doesNotMatch(contactFormScript, /preventDefault\(\)|fetch\(/);
   assert.match(byPath["contact/thanks/index.html"], /data-submission-result="success"/);
+});
+
+test("built render imagery discloses concept status on every affected route", () => {
+  const expectedByRoute = {
+    "index.html": 6,
+    "network/index.html": 1,
+    "network/waystation/index.html": 1,
+    "network/basecamp/index.html": 2,
+    "network/summit/index.html": 2,
+    "our-story/index.html": 1,
+  };
+
+  for (const [path, expected] of Object.entries(expectedByRoute)) {
+    const html = byPath[path];
+    assert.equal((html.match(/>Concept rendering<\/p>/g) ?? []).length, expected, `${path} visible concept labels`);
+    assert.equal((html.match(/alt="Concept rendering of /g) ?? []).length, expected, `${path} concept-aware alt text`);
+  }
+});
+
+test("every built local image declares its exact intrinsic file geometry", () => {
+  const metadata = new Map();
+  const dimensionsFor = (src) => {
+    if (metadata.has(src)) return metadata.get(src);
+    const output = execFileSync("sips", ["-g", "pixelWidth", "-g", "pixelHeight", fileURLToPath(new URL(src.slice(1), root))], { encoding: "utf8" });
+    const dimensions = {
+      width: Number(output.match(/pixelWidth:\s*([\d.]+)/)?.[1]),
+      height: Number(output.match(/pixelHeight:\s*([\d.]+)/)?.[1]),
+    };
+    metadata.set(src, dimensions);
+    return dimensions;
+  };
+
+  for (const { path, html } of htmlFiles) {
+    for (const tag of html.match(/<img\b[^>]*>/g) ?? []) {
+      const src = tag.match(/\bsrc="([^"]+)"/)?.[1];
+      if (!src?.startsWith("/images/")) continue;
+      const declared = {
+        width: Number(tag.match(/\bwidth="([\d.]+)"/)?.[1]),
+        height: Number(tag.match(/\bheight="([\d.]+)"/)?.[1]),
+      };
+      assert.deepEqual(declared, dimensionsFor(src), `${path} ${src}`);
+    }
+  }
+});
+
+test("built mobile navigation marks only the real external destination", () => {
+  const menu = byPath["index.html"].match(/<details class="site-header__mobile-menu"[\s\S]*?<\/details>/)?.[0] ?? "";
+  const links = [...menu.matchAll(/<a\b([^>]*)>([\s\S]*?)<\/a>/g)].map((match) => ({ attrs: match[1], body: match[2] }));
+  assert.equal(links.length, 7);
+
+  for (const link of links) {
+    const external = /target="_blank"/.test(link.attrs);
+    if (external) {
+      assert.match(link.body, /opens in a new tab/);
+      assert.match(link.body, /↗/);
+    } else {
+      assert.doesNotMatch(link.body, /opens in a new tab|↗/);
+    }
+  }
+  assert.equal(links.filter((link) => /target="_blank"/.test(link.attrs)).length, 1);
 });

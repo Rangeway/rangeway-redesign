@@ -342,3 +342,34 @@ test("contact success, failure, and timeout states remain semantic without repla
   assert.match(thanks, /role="status"/);
   assert.doesNotMatch(contact, /preventDefault|fetch\(/);
 });
+
+test("every unbuilt-place image carries visible concept disclosure and accurate alt framing", () => {
+  const expectedByPage = new Map([
+    ["src/pages/index.astro", 6],
+    ["src/pages/network.astro", 1],
+    ["src/pages/network/waystation.astro", 1],
+    ["src/pages/network/basecamp.astro", 2],
+    ["src/pages/network/summit.astro", 2],
+    ["src/pages/our-story.astro", 1],
+  ]);
+
+  for (const [path, expected] of expectedByPage) {
+    const source = read(path);
+    assert.equal((source.match(/>Concept rendering<\/p>/g) ?? []).length, expected, `${path} visible labels`);
+    assert.equal((source.match(/alt="Concept rendering of /g) ?? []).length, expected, `${path} concept-aware alt text`);
+  }
+
+  const css = read("src/styles/global.css");
+  assert.match(css, /\.concept-label\s*\{/);
+  assert.match(css, /font:\s*600[^;]*var\(--font-mono\)/);
+});
+
+test("mobile navigation reserves arrows for external links and announces new tabs", () => {
+  const header = read("src/components/SiteHeader.astro");
+  const css = read("src/styles/global.css");
+
+  assert.match(header, /link\.external && <span class="sr-only"> \(opens in a new tab\)<\/span>/);
+  assert.match(header, /link\.external && <span aria-hidden="true">↗<\/span>/);
+  assert.doesNotMatch(header, /<span>\{link\.label\}<\/span><span aria-hidden="true">↗<\/span>/);
+  assert.match(css, /\.sr-only\s*\{/);
+});

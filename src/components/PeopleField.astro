@@ -12,8 +12,8 @@ import { TEAM } from "../data/site-content";
           src={person.image}
           srcSmall={"imageSmall" in person ? person.imageSmall : undefined}
           alt={`Portrait of ${person.name}`}
-          width={920}
-          height={1120}
+          width={person.imageWidth}
+          height={person.imageHeight}
           sizes="(max-width: 720px) 100vw, 50vw"
           position={index === 1 ? "50% 28%" : "center 22%"}
         />

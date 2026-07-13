@@ -101,6 +101,8 @@ export const TEAM = [
     bio: "Zak has spent his career operating luxury resorts, wellness retreats, and flagship urban hotels. He is also a longtime EV driver and community organizer, with firsthand insight into what charging feels like on a long trip.",
     image: "/images/team/zak-winnick.webp",
     imageSmall: "/images/team/zak-winnick-640.webp",
+    imageWidth: 800,
+    imageHeight: 800,
     linkedin: "https://www.linkedin.com/in/zakwinnick",
   },
   {
@@ -108,6 +110,8 @@ export const TEAM = [
     role: "Director of Design and Construction",
     bio: "Luke leads design and construction for the Rangeway network. A structural systems innovator, he chairs ASTM's task group on Structural Engineered Bamboo and holds patents in solar charging structures.",
     image: "/images/team/luke-schuette.webp",
+    imageWidth: 400,
+    imageHeight: 400,
     linkedin: "https://www.linkedin.com/in/luke-d-sch%C3%BCette/",
   },
   {
@@ -116,6 +120,8 @@ export const TEAM = [
     bio: "Theo founded Nexxt Industry, an eMobility marketing agency, and specializes in charging-network brand development and market positioning. He also hosts The eMobility Marketing Podcast.",
     image: "/images/team/theo-reichgelt.webp",
     imageSmall: "/images/team/theo-reichgelt-640.webp",
+    imageWidth: 800,
+    imageHeight: 800,
     linkedin: "https://www.linkedin.com/in/theoreichgelt/",
   },
   {
@@ -123,6 +129,8 @@ export const TEAM = [
     role: "Policy and Public Capital",
     bio: "Stephanie's career has focused on zero-emission vehicle infrastructure. She founded Open Energy Alliance and specializes in LCFS optimization and public funding strategies, including NEVI and state programs.",
     image: "/images/team/stephanie-mcgreevy.webp",
+    imageWidth: 352,
+    imageHeight: 352,
     linkedin: "https://www.linkedin.com/in/smcgreevy/",
   },
 ] as const;

@@ -11,19 +11,19 @@ const rightLinks = NAV_LINKS.slice(3);
     <nav class="site-header__nav site-header__nav--left" aria-label="Primary navigation">
       {leftLinks.map((link) => (
         <a href={link.href} target={link.external ? "_blank" : undefined} rel={link.external ? "noopener noreferrer" : undefined}>
-          {link.label}
+          {link.label}{link.external && <span class="sr-only"> (opens in a new tab)</span>}
         </a>
       ))}
     </nav>
 
     <a class="site-header__brand" href="/" aria-label="Rangeway home">
-      <img src="/images/logo/rangeway-lockup-charcoal.svg" width="215" height="42" alt="Rangeway" />
+      <img src="/images/logo/rangeway-lockup-charcoal.svg" width="240" height="56" alt="Rangeway" />
     </a>
 
     <nav class="site-header__nav site-header__nav--right" aria-label="Secondary navigation">
       {rightLinks.map((link) => (
         <a href={link.href} target={link.external ? "_blank" : undefined} rel={link.external ? "noopener noreferrer" : undefined}>
-          {link.label}
+          {link.label}{link.external && <span class="sr-only"> (opens in a new tab)</span>}
         </a>
       ))}
     </nav>
@@ -36,7 +36,8 @@ const rightLinks = NAV_LINKS.slice(3);
       <nav aria-label="Mobile navigation">
         {NAV_LINKS.map((link) => (
           <a href={link.href} target={link.external ? "_blank" : undefined} rel={link.external ? "noopener noreferrer" : undefined}>
-            <span>{link.label}</span><span aria-hidden="true">↗</span>
+            <span>{link.label}{link.external && <span class="sr-only"> (opens in a new tab)</span>}</span>
+            {link.external && <span aria-hidden="true">↗</span>}
           </a>
         ))}
       </nav>

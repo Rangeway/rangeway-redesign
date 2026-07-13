@@ -2,7 +2,7 @@
 
 ## Outcome
 
-The non-production static preview builds all 15 authored routes and preserves the required operating-company truth boundary. Route-wide geometry checks cover 1440×1100, 1024×768, 390×844, and 360×800. One verified mobile defect was found on Basecamp, fixed with a focused RED/GREEN guard, and re-probed successfully.
+The non-production static preview builds all 15 authored routes and preserves the required operating-company truth boundary. A final 60-case browser matrix covered all 15 routes at 1440×1100, 1024×768, 390×844, and 360×800 after the Basecamp correction; every case remained horizontally contained and exposed zero hidden or inert elements in `main`. One verified mobile defect was found on Basecamp, fixed with a focused RED/GREEN guard, and re-probed successfully.
 
 No deployment, production-domain change, or real form submission occurred.
 
@@ -49,6 +49,8 @@ The in-app browser audit evaluated document width, the primary `h1` bounding rec
 
 Representative desktop browser inspection covered the homepage, Network, all three format pages, Team, Partners, and Privacy at 1280×720. Those pages exposed distinct, visible hierarchy rather than a universal split hero. Waystation was separately reviewer-verified at 1440×1100 and 390×844 after its earlier title correction.
 
+The final 60-case pass also confirmed that every route could be reached through browser navigation at each viewport. Automated wheel input did not move the in-app browser; `PageDown` worked on a sample route, but navigation reset the viewport override. Incremental scrolling therefore was not established route-wide and is not claimed here.
+
 The route-wide source/output visibility tests also enumerate substantive sections for every primary page family and reject hidden/inert containers, inline `opacity: 0`, `visibility: hidden`, `display: none`, and compiled CSS hiding rules on primary content. The contact honeypot is the only intentional hidden utility field and is excluded by its exact selector.
 
 ## Negative-constraint review
@@ -66,8 +68,9 @@ The route-wide source/output visibility tests also enumerate substantive section
 
 - All route-defining content and all seven mobile navigation links exist in generated HTML.
 - Mobile navigation is a native `details`/`summary` disclosure before enhancement.
+- The external Field Notes destination is the only mobile navigation link with an external arrow and “opens in a new tab” screen-reader text; internal destinations have neither.
 - Generated CSS contains the reduced-motion override and does not import a second Google Fonts stylesheet.
-- Every generated `img` reserves intrinsic width and height.
+- Every generated local `img` declares dimensions that exactly match its file metadata, including the Rangeway lockups, all four team portraits, St. Louis imagery, and all responsive render assets.
 - Built-output tests confirm 15 static pages, unique page families, non-indexing metadata, legal anchors, and substantive visible sections.
 
 These are source and generated-output contracts. The all-route browser pass did not independently repeat incremental scrolling with JavaScript disabled or the reduced-motion preference enabled.
@@ -135,6 +138,33 @@ Focused GREEN and browser re-probe:
 - 390×844: `scrollWidth 375`, heading right edge 355.
 - 360×800: `scrollWidth 345`, heading right edge 325.
 
+### Final render-disclosure, image-geometry, and navigation pass
+
+Focused RED contracts failed before the final corrections: affected pages had no visible “Concept rendering” labels, render alt text did not consistently identify conceptual imagery, the mobile menu showed an external arrow on internal links, and the metadata audit first found the header lockup declared as 215×42 despite a 240×56 source file.
+
+GREEN changes:
+
+- added visible “Concept rendering” labels and concept-aware, scene-specific alt text to all 13 render placements across Home, Network, all three format pages, and Our Story;
+- corrected the source dimensions for both Rangeway lockups, all four PeopleField portraits, the 1024×1024 Basecamp interior, the 832×834 St. Louis image, and the 1672×941 Our Story masthead;
+- added a built-output audit that compares every local image declaration against its actual `sips` file metadata;
+- limited the mobile navigation arrow to Field Notes and added new-tab screen-reader text to the real external navigation link in both desktop and mobile navigation.
+
+Focused GREEN results: 19 source-contract tests and 10 built-output tests passed with zero failures.
+
+## Acceptance matrix
+
+| Acceptance item | Result | Evidence boundary |
+| --- | --- | --- |
+| 15 authored routes build and remain non-indexing | Pass | Static build and built-output contracts. |
+| All routes fit 1440, 1024, 390, and 360 widths | Pass | 60-case in-app browser matrix after the Basecamp fix. |
+| Primary content is not hidden or inert | Pass | 60-case browser matrix plus source/compiled-output rejection guards. |
+| Unbuilt-place imagery is disclosed and described accurately | Pass | Source and generated-HTML counts, scene-by-scene alt review, and visible-label CSS; no separate final-label screenshot pass was recorded. |
+| Local image declarations match file geometry | Pass | Built-output metadata comparison for every local image on every route. |
+| Mobile navigation distinguishes the real external link | Pass | Source and generated-HTML contracts; keyboard interaction remains source/output verified rather than browser replayed. |
+| Incremental scrolling executes on every route | Not established | Automated wheel input was ineffective; `PageDown` worked only on a sample and viewport overrides reset during navigation. |
+| Interceptor isolated-browser review | Blocked | Mandatory preflight exited 8 because `INTERCEPTOR_TEST_CONTEXT_ID` was unset. |
+| Real external form delivery and production deployment | Out of scope | No real submission, deploy, or domain change occurred. |
+
 ## External and tooling limitations
 
 - The Interceptor real-browser workflow was invoked but its mandatory isolation gate stopped before opening a tab: `INTERCEPTOR_TEST_CONTEXT_ID is not set` (exit 8). No fallback to the operator's Default profile, raw screen capture, or window manipulation was attempted.
@@ -152,10 +182,10 @@ npm test && npm run check && npm run build && node --test test/build-output.test
 
 Result:
 
-- `npm test`: 24 passed, 0 failed.
+- `npm test`: 29 passed, 0 failed.
 - `astro check`: 33 files checked; 0 errors, 0 warnings, 0 hints.
 - `astro build`: 15 static pages generated.
-- explicit built-output suite: 7 passed, 0 failed.
+- explicit built-output suite: 10 passed, 0 failed.
 - `git diff --check`: clean.
 
 ## Handoff status
