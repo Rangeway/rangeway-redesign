@@ -264,6 +264,7 @@ git commit -m "Build Quiet Bold site foundation"
 **Files:**
 - Modify: `src/sections/Hero.astro`
 - Modify: `src/pages/index.astro`
+- Modify: `src/config.ts`
 - Modify: `test/site-regressions.test.mjs`
 
 **Interfaces:**
@@ -274,10 +275,14 @@ git commit -m "Build Quiet Bold site foundation"
 
 ```js
 test("homepage hero implements the approved Quiet Bold composition", async () => {
-  const hero = await readSource("src/sections/Hero.astro");
+  const [hero, config] = await Promise.all([
+    readSource("src/sections/Hero.astro"),
+    readSource("src/config.ts")
+  ]);
 
   assert.match(hero, /Travel farther\./);
   assert.match(hero, /Stop better\./);
+  assert.match(config, /tagline:\s*"Travel farther\. Stop better\."/);
   assert.match(hero, /class="hero__copy"/);
   assert.match(hero, /class="hero__media"/);
   assert.match(hero, /class="hero__cta"/);
@@ -324,7 +329,7 @@ const heroAlt = "Concept rendering of a Rangeway Basecamp at dusk in Bozeman, Mo
 </section>
 ```
 
-Style `.hero__grid` as a `43fr/57fr` split above `760px`, use Highway Navy on the copy panel, use one image only, keep the headline at a maximum width of `8ch`, and stack copy before image on mobile. Do not add any absolute decorative shape inside `.hero__copy`.
+Style `.hero__grid` as a `43fr/57fr` split above `760px`, use Highway Navy on the copy panel, use one image only, keep the headline at a maximum width of `8ch`, and stack copy before image on mobile. Do not add any absolute decorative shape inside `.hero__copy`. Set `SITE.tagline` in `src/config.ts` to the exact string `Travel farther. Stop better.` so metadata and page copy use the locked tagline.
 
 - [ ] **Step 4: Run hero checks and build**
 
@@ -335,7 +340,7 @@ Expected: PASS with the homepage rendered and no Astro diagnostics.
 - [ ] **Step 5: Commit the hero**
 
 ```bash
-git add src/sections/Hero.astro src/pages/index.astro test/site-regressions.test.mjs
+git add src/sections/Hero.astro src/pages/index.astro src/config.ts test/site-regressions.test.mjs
 git commit -m "Build Quiet Bold homepage hero"
 ```
 
