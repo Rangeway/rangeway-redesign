@@ -24,12 +24,12 @@ jobs:
           node-version: 22
           cache: npm
 
-      - name: Verify and build
+      - name: Build and verify
         run: |
           npm ci
-          npm test
           npm run check
           npm run build
+          npm test
 
       # The VPS polls deploy-dist every two minutes and syncs it into
       # /var/www/rangeway-redesign. CI does not connect directly to the VPS.
