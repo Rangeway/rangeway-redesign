@@ -90,6 +90,12 @@ test("homepage feedback keeps proof, disclosures, and partner marks attached to 
   assert.match(css, /\.partner-proof__logos\s*\{[^}]*background:\s*transparent/s);
   assert.match(css, /\.partner-proof__logo--pebble\s*\{[^}]*max-height:/s);
 
+  assert.match(partnerProof, /"partner-proof__logo--reverse": partner\.name === "ChargeMate"/);
+  const reverseRule = css.match(/\.partner-proof__logo--reverse\s*\{(?<rule>[^}]*)\}/)?.groups?.rule ?? "";
+  assert.match(reverseRule, /filter:\s*invert\(1\)/);
+  assert.match(reverseRule, /mix-blend-mode:\s*screen/);
+  assert.doesNotMatch(reverseRule, /brightness\(0\)/);
+
   assert.match(css, /\.current-activity__intro\s*\{[^}]*position:\s*sticky/s);
 });
 

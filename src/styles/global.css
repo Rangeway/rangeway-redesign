@@ -148,6 +148,7 @@ h1, h2, h3 { font-family: var(--font-display); letter-spacing: -0.055em; line-he
 .partner-proof__logo { width: auto; max-width: 112px; height: auto; max-height: 34px; object-fit: contain; }
 .partner-proof__logo--screen { mix-blend-mode: screen; }
 .partner-proof__logo--invert { filter: brightness(0) invert(1); }
+.partner-proof__logo--reverse { filter: invert(1); mix-blend-mode: screen; }
 .partner-proof__logo--pebble { max-width: 76px; max-height: 50px; }
 
 .current-activity { display: grid; grid-template-columns: .62fr 1.38fr; gap: 0 60px; padding: var(--section-pad) var(--page-pad); background: var(--warm-white); }

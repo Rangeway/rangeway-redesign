@@ -185,8 +185,9 @@ import { ACTIVITY, EXTERNAL_LINKS, FORMATS, PARTNER_GROUPS } from "../data/site-
                 class:list={[
                   "partner-proof__logo",
                   {
-                    "partner-proof__logo--screen": ["Carbon DC", "ChargeMate"].includes(partner.name),
-                    "partner-proof__logo--invert": ["Ekoenergetyka", "ChargeMate"].includes(partner.name),
+                    "partner-proof__logo--screen": partner.name === "Carbon DC",
+                    "partner-proof__logo--invert": partner.name === "Ekoenergetyka",
+                    "partner-proof__logo--reverse": partner.name === "ChargeMate",
                     "partner-proof__logo--pebble": partner.name === "Pebble",
                   },
                 ]}
