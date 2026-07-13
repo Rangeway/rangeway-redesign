@@ -235,6 +235,16 @@ test("company and utility families preserve distinct purposes", () => {
   assert.doesNotMatch(all, /PageHero|index-row|reveal/);
 });
 
+test("Company hero globally targets its child image while keeping the veil scoped", () => {
+  const story = read("src/pages/our-story.astro");
+
+  assert.match(
+    story,
+    /:global\(\.story-photo-masthead__image\),\s*\.story-photo-masthead__veil\s*\{[^}]*position:\s*absolute;[^}]*inset:\s*0;/s,
+  );
+  assert.doesNotMatch(story, /:global\(\.story-photo-masthead__veil\)/);
+});
+
 test("company people are visible once and limited to the approved roster", () => {
   const data = read("src/data/site-content.ts");
   const field = read("src/components/PeopleField.astro");

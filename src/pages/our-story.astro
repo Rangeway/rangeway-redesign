@@ -54,7 +54,7 @@ import RouteBoard from "../components/RouteBoard.astro";
 
 <style>
   .story-photo-masthead { position: relative; min-height: min(1000px,100svh); background: var(--navy-deep); color: white; overflow: hidden; }
-  .story-photo-masthead__image, .story-photo-masthead__veil { position: absolute; inset: 0; }
+  :global(.story-photo-masthead__image), .story-photo-masthead__veil { position: absolute; inset: 0; }
   .story-photo-masthead__veil { background: linear-gradient(180deg,rgba(9,26,32,.16) 18%,rgba(9,26,32,.88) 94%), linear-gradient(90deg,rgba(9,26,32,.58),transparent 72%); }
   .story-photo-masthead__copy { position: relative; z-index: 1; display: flex; min-height: inherit; flex-direction: column; justify-content: flex-end; padding: 190px var(--page-pad) 68px; }
   .story-photo-masthead h1 { max-width: 11ch; margin: 0 0 26px; font-size: clamp(4.5rem,9.2vw,9.8rem); }
