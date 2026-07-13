@@ -1,8 +1,7 @@
 import assert from "node:assert/strict";
-import { execFileSync } from "node:child_process";
 import { readdirSync, readFileSync } from "node:fs";
-import { fileURLToPath } from "node:url";
 import test from "node:test";
+import { imageSize } from "image-size";
 
 const root = new URL("../dist/", import.meta.url);
 const htmlFiles = readdirSync(root, { recursive: true })
@@ -197,11 +196,8 @@ test("every built local image declares its exact intrinsic file geometry", () =>
   const metadata = new Map();
   const dimensionsFor = (src) => {
     if (metadata.has(src)) return metadata.get(src);
-    const output = execFileSync("sips", ["-g", "pixelWidth", "-g", "pixelHeight", fileURLToPath(new URL(src.slice(1), root))], { encoding: "utf8" });
-    const dimensions = {
-      width: Number(output.match(/pixelWidth:\s*([\d.]+)/)?.[1]),
-      height: Number(output.match(/pixelHeight:\s*([\d.]+)/)?.[1]),
-    };
+    const { width, height } = imageSize(readFileSync(new URL(src.slice(1), root)));
+    const dimensions = { width, height };
     metadata.set(src, dimensions);
     return dimensions;
   };
