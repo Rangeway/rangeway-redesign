@@ -74,8 +74,8 @@ test("homepage feedback keeps proof, disclosures, and partner marks attached to 
   assert.doesNotMatch(proofRail, /Field Notes|access to the team/i);
   assert.match(css, /\.proof-rail\s*\{[^}]*grid-template-columns:\s*repeat\(2,1fr\)/s);
 
-  assert.match(css, /\.site-header__nav--left\s*\{[^}]*justify-content:\s*flex-end/s);
-  assert.match(css, /\.site-header__nav--right\s*\{[^}]*justify-content:\s*flex-start/s);
+  assert.match(css, /\.site-header__nav--left\s*\{[^}]*justify-content:\s*center/s);
+  assert.match(css, /\.site-header__nav--right\s*\{[^}]*justify-content:\s*center/s);
 
   const waystation = home.match(/<article class="format format--waystation">[\s\S]*?<\/article>/)?.[0] ?? "";
   assert.match(waystation, /<div class="format__waystation-media">[\s\S]*<ResponsiveImage[\s\S]*<p class="concept-label">Concept rendering<\/p>[\s\S]*<\/div>/);
@@ -97,6 +97,42 @@ test("homepage feedback keeps proof, disclosures, and partner marks attached to 
   assert.doesNotMatch(reverseRule, /brightness\(0\)/);
 
   assert.match(css, /\.current-activity__intro\s*\{[^}]*position:\s*sticky/s);
+});
+
+test("final homepage polish centers desktop navigation, reduces format cards, and links partner logos", () => {
+  const home = read("src/pages/index.astro");
+  const css = read("src/styles/global.css");
+
+  assert.match(css, /\.site-header__nav--left\s*\{[^}]*justify-content:\s*center/s);
+  assert.match(css, /\.site-header__nav--right\s*\{[^}]*justify-content:\s*center/s);
+
+  const waystationRule = css.match(/\.format--waystation\s*\{(?<rule>[^}]*)\}/)?.groups?.rule ?? "";
+  assert.match(waystationRule, /max-width:\s*1320px/);
+  assert.match(css, /\.format__waystation-media\s*\{[^}]*aspect-ratio:\s*\.95/s);
+
+  const basecampRule = css.match(/\.format--basecamp\s*\{(?<rule>[^}]*)\}/)?.groups?.rule ?? "";
+  assert.match(basecampRule, /max-width:\s*1280px/);
+  assert.match(basecampRule, /min-height:\s*740px/);
+  assert.match(css, /\.format__basecamp-panel\s*\{[^}]*min-height:\s*740px/s);
+
+  const summitRule = css.match(/\.format--summit\s*\{(?<rule>[^}]*)\}/)?.groups?.rule ?? "";
+  assert.match(summitRule, /max-width:\s*1180px/);
+  assert.match(css, /\.format__summit-title h3\s*\{[^}]*font-size:\s*clamp\(4rem,7vw,7rem\)/s);
+  assert.match(css, /\.format__summit-media\s*\{[^}]*min-height:\s*560px/s);
+  assert.match(css, /\.format__summit-copy\s*\{[^}]*padding:\s*34px clamp\(28px,6vw,76px\) 48px 0/s);
+
+  const mobileRules = css.match(/@media \(max-width: 820px\)\s*\{(?<rules>[\s\S]*?)\n\}/)?.groups?.rules ?? "";
+  assert.match(mobileRules, /\.format__waystation-media\s*\{[^}]*aspect-ratio:\s*1\s*\/\s*\.94/s);
+  assert.match(mobileRules, /\.format--basecamp\s*\{[^}]*min-height:\s*620px/s);
+  assert.match(mobileRules, /\.format__basecamp-panel\s*\{[^}]*min-height:\s*620px/s);
+  assert.match(mobileRules, /\.format__summit-media\s*\{[^}]*min-height:\s*340px/s);
+
+  const partnerProof = home.match(/<section class="partner-proof"[\s\S]*?<\/section>/)?.[0] ?? "";
+  assert.match(partnerProof, /<a\s+href=\{partner\.href\}\s+target="_blank"\s+rel="noopener noreferrer"/);
+  assert.match(partnerProof, /aria-label=\{`Visit \$\{partner\.name\} website \(opens in a new tab\)`\}/);
+  assert.match(partnerProof, /<a[\s\S]*?<img[\s\S]*?<\/a>/);
+  assert.match(css, /\.partner-proof__logos a\s*\{[^}]*transition:/s);
+  assert.match(css, /\.partner-proof__logos a:hover,[\s\S]*\.partner-proof__logos a:focus-visible\s*\{[^}]*transform:/s);
 });
 
 test("network overview presents the operating system without a fake locator", () => {

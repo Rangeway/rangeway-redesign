@@ -176,26 +176,33 @@ import { ACTIVITY, EXTERNAL_LINKS, FORMATS, PARTNER_GROUPS } from "../data/site-
           <p>{group.promise}</p>
           <div class="partner-proof__logos">
             {group.partners.slice(0, 2).map((partner) => (
-              <img
-                src={partner.name === "LoüTeq"
-                  ? "/images/partners/louteq-white.png"
-                  : partner.name === "Ekoenergetyka"
-                    ? "/images/partners/eko-trans.webp"
-                    : partner.logo}
-                class:list={[
-                  "partner-proof__logo",
-                  {
-                    "partner-proof__logo--screen": partner.name === "Carbon DC",
-                    "partner-proof__logo--invert": partner.name === "Ekoenergetyka",
-                    "partner-proof__logo--reverse": partner.name === "ChargeMate",
-                    "partner-proof__logo--pebble": partner.name === "Pebble",
-                  },
-                ]}
-                alt={`${partner.name} logo`}
-                width={partner.name === "Ekoenergetyka" ? 512 : partner.logoWidth}
-                height={partner.name === "Ekoenergetyka" ? 512 : partner.logoHeight}
-                loading="lazy"
-              />
+              <a
+                href={partner.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Visit ${partner.name} website (opens in a new tab)`}
+              >
+                <img
+                  src={partner.name === "LoüTeq"
+                    ? "/images/partners/louteq-white.png"
+                    : partner.name === "Ekoenergetyka"
+                      ? "/images/partners/eko-trans.webp"
+                      : partner.logo}
+                  class:list={[
+                    "partner-proof__logo",
+                    {
+                      "partner-proof__logo--screen": partner.name === "Carbon DC",
+                      "partner-proof__logo--invert": partner.name === "Ekoenergetyka",
+                      "partner-proof__logo--reverse": partner.name === "ChargeMate",
+                      "partner-proof__logo--pebble": partner.name === "Pebble",
+                    },
+                  ]}
+                  alt={`${partner.name} logo`}
+                  width={partner.name === "Ekoenergetyka" ? 512 : partner.logoWidth}
+                  height={partner.name === "Ekoenergetyka" ? 512 : partner.logoHeight}
+                  loading="lazy"
+                />
+              </a>
             ))}
           </div>
         </article>
