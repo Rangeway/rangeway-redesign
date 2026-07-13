@@ -65,9 +65,24 @@ test("built main content has no static hiding hooks", () => {
     .join("\n");
   const visibleRoots = [
     "home-hero", "network-intro", "waystation-lead", "basecamp-service", "summit-horizon",
-    "story-editorial-opening", "team-people-opening", "partners-capability-opening", "investor-thesis-opening",
+    "story-photo-masthead", "team-people-opening", "partners-capability-opening", "investor-proof-opening",
     "commitments-index-opening", "contact-support-opening", "legal-shell", "utility-state", "off-map",
   ];
+  const substantiveByRoute = {
+    "index.html": ["stop-product", "formats", "partner-proof", "current-activity"],
+    "network/index.html": ["network-promises", "comfort-guarantee", "network-formats", "network-technical", "project-briefs"],
+    "network/waystation/index.html": ["route-flow", "waystation-essentials"],
+    "network/basecamp/index.html": ["trailkeeper-intro", "service-day", "basecamp-interior"],
+    "network/summit/index.html": ["summit-thesis", "destination-ledger", "summit-energy"],
+    "our-story/index.html": ["story-origin", "story-beliefs", "story-current"],
+    "team/index.html": ["people-field"],
+    "partners/index.html": ["partner-field"],
+    "investors/index.html": ["investor-evidence", "investor-pipeline", "investor-recognition"],
+    "commitments/index.html": ["commitments-chapter"],
+    "contact/index.html": ["contact-form"],
+    "privacy/index.html": ["legal-prose"],
+    "terms/index.html": ["legal-prose"],
+  };
 
   for (const { path, html } of htmlFiles) {
     const main = html.match(/<main\b[\s\S]*?<\/main>/)?.[0] ?? "";
@@ -75,18 +90,30 @@ test("built main content has no static hiding hooks", () => {
     assert.doesNotMatch(main, /<(?:section|article|header|div|nav|aside)\b[^>]*(?:\shidden(?:\s|=|>)|\sinert(?:\s|=|>))/i, `${path} has no hidden or inert content container`);
     assert.doesNotMatch(main, /style="[^"]*(?:opacity\s*:\s*0|visibility\s*:\s*hidden|display\s*:\s*none)/i, `${path} has no inline-hidden main content`);
   }
+  const visibilityCss = css.replace(/\.contact-form__honey[^,{]*\{[^}]*\}/g, "");
+  for (const [path, classes] of Object.entries(substantiveByRoute)) {
+    for (const className of classes) {
+      assert.match(byPath[path], new RegExp(`class="[^"]*${className}`), `${path} renders ${className}`);
+      assert.doesNotMatch(byPath[path], new RegExp(`<[^>]*class="[^"]*${className}[^"]*"[^>]*(?:\\shidden(?:\\s|=|>)|\\sinert(?:\\s|=|>)|style="[^"]*(?:opacity\\s*:\\s*0|visibility\\s*:\\s*hidden|display\\s*:\\s*none))`, "i"), `${path} keeps ${className} semantically visible`);
+    }
+  }
+  const hidingDeclaration = "(?:opacity\\s*:\\s*0(?:[;}]|\\s)|visibility\\s*:\\s*hidden|display\\s*:\\s*none)";
   for (const rootClass of visibleRoots) {
-    const hiddenRule = new RegExp(`\\.${rootClass}(?![-_])[^{}]*\\{[^}]*(?:opacity\\s*:\\s*0(?:[;}]|\\s)|visibility\\s*:\\s*hidden|display\\s*:\\s*none)`, "i");
-    assert.doesNotMatch(css, hiddenRule, `${rootClass} has no CSS hiding rule`);
+    const hiddenRootRule = new RegExp(`\\.${rootClass}(?![-_])[^{}]*\\{[^}]*${hidingDeclaration}`, "i");
+    assert.doesNotMatch(visibilityCss, hiddenRootRule, `${rootClass} root has no CSS hiding rule`);
+  }
+  for (const className of new Set(Object.values(substantiveByRoute).flat())) {
+    const hiddenContentRule = new RegExp(`\\.${className}(?:[-_][^,{]*)?[^{}]*\\{[^}]*${hidingDeclaration}`, "i");
+    assert.doesNotMatch(visibilityCss, hiddenContentRule, `${className} and its substantive descendants have no CSS hiding rule`);
   }
 });
 
 test("built reviewed openings remain purpose-specific and reject split-story/investor heroes", () => {
   const openings = {
-    "our-story/index.html": "story-editorial-opening",
+    "our-story/index.html": "story-photo-masthead",
     "team/index.html": "team-people-opening",
     "partners/index.html": "partners-capability-opening",
-    "investors/index.html": "investor-thesis-opening",
+    "investors/index.html": "investor-proof-opening",
     "commitments/index.html": "commitments-index-opening",
     "contact/index.html": "contact-support-opening",
   };
@@ -94,8 +121,12 @@ test("built reviewed openings remain purpose-specific and reject split-story/inv
   for (const [path, opening] of Object.entries(openings)) {
     assert.match(byPath[path], new RegExp(`<main[^>]*>[\\s\\S]*?<section class="${opening}"`), `${path} opening`);
   }
-  assert.doesNotMatch(byPath["our-story/index.html"], /story-opening|basecamp-interior/);
-  assert.doesNotMatch(byPath["investors/index.html"], /class="investor-opening"/);
+  const storyOpening = byPath["our-story/index.html"].match(/<section class="story-photo-masthead"[\s\S]*?<\/section>/)?.[0] ?? "";
+  const investorOpening = byPath["investors/index.html"].match(/<section class="investor-proof-opening"[\s\S]*?<\/section>/)?.[0] ?? "";
+  assert.match(storyOpening, /<picture[\s\S]*story-photo-masthead__copy/);
+  assert.doesNotMatch(storyOpening, /<header/);
+  assert.match(investorOpening, /investor-proof-opening__thesis[\s\S]*<dl class="investor-evidence-rail"/);
+  assert.doesNotMatch(investorOpening, /<picture|<figure/);
 });
 
 test("contact remains a native POST and legal anchors survive static rendering", () => {

@@ -6,17 +6,15 @@ import RouteBoard from "../components/RouteBoard.astro";
 
 <SiteLayout title="Our Story · Rangeway" description="Rangeway brings hospitality operating experience and EV-driver perspective to the charging stop." class="story-family">
   <!-- HERO: A road-width thesis interrupts a visual timeline of the company in motion. -->
-  <section class="story-editorial-opening">
-    <header class="story-editorial-opening__header">
-      <p class="eyebrow">Our story / An operating point of view</p>
+  <section class="story-photo-masthead">
+    <ResponsiveImage class="story-photo-masthead__image" src="/images/hero-mountain-waystation.webp" srcSmall="/images/hero-mountain-waystation-640.webp" alt="A Rangeway stop set along a broad mountain route" width={2200} height={1200} sizes="100vw" loading="eager" position="center 62%" />
+    <div class="story-photo-masthead__veil" aria-hidden="true"></div>
+    <div class="story-photo-masthead__copy">
+      <p class="eyebrow eyebrow--sun">Our story / Roadside hospitality</p>
       <h1>Hospitality is how the road gets better.</h1>
-      <p>Rangeway is not a charging company with amenities. It is a hospitality company that happens to charge vehicles.</p>
-    </header>
-    <figure class="story-editorial-opening__media">
-      <ResponsiveImage src="/images/hero-mountain-waystation.webp" srcSmall="/images/hero-mountain-waystation-640.webp" alt="A Rangeway stop set along a broad mountain route" width={2200} height={1200} sizes="100vw" loading="eager" position="center 62%" />
-      <figcaption>Road / stop / road again</figcaption>
+      <p>Rangeway is a hospitality company that happens to charge vehicles.</p>
       <blockquote>The point is not to interrupt the journey. It is to make the journey feel cared for.</blockquote>
-    </figure>
+    </div>
   </section>
 
   <section class="story-origin">
@@ -54,13 +52,13 @@ import RouteBoard from "../components/RouteBoard.astro";
 </SiteLayout>
 
 <style>
-  .story-editorial-opening { padding-top: 132px; background: var(--cream); }
-  .story-editorial-opening__header { display: grid; grid-template-columns: .35fr 1.05fr .6fr; gap: 38px; align-items: end; padding: 76px var(--page-pad) 70px; }
-  .story-editorial-opening h1 { max-width: 11ch; margin: 0; font-size: clamp(4.4rem,8.4vw,8.8rem); }
-  .story-editorial-opening__header > p:last-child { max-width: 40ch; margin-bottom: 8px; color: var(--slate); }
-  .story-editorial-opening__media { position: relative; height: min(66vw,780px); min-height: 470px; margin: 0; overflow: hidden; }
-  .story-editorial-opening__media figcaption { position: absolute; left: var(--page-pad); top: 24px; padding: 9px 12px; background: var(--sun); font: 600 .64rem var(--font-mono); letter-spacing: .1em; text-transform: uppercase; }
-  .story-editorial-opening__media blockquote { position: absolute; right: var(--page-pad); bottom: 0; width: min(560px,48vw); margin: 0; padding: 34px; background: var(--navy-deep); color: white; font: 700 clamp(1.7rem,3vw,3.2rem)/1.05 var(--font-display); letter-spacing: -.045em; }
+  .story-photo-masthead { position: relative; min-height: min(1000px,100svh); background: var(--navy-deep); color: white; overflow: hidden; }
+  .story-photo-masthead__image, .story-photo-masthead__veil { position: absolute; inset: 0; }
+  .story-photo-masthead__veil { background: linear-gradient(180deg,rgba(9,26,32,.16) 18%,rgba(9,26,32,.88) 94%), linear-gradient(90deg,rgba(9,26,32,.58),transparent 72%); }
+  .story-photo-masthead__copy { position: relative; z-index: 1; display: flex; min-height: inherit; flex-direction: column; justify-content: flex-end; padding: 190px var(--page-pad) 68px; }
+  .story-photo-masthead h1 { max-width: 11ch; margin: 0 0 26px; font-size: clamp(4.5rem,9.2vw,9.8rem); }
+  .story-photo-masthead__copy > p:not(.eyebrow) { max-width: 38ch; margin: 0; color: rgba(255,255,255,.76); font-size: 1.12rem; }
+  .story-photo-masthead blockquote { align-self: flex-end; width: min(520px,46vw); margin: -30px 0 0; padding: 24px 0 0; border-top: 3px solid var(--sun); font: 700 clamp(1.35rem,2.4vw,2.5rem)/1.08 var(--font-display); letter-spacing: -.04em; }
   .story-origin { display: grid; grid-template-columns: .5fr 1.1fr .8fr; gap: clamp(30px,5vw,90px); padding: var(--section-pad) var(--page-pad); background: var(--cream); }
   .story-origin__marker { color: var(--oxide); font: 600 .65rem var(--font-mono); letter-spacing: .1em; text-transform: uppercase; }
   .story-origin__statement p { margin: 0; font: 700 clamp(2.7rem,5vw,5.8rem)/.92 var(--font-display); letter-spacing: -.06em; }
@@ -84,11 +82,9 @@ import RouteBoard from "../components/RouteBoard.astro";
   .story-team-handoff h2 { margin: 0; font-size: clamp(3.4rem,6.7vw,7rem); }
   .story-team-handoff > div p { color: rgba(255,255,255,.78); }
   @media (max-width: 820px) {
-    .story-editorial-opening { padding-top: 82px; }
-    .story-editorial-opening__header { grid-template-columns: 1fr; padding: 62px 20px 48px; }
-    .story-editorial-opening__media { min-height: 520px; }
-    .story-editorial-opening__media figcaption { left: 20px; }
-    .story-editorial-opening__media blockquote { right: 20px; width: calc(100% - 40px); padding: 25px; }
+    .story-photo-masthead { min-height: 820px; }
+    .story-photo-masthead__copy { padding: 140px 20px 46px; }
+    .story-photo-masthead blockquote { align-self: flex-start; width: 100%; margin-top: 42px; }
     .story-origin, .story-current > header, .story-team-handoff { grid-template-columns: 1fr; padding-inline: 20px; }
     .story-beliefs { padding-inline: 20px; }
     .story-beliefs > header { grid-template-columns: 1fr; }

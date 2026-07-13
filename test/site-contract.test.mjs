@@ -221,10 +221,10 @@ test("reviewed page openings use six purpose-specific structures", () => {
     contact: read("src/pages/contact.astro"),
   };
   const expectedOpenings = {
-    story: "story-editorial-opening",
+    story: "story-photo-masthead",
     team: "team-people-opening",
     partners: "partners-capability-opening",
-    investors: "investor-thesis-opening",
+    investors: "investor-proof-opening",
     commitments: "commitments-index-opening",
     contact: "contact-support-opening",
   };
@@ -236,15 +236,23 @@ test("reviewed page openings use six purpose-specific structures", () => {
   });
   assert.equal(new Set(actualOpenings).size, 6);
 
-  assert.match(pages.story, /hero-mountain-waystation\.webp/);
+  const storyOpening = pages.story.match(/<section class="story-photo-masthead"[\s\S]*?<\/section>/)?.[0] ?? "";
+  const investorOpening = pages.investors.match(/<section class="investor-proof-opening"[\s\S]*?<\/section>/)?.[0] ?? "";
+  assert.ok(storyOpening.indexOf("<ResponsiveImage") < storyOpening.indexOf("story-photo-masthead__copy"));
+  assert.match(storyOpening, /<blockquote>/);
+  assert.doesNotMatch(storyOpening, /<header|grid-template-columns/);
+  assert.match(pages.story, /\.story-photo-masthead \{[^}]*position: relative;[^}]*min-height:/s);
   assert.doesNotMatch(pages.story, /basecamp-interior|class="story-opening"/);
   assert.match(pages.team, /<section class="team-people-opening"[\s\S]*<PeopleField\s*\/>/);
   assert.match(pages.team, /\.team-people-opening > header \{ display: flex/);
   assert.match(pages.partners, /<section class="partners-capability-opening"[\s\S]*<PartnerField\s*\/>/);
   assert.match(pages.partners, /\.partners-capability-opening > header \{ max-width:/);
-  assert.match(pages.investors, /investor-evidence-rail/);
-  assert.match(pages.investors, /investor-opening-media/);
-  assert.doesNotMatch(pages.investors.match(/<section class="investor-thesis-opening"[\s\S]*?<\/section>/)?.[0] ?? "", /ResponsiveImage/);
+  assert.match(investorOpening, /<div class="investor-proof-opening__thesis">/);
+  assert.match(investorOpening, /<dl class="investor-evidence-rail"/);
+  assert.equal((investorOpening.match(/<dt>/g) ?? []).length, 3);
+  assert.doesNotMatch(investorOpening, /ResponsiveImage|<picture|<figure/);
+  assert.match(pages.investors, /\.investor-proof-opening__thesis \{ max-width:/);
+  assert.doesNotMatch(pages.investors.match(/\.investor-proof-opening__thesis \{[^}]*\}/)?.[0] ?? "", /display: grid|grid-template-columns/);
   assert.match(pages.commitments, /<section class="commitments-index-opening"[\s\S]*aria-label="On this page"/);
   assert.match(pages.commitments, /commitments-index-opening__brief/);
   assert.match(pages.commitments, /grid-template-columns: minmax\(0,1\.2fr\) minmax\(280px,\.8fr\)/);
@@ -252,7 +260,7 @@ test("reviewed page openings use six purpose-specific structures", () => {
 
   const all = Object.values(pages).join("\n");
   assert.doesNotMatch(all, /grid-template-columns:\s*\.3[58]fr\s+1\.0[5-9]fr\s+\.5[05]fr/);
-  assert.doesNotMatch(all, /class="(?:story-opening|investor-opening|team-intro|partners-intro|commitments-opening|contact-opening)"/);
+  assert.doesNotMatch(all, /class="(?:story-opening|story-editorial-opening|investor-opening|investor-thesis-opening|team-intro|partners-intro|commitments-opening|contact-opening)"/);
 });
 
 test("Trailkeeper commitment stays Basecamp-specific", () => {
