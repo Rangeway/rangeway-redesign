@@ -5,13 +5,12 @@ const chapters = [
   { id: "environment", number: "01", label: "Environment", title: "Build for a lower-impact journey.", lead: "Environmental responsibility belongs in how locations are designed, powered, built, and operated.", points: [["Solar and storage", "Rangeway evaluates solar generation and battery storage as part of project-specific energy architecture, including off-grid concepts where appropriate."], ["Lower-carbon construction", "Preferred structural systems use engineered bamboo and modular fabrication to reduce embodied impact while meeting a hospitality-grade finish."], ["Long-term usefulness", "Hardware-flexible sites are designed to adapt as charging demand and technology change."]] },
   { id: "communities", number: "02", label: "Communities", title: "Show up beyond the obvious corridors.", lead: "Smaller cities, rural communities, and the routes between them need charging places that contribute to the local economy.", points: [["Regional investment", "Project planning centers routes and communities that need stronger charging infrastructure."], ["Local presence", "Staffed Basecamp and Summit formats are designed to create hospitality work and local operating relationships."], ["Built in public", "Field Notes, community activity, and project news create a public record of what the company is learning."]] },
   { id: "inclusion", number: "03", label: "Inclusion", title: "Comfort should welcome every traveler.", lead: "A well-lit, climate-controlled, accessible stop matters differently to every guest, and the baseline should work for all of them.", points: [["Designed for varied journeys", "Parents, older travelers, people with limited mobility, and drivers traveling alone all deserve a clean and legible place to reset."], ["Broad hiring", "As the team grows, Rangeway intends to source candidates broadly, hire for character and capability, and measure outcomes."], ["Equal quality", "Communities with less charging investment should receive the same quality of hospitality experience."]] },
-  { id: "people", number: "04", label: "People", title: "Treat hospitality as a career craft.", lead: "The people who operate a stop should have training, mentorship, and a visible path to more responsibility.", points: [["The Trailkeeper standard", "Basecamp and Summit service roles are designed around hospitality training and progression."], ["Operating discipline", "Hotel service principles inform how teams learn, lead, and care for a place."], ["Curiosity at work", "Publishing and sharing what the team learns should remain part of how Rangeway improves."]] },
+  { id: "people", number: "04", label: "People", title: "Treat hospitality as a career craft.", lead: "The people who operate a stop should have training, mentorship, and a visible path to more responsibility.", points: [["The Trailkeeper standard", "Basecamp service roles are designed around hospitality training and progression."], ["Operating discipline", "Hotel service principles inform how teams learn, lead, and care for a place."], ["Curiosity at work", "Publishing and sharing what the team learns should remain part of how Rangeway improves."]] },
 ];
 ---
 
 <SiteLayout title="Our Commitments · Rangeway" description="The environmental, community, inclusion, and people standards Rangeway intends to report against." class="commitments-family">
-  <section class="commitments-opening"><p class="eyebrow">Commitments / Working standard</p><h1>Say what matters. Show the work.</h1><p>These commitments guide how Rangeway designs places, works with communities, hires, and grows. Accountability follows evidence, not slogans.</p></section>
-  <nav class="commitments-nav" aria-label="On this page"><span>On this page</span>{chapters.map((chapter) => <a href={`#${chapter.id}`}>{chapter.label}</a>)}<a href="#accountability">Accountability</a></nav>
+  <section class="commitments-index-opening"><div class="commitments-index-opening__brief"><div><p class="eyebrow">Commitments / Working standard</p><h1>Say what matters. Show the work.</h1></div><p>Environmental, community, inclusion, and people standards—organized for direct reading and future accountability.</p></div><nav class="commitments-nav" aria-label="On this page"><span>Read by chapter</span>{chapters.map((chapter) => <a href={`#${chapter.id}`}>{chapter.label}</a>)}<a href="#accountability">Accountability</a></nav></section>
   <div class="commitments-chapters">
     {chapters.map((chapter) => (
       <section id={chapter.id} class="commitments-chapter">
@@ -24,10 +23,11 @@ const chapters = [
 </SiteLayout>
 
 <style>
-  .commitments-opening { display: grid; grid-template-columns: .35fr 1.05fr .6fr; gap: 38px; align-items: end; min-height: 680px; padding: 180px var(--page-pad) 80px; background: var(--cream); }
-  .commitments-opening h1 { margin: 0; font-size: clamp(4.2rem,8.4vw,8.8rem); }
-  .commitments-opening > p:last-child { color: var(--slate); }
-  .commitments-nav { position: sticky; z-index: 5; top: 0; display: flex; gap: 24px; align-items: center; padding: 18px var(--page-pad); background: var(--sun); overflow-x: auto; }
+  .commitments-index-opening { padding: 170px var(--page-pad) 0; background: var(--cream); }
+  .commitments-index-opening__brief { display: grid; grid-template-columns: minmax(0,1.2fr) minmax(280px,.8fr); gap: clamp(38px,8vw,130px); align-items: end; padding-bottom: 46px; }
+  .commitments-index-opening h1 { margin: 0; font-size: clamp(3.8rem,6.8vw,7.2rem); }
+  .commitments-index-opening__brief > p { max-width: 48ch; color: var(--slate); }
+  .commitments-nav { display: flex; gap: 24px; align-items: center; margin: 0 calc(var(--page-pad) * -1); padding: 18px var(--page-pad); background: var(--sun); overflow-x: auto; }
   .commitments-nav span { margin-right: auto; font: 600 .65rem var(--font-mono); text-transform: uppercase; }
   .commitments-nav a { white-space: nowrap; font: 700 .72rem var(--font-display); text-transform: uppercase; }
   .commitments-chapters { background: var(--warm-white); }
@@ -47,5 +47,5 @@ const chapters = [
   .commitments-accountability { display: grid; grid-template-columns: 1.15fr .85fr; gap: 70px; align-items: end; padding: var(--section-pad) var(--page-pad); background: var(--oxide); color: white; scroll-margin-top: 58px; }
   .commitments-accountability h2 { margin: 0; font-size: clamp(3.5rem,6.8vw,7rem); }
   .commitments-accountability > div:last-child > p { color: rgba(255,255,255,.75); }
-  @media (max-width: 820px) { .commitments-opening, .commitments-chapter, .commitments-accountability { grid-template-columns: 1fr; padding-inline: 20px; } .commitments-opening { min-height: 640px; padding-top: 140px; } .commitments-nav { padding-inline: 20px; } .commitments-nav span { display: none; } .commitments-chapter article { grid-template-columns: 1fr; gap: 10px; } }
+  @media (max-width: 820px) { .commitments-index-opening { padding: 130px 20px 0; } .commitments-index-opening__brief, .commitments-chapter, .commitments-accountability { grid-template-columns: 1fr; } .commitments-chapter, .commitments-accountability { padding-inline: 20px; } .commitments-nav { margin-inline: -20px; padding-inline: 20px; } .commitments-nav span { position: absolute; width: 1px; height: 1px; overflow: clip; clip-path: inset(50%); } .commitments-chapter article { grid-template-columns: 1fr; gap: 10px; } }
 </style>

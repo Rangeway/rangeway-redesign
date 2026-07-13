@@ -210,3 +210,63 @@ test("legal layout provides anchors and a readable measure", () => {
   assert.match(terms, /State of Delaware/);
   assert.match(`${privacy}\n${terms}`, /April 21, 2026/);
 });
+
+test("reviewed page openings use six purpose-specific structures", () => {
+  const pages = {
+    story: read("src/pages/our-story.astro"),
+    team: read("src/pages/team.astro"),
+    partners: read("src/pages/partners.astro"),
+    investors: read("src/pages/investors.astro"),
+    commitments: read("src/pages/commitments.astro"),
+    contact: read("src/pages/contact.astro"),
+  };
+  const expectedOpenings = {
+    story: "story-editorial-opening",
+    team: "team-people-opening",
+    partners: "partners-capability-opening",
+    investors: "investor-thesis-opening",
+    commitments: "commitments-index-opening",
+    contact: "contact-support-opening",
+  };
+
+  const actualOpenings = Object.entries(pages).map(([name, source]) => {
+    const opening = source.match(/<section class="([^"]+)"/)?.[1];
+    assert.equal(opening, expectedOpenings[name], `${name} opening class`);
+    return opening;
+  });
+  assert.equal(new Set(actualOpenings).size, 6);
+
+  assert.match(pages.story, /hero-mountain-waystation\.webp/);
+  assert.doesNotMatch(pages.story, /basecamp-interior|class="story-opening"/);
+  assert.match(pages.team, /<section class="team-people-opening"[\s\S]*<PeopleField\s*\/>/);
+  assert.match(pages.team, /\.team-people-opening > header \{ display: flex/);
+  assert.match(pages.partners, /<section class="partners-capability-opening"[\s\S]*<PartnerField\s*\/>/);
+  assert.match(pages.partners, /\.partners-capability-opening > header \{ max-width:/);
+  assert.match(pages.investors, /investor-evidence-rail/);
+  assert.match(pages.investors, /investor-opening-media/);
+  assert.doesNotMatch(pages.investors.match(/<section class="investor-thesis-opening"[\s\S]*?<\/section>/)?.[0] ?? "", /ResponsiveImage/);
+  assert.match(pages.commitments, /<section class="commitments-index-opening"[\s\S]*aria-label="On this page"/);
+  assert.match(pages.commitments, /commitments-index-opening__brief/);
+  assert.match(pages.commitments, /grid-template-columns: minmax\(0,1\.2fr\) minmax\(280px,\.8fr\)/);
+  assert.match(pages.contact, /<section class="contact-support-opening"[\s\S]*<ContactForm\s*\/>/);
+
+  const all = Object.values(pages).join("\n");
+  assert.doesNotMatch(all, /grid-template-columns:\s*\.3[58]fr\s+1\.0[5-9]fr\s+\.5[05]fr/);
+  assert.doesNotMatch(all, /class="(?:story-opening|investor-opening|team-intro|partners-intro|commitments-opening|contact-opening)"/);
+});
+
+test("Trailkeeper commitment stays Basecamp-specific", () => {
+  const commitments = read("src/pages/commitments.astro");
+  assert.match(commitments, /Basecamp service roles are designed around hospitality training and progression/);
+  assert.doesNotMatch(commitments, /Basecamp and Summit service roles/);
+});
+
+test("interrupted native contact submissions recover without clearing values", () => {
+  const contact = read("src/components/ContactForm.astro");
+  assert.match(contact, /const SUBMISSION_TIMEOUT_MS = 12000/);
+  assert.match(contact, /const restoreSubmission =/);
+  assert.match(contact, /window\.setTimeout\(\(\) =>/);
+  assert.match(contact, /We could not confirm delivery\. Your message is still here; check your connection and try again\./);
+  assert.match(contact, /button\.disabled = false/);
+  assert.doesNotMatch(contact, /form\.reset\(|preventDefault/);
+});

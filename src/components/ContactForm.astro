@@ -48,16 +48,32 @@ const interests = ["EV Driver", "Potential Partner", "Investor", "Careers", "Med
 </style>
 
 <script>
+  const SUBMISSION_TIMEOUT_MS = 12000;
+
   document.querySelectorAll<HTMLFormElement>("[data-contact-form]").forEach((form) => {
     const button = form.querySelector<HTMLButtonElement>("[data-submit]");
     const status = form.querySelector<HTMLElement>("[data-status]");
+    const idleStatus = status?.textContent ?? "Native secure form submission. No account required.";
+    let submissionTimeout: number | undefined;
+
+    const restoreSubmission = (message = idleStatus) => {
+      if (submissionTimeout) window.clearTimeout(submissionTimeout);
+      submissionTimeout = undefined;
+      if (button) { button.disabled = false; button.textContent = "Send message"; }
+      if (status) status.textContent = message;
+    };
+
     form.addEventListener("submit", () => {
+      if (submissionTimeout) window.clearTimeout(submissionTimeout);
       if (button) { button.disabled = true; button.textContent = "Sending…"; }
       if (status) status.textContent = "Routing your note. A confirmation page will appear next.";
+      submissionTimeout = window.setTimeout(() => {
+        restoreSubmission("We could not confirm delivery. Your message is still here; check your connection and try again.");
+      }, SUBMISSION_TIMEOUT_MS);
     });
-    window.addEventListener("pageshow", () => {
-      if (button) { button.disabled = false; button.textContent = "Send message"; }
-      if (status) status.textContent = "Native secure form submission. No account required.";
+    window.addEventListener("pageshow", () => restoreSubmission());
+    window.addEventListener("pagehide", () => {
+      if (submissionTimeout) window.clearTimeout(submissionTimeout);
     });
   });
 </script>
