@@ -84,6 +84,16 @@ test("the shared footer exposes the approved social channels as accessible icon 
   assert.equal((footer.match(/<svg\b/g) ?? []).length, 3);
 });
 
+test("Our Commitments appears only in the footer legal row", () => {
+  const footer = read("src/components/SiteFooter.astro");
+  const companyColumn = footer.match(/<p class="footer-label">Company<\/p>[\s\S]*?<\/div>/)?.[0] ?? "";
+  const legalRow = footer.match(/<div class="site-footer__base">[\s\S]*?<\/div>/)?.[0] ?? "";
+
+  assert.doesNotMatch(companyColumn, /href="\/commitments"|>Commitments</);
+  assert.match(legalRow, /<a href="\/commitments">Our Commitments<\/a><a href="\/privacy">Privacy<\/a><a href="\/terms">Terms<\/a>/);
+  assert.equal((footer.match(/href="\/commitments"/g) ?? []).length, 1);
+});
+
 test("homepage feedback keeps proof, disclosures, and partner marks attached to their intended surfaces", () => {
   const home = read("src/pages/index.astro");
   const css = read("src/styles/global.css");
