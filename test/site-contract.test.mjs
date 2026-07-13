@@ -58,6 +58,41 @@ test("fresh operating homepage contract", () => {
   assert.doesNotMatch(css, /\.reveal[^}]*opacity\s*:\s*0/s);
 });
 
+test("homepage feedback keeps proof, disclosures, and partner marks attached to their intended surfaces", () => {
+  const home = read("src/pages/index.astro");
+  const css = read("src/styles/global.css");
+
+  assert.match(home, /src="\/images\/hero-mountain-waystation\.webp"/);
+  assert.match(home, /srcSmall="\/images\/hero-mountain-waystation-640\.webp"/);
+  assert.match(home, /alt="Concept rendering of a Rangeway Waystation in Bozeman, Montana,[^"]+"/);
+  assert.match(home, /width=\{1672\}[\s\S]*height=\{941\}/);
+
+  const proofRail = home.match(/<section class="proof-rail"[\s\S]*?<\/section>/)?.[0] ?? "";
+  assert.equal((proofRail.match(/<div>/g) ?? []).length, 2);
+  assert.match(proofRail, /<strong>03<\/strong><span>network formats<\/span>/);
+  assert.match(proofRail, /<strong>03<\/strong><span>public project regions<\/span>/);
+  assert.doesNotMatch(proofRail, /Field Notes|access to the team/i);
+  assert.match(css, /\.proof-rail\s*\{[^}]*grid-template-columns:\s*repeat\(2,1fr\)/s);
+
+  assert.match(css, /\.site-header__nav--left\s*\{[^}]*justify-content:\s*flex-end/s);
+  assert.match(css, /\.site-header__nav--right\s*\{[^}]*justify-content:\s*flex-start/s);
+
+  const waystation = home.match(/<article class="format format--waystation">[\s\S]*?<\/article>/)?.[0] ?? "";
+  assert.match(waystation, /<div class="format__waystation-media">[\s\S]*<ResponsiveImage[\s\S]*<p class="concept-label">Concept rendering<\/p>[\s\S]*<\/div>/);
+  assert.match(css, /\.format__waystation-media\s*\{[^}]*position:\s*relative/s);
+
+  const partnerProof = home.match(/<section class="partner-proof"[\s\S]*?<\/section>/)?.[0] ?? "";
+  assert.match(partnerProof, /\/images\/partners\/louteq-white\.png/);
+  assert.match(partnerProof, /\/images\/partners\/eko-trans\.webp/);
+  assert.match(partnerProof, /width=\{partner\.name === "Ekoenergetyka" \? 512 : partner\.logoWidth\}/);
+  assert.match(partnerProof, /height=\{partner\.name === "Ekoenergetyka" \? 512 : partner\.logoHeight\}/);
+  assert.match(partnerProof, /partner-proof__logo--pebble/);
+  assert.match(css, /\.partner-proof__logos\s*\{[^}]*background:\s*transparent/s);
+  assert.match(css, /\.partner-proof__logo--pebble\s*\{[^}]*max-height:/s);
+
+  assert.match(css, /\.current-activity__intro\s*\{[^}]*position:\s*sticky/s);
+});
+
 test("network overview presents the operating system without a fake locator", () => {
   const network = read("src/pages/network.astro");
 
@@ -196,10 +231,11 @@ test("deferred asset cleanup removes duplicate font CSS and reserves partner log
   assert.doesNotMatch(css, /@import\s+url\(["']?https:\/\/fonts\.googleapis\.com/i);
   assert.equal((data.match(/logoWidth:\s*\d+/g) ?? []).length, 11);
   assert.equal((data.match(/logoHeight:\s*\d+/g) ?? []).length, 11);
-  for (const source of [field, home]) {
-    assert.match(source, /width=\{partner\.logoWidth\}/);
-    assert.match(source, /height=\{partner\.logoHeight\}/);
-  }
+  assert.match(field, /width=\{partner\.logoWidth\}/);
+  assert.match(field, /height=\{partner\.logoHeight\}/);
+  const homePartnerProof = home.match(/<section class="partner-proof"[\s\S]*?<\/section>/)?.[0] ?? "";
+  assert.match(homePartnerProof, /width=\{[^}]*partner\.logoWidth\}/);
+  assert.match(homePartnerProof, /height=\{[^}]*partner\.logoHeight\}/);
   assert.doesNotMatch(`${charcoalLogo}\n${whiteLogo}`, /[ \t]+$/m);
 });
 

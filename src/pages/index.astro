@@ -13,11 +13,11 @@ import { ACTIVITY, EXTERNAL_LINKS, FORMATS, PARTNER_GROUPS } from "../data/site-
 >
   <section class="home-hero" aria-labelledby="home-hero-title">
     <ResponsiveImage
-      src="/images/network-hero.webp"
-      srcSmall="/images/network-hero-640.webp"
-      alt="Concept rendering of a Rangeway charging plaza with a timber solar canopy and glass-walled lounge in a desert mountain landscape"
-      width={2200}
-      height={1200}
+      src="/images/hero-mountain-waystation.webp"
+      srcSmall="/images/hero-mountain-waystation-640.webp"
+      alt="Concept rendering of a Rangeway Waystation in Bozeman, Montana, with a timber solar canopy, glass lounge, EV chargers, and mountain backdrop"
+      width={1672}
+      height={941}
       sizes="100vw"
       class="home-hero__image"
       position="center 58%"
@@ -45,8 +45,6 @@ import { ACTIVITY, EXTERNAL_LINKS, FORMATS, PARTNER_GROUPS } from "../data/site-
   <section class="proof-rail" id="proof" aria-label="Rangeway operating proof">
     <div><strong>03</strong><span>network formats</span></div>
     <div><strong>03</strong><span>public project regions</span></div>
-    <div><strong>Now</strong><span>publishing Field Notes</span></div>
-    <div><strong>Direct</strong><span>access to the team</span></div>
   </section>
 
   <section class="stop-product" id="experience" aria-labelledby="stop-product-title">
@@ -92,17 +90,19 @@ import { ACTIVITY, EXTERNAL_LINKS, FORMATS, PARTNER_GROUPS } from "../data/site-
 
     <article class="format format--waystation">
       <div class="format__label"><span>01</span><p>{FORMATS[0].context}</p></div>
-      <ResponsiveImage
-        src={FORMATS[0].image}
-        srcSmall={FORMATS[0].imageSmall}
-        alt="Concept rendering of a compact Rangeway Waystation with solar canopy, chargers, and glass lounge beside a desert highway"
-        width={768}
-        height={810}
-        sizes="(max-width: 800px) 100vw, 48vw"
-        class="format__image"
-        position="center 54%"
-      />
-      <p class="concept-label">Concept rendering</p>
+      <div class="format__waystation-media">
+        <ResponsiveImage
+          src={FORMATS[0].image}
+          srcSmall={FORMATS[0].imageSmall}
+          alt="Concept rendering of a compact Rangeway Waystation with solar canopy, chargers, and glass lounge beside a desert highway"
+          width={768}
+          height={810}
+          sizes="(max-width: 800px) 100vw, 48vw"
+          class="format__image"
+          position="center 54%"
+        />
+        <p class="concept-label">Concept rendering</p>
+      </div>
       <div class="format__copy">
         <p class="format__model">{FORMATS[0].operatingModel}</p>
         <h3>{FORMATS[0].name}</h3>
@@ -177,10 +177,22 @@ import { ACTIVITY, EXTERNAL_LINKS, FORMATS, PARTNER_GROUPS } from "../data/site-
           <div class="partner-proof__logos">
             {group.partners.slice(0, 2).map((partner) => (
               <img
-                src={partner.logo}
+                src={partner.name === "LoüTeq"
+                  ? "/images/partners/louteq-white.png"
+                  : partner.name === "Ekoenergetyka"
+                    ? "/images/partners/eko-trans.webp"
+                    : partner.logo}
+                class:list={[
+                  "partner-proof__logo",
+                  {
+                    "partner-proof__logo--screen": ["Carbon DC", "ChargeMate"].includes(partner.name),
+                    "partner-proof__logo--invert": ["Ekoenergetyka", "ChargeMate"].includes(partner.name),
+                    "partner-proof__logo--pebble": partner.name === "Pebble",
+                  },
+                ]}
                 alt={`${partner.name} logo`}
-                width={partner.logoWidth}
-                height={partner.logoHeight}
+                width={partner.name === "Ekoenergetyka" ? 512 : partner.logoWidth}
+                height={partner.name === "Ekoenergetyka" ? 512 : partner.logoHeight}
                 loading="lazy"
               />
             ))}
