@@ -131,19 +131,27 @@ test("homepage feedback keeps proof, disclosures, and partner marks attached to 
   assert.match(home, /alt="Concept rendering of a Rangeway Waystation with a timber solar canopy,[^"]+"/);
   assert.match(home, /width=\{1672\}[\s\S]*height=\{941\}/);
 
-  const proofRail = home.match(/<section class="proof-rail"[\s\S]*?<\/section>/)?.[0] ?? "";
-  assert.equal((proofRail.match(/<div>/g) ?? []).length, 2);
-  assert.match(proofRail, /<strong>03<\/strong><span>network formats<\/span>/);
-  assert.match(proofRail, /<strong>03<\/strong><span>public project regions<\/span>/);
-  assert.doesNotMatch(proofRail, /Field Notes|access to the team/i);
-  assert.match(css, /\.proof-rail\s*\{[^}]*grid-template-columns:\s*repeat\(2,1fr\)/s);
+  assert.doesNotMatch(home, /proof-rail|network formats|public project regions/i);
+  assert.doesNotMatch(css, /\.proof-rail/);
+
+  const operatingStrip = home.match(/<section class="operating-strip"[\s\S]*?<\/section>/)?.[0] ?? "";
+  assert.match(operatingStrip, /id="activity-status"/);
+  assert.match(operatingStrip, /Company activity/);
+  assert.match(operatingStrip, /Developing sites/);
+  assert.match(operatingStrip, /Building partnerships/);
+  assert.match(operatingStrip, /Raising capital/);
+  assert.match(operatingStrip, /href="\/contact"/);
+  assert.match(home, /href="#activity-status"><span>Scroll to activity<\/span>/);
+  assert.match(css, /\.operating-strip\s*\{[^}]*grid-template-columns:\s*auto 1fr auto/s);
 
   assert.match(css, /\.site-header__nav--left\s*\{[^}]*justify-content:\s*center/s);
   assert.match(css, /\.site-header__nav--right\s*\{[^}]*justify-content:\s*center/s);
 
-  const waystation = home.match(/<article class="format format--waystation">[\s\S]*?<\/article>/)?.[0] ?? "";
-  assert.match(waystation, /<div class="format__waystation-media">[\s\S]*<ResponsiveImage[\s\S]*<p class="concept-label">Concept rendering<\/p>[\s\S]*<\/div>/);
-  assert.match(css, /\.format__waystation-media\s*\{[^}]*position:\s*relative/s);
+  const formatCards = home.match(/<article class="format format-card format-card--[^"]+">[\s\S]*?<\/article>/g) ?? [];
+  assert.equal(formatCards.length, 3);
+  for (const card of formatCards) {
+    assert.match(card, /<ResponsiveImage[\s\S]*?<p class="concept-label">Concept rendering<\/p>[\s\S]*?<div class="format-card__panel">/);
+  }
 
   const partnerProof = home.match(/<section class="partner-proof"[\s\S]*?<\/section>/)?.[0] ?? "";
   assert.match(partnerProof, /\/images\/partners\/louteq-white\.png/);
@@ -163,7 +171,7 @@ test("homepage feedback keeps proof, disclosures, and partner marks attached to 
   assert.match(css, /\.current-activity__intro\s*\{[^}]*position:\s*sticky/s);
 });
 
-test("final homepage polish centers desktop navigation, reduces format cards, and links partner logos", () => {
+test("final homepage polish centers desktop navigation, unifies format cards, and links partner logos", () => {
   const home = read("src/pages/index.astro");
   const css = read("src/styles/global.css");
 
@@ -174,26 +182,23 @@ test("final homepage polish centers desktop navigation, reduces format cards, an
   assert.match(css, /\.site-header__nav--left\s*\{[^}]*justify-content:\s*center/s);
   assert.match(css, /\.site-header__nav--right\s*\{[^}]*justify-content:\s*center/s);
 
-  const waystationRule = css.match(/\.format--waystation\s*\{(?<rule>[^}]*)\}/)?.groups?.rule ?? "";
-  assert.match(waystationRule, /max-width:\s*1320px/);
-  assert.match(css, /\.format__waystation-media\s*\{[^}]*aspect-ratio:\s*\.95/s);
+  const formatCardRule = css.match(/\.format-card\s*\{(?<rule>[^}]*)\}/)?.groups?.rule ?? "";
+  assert.match(formatCardRule, /width:\s*calc\(100%\s*-\s*\(2\s*\*\s*var\(--page-pad\)\)\)/);
+  assert.match(formatCardRule, /max-width:\s*1280px/);
+  assert.match(formatCardRule, /min-height:\s*740px/);
+  assert.match(css, /\.format-card::after\s*\{[^}]*linear-gradient\(90deg/s);
+  assert.match(css, /\.format-card \.format__image\s*\{[^}]*position:\s*absolute;[^}]*inset:\s*0/s);
+  assert.match(css, /\.format-card__panel\s*\{[^}]*width:\s*min\(530px,55%\);[^}]*min-height:\s*740px/s);
+  assert.match(css, /\.format-card__panel \.format__label\s*\{[^}]*margin-bottom:\s*auto/s);
+  assert.match(css, /\.format-card__panel \.format__model\s*\{[^}]*color:\s*var\(--sun\)/s);
 
-  const basecampRule = css.match(/\.format--basecamp\s*\{(?<rule>[^}]*)\}/)?.groups?.rule ?? "";
-  assert.match(basecampRule, /max-width:\s*1280px/);
-  assert.match(basecampRule, /min-height:\s*740px/);
-  assert.match(css, /\.format__basecamp-panel\s*\{[^}]*min-height:\s*740px/s);
-
-  const summitRule = css.match(/\.format--summit\s*\{(?<rule>[^}]*)\}/)?.groups?.rule ?? "";
-  assert.match(summitRule, /max-width:\s*1180px/);
-  assert.match(css, /\.format__summit-title h3\s*\{[^}]*font-size:\s*clamp\(4rem,7vw,7rem\)/s);
-  assert.match(css, /\.format__summit-media\s*\{[^}]*min-height:\s*560px/s);
-  assert.match(css, /\.format__summit-copy\s*\{[^}]*padding:\s*34px clamp\(28px,6vw,76px\) 48px 0/s);
+  assert.doesNotMatch(home, /format--waystation|format--basecamp|format--summit|format__waystation|format__basecamp|format__summit/);
+  assert.doesNotMatch(css, /format--waystation|format--basecamp|format--summit|format__waystation|format__basecamp|format__summit/);
 
   const mobileRules = css.match(/@media \(max-width: 820px\)\s*\{(?<rules>[\s\S]*?)\n\}/)?.groups?.rules ?? "";
-  assert.match(mobileRules, /\.format__waystation-media\s*\{[^}]*aspect-ratio:\s*1\s*\/\s*\.94/s);
-  assert.match(mobileRules, /\.format--basecamp\s*\{[^}]*min-height:\s*620px/s);
-  assert.match(mobileRules, /\.format__basecamp-panel\s*\{[^}]*min-height:\s*620px/s);
-  assert.match(mobileRules, /\.format__summit-media\s*\{[^}]*min-height:\s*340px/s);
+  assert.match(mobileRules, /\.format-card\s*\{[^}]*min-height:\s*620px/s);
+  assert.match(mobileRules, /\.format-card__panel\s*\{[^}]*min-height:\s*620px/s);
+  assert.match(mobileRules, /\.format-card::after\s*\{[^}]*linear-gradient\(180deg/s);
 
   const partnerProof = home.match(/<section class="partner-proof"[\s\S]*?<\/section>/)?.[0] ?? "";
   assert.match(partnerProof, /<a\s+href=\{partner\.href\}\s+target="_blank"\s+rel="noopener noreferrer"/);
