@@ -214,18 +214,18 @@ test("built pages keep no-JavaScript navigation, reduced-motion safety, and stab
 
 test("built render imagery discloses concept status on every affected route", () => {
   const expectedByRoute = {
-    "index.html": 6,
-    "network/index.html": 1,
-    "network/waystation/index.html": 1,
-    "network/basecamp/index.html": 2,
-    "network/summit/index.html": 2,
-    "our-story/index.html": 1,
+    "index.html": { labels: 5, alts: 6 },
+    "network/index.html": { labels: 1, alts: 1 },
+    "network/waystation/index.html": { labels: 1, alts: 1 },
+    "network/basecamp/index.html": { labels: 2, alts: 2 },
+    "network/summit/index.html": { labels: 2, alts: 2 },
+    "our-story/index.html": { labels: 1, alts: 1 },
   };
 
   for (const [path, expected] of Object.entries(expectedByRoute)) {
     const html = byPath[path];
-    assert.equal((html.match(/>Concept rendering<\/p>/g) ?? []).length, expected, `${path} visible concept labels`);
-    assert.equal((html.match(/alt="Concept rendering of /g) ?? []).length, expected, `${path} concept-aware alt text`);
+    assert.equal((html.match(/>Concept rendering<\/p>/g) ?? []).length, expected.labels, `${path} visible concept labels`);
+    assert.equal((html.match(/alt="Concept rendering (?:of|for) /g) ?? []).length, expected.alts, `${path} concept-aware alt text`);
   }
 });
 

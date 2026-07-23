@@ -4,6 +4,8 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  schedule:
+    - cron: "17 * * * *"
 
 concurrency:
   group: deploy-rangeway-redesign
@@ -37,10 +39,18 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          cd dist
-          git init -q -b deploy-dist
+          publish_dir="$(mktemp -d)"
+          git clone -q --branch deploy-dist --single-branch \
+            "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" \
+            "$publish_dir"
+          rsync -a --delete --exclude=".git/" dist/ "$publish_dir/"
+          cd "$publish_dir"
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "No Newsroom changes to publish"
+            exit 0
+          fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A
           git commit -q -m "deploy ${GITHUB_SHA}"
-          git push -q --force "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" deploy-dist
+          git push -q origin deploy-dist

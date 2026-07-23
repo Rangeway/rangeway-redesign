@@ -4,6 +4,14 @@ import ResponsiveImage from "../components/ResponsiveImage.astro";
 import RouteBoard from "../components/RouteBoard.astro";
 import SiteLayout from "../layouts/SiteLayout.astro";
 import { ACTIVITY, EXTERNAL_LINKS, FORMATS, PARTNER_GROUPS } from "../data/site-content";
+import { loadLatestPressRelease } from "../lib/newsroom-feed";
+
+const latestActivity = await loadLatestPressRelease(ACTIVITY[0]);
+const latestActivityImage = latestActivity.image ?? "/images/basecamp-stlouis-arch.webp";
+const latestActivityImageSmall = latestActivity.image ?? "/images/basecamp-stlouis-arch-640.webp";
+const latestActivityImageAlt = latestActivity.image
+  ? `${latestActivity.imageLabel ? "Concept rendering for" : "Newsroom image for"} ${latestActivity.title}`
+  : "Concept rendering of a Rangeway Basecamp lounge and chargers with the Gateway Arch and timber tower in St. Louis";
 ---
 
 <SiteLayout
@@ -225,20 +233,19 @@ import { ACTIVITY, EXTERNAL_LINKS, FORMATS, PARTNER_GROUPS } from "../data/site-
     </div>
     <article class="activity-story">
       <ResponsiveImage
-        src="/images/basecamp-stlouis-arch.webp"
-        srcSmall="/images/basecamp-stlouis-arch-640.webp"
-        alt="Concept rendering of a Rangeway Basecamp lounge and chargers with the Gateway Arch and timber tower in St. Louis"
-        width={832}
-        height={834}
+        src={latestActivityImage}
+        srcSmall={latestActivityImageSmall}
+        alt={latestActivityImageAlt}
+        width={latestActivity.image ? 1024 : 832}
+        height={latestActivity.image ? 1024 : 834}
         sizes="(max-width: 800px) 100vw, 56vw"
         class="activity-story__image"
         position="center 58%"
       />
-      <p class="concept-label">Concept rendering</p>
       <div class="activity-story__copy">
-        <p>{ACTIVITY[0].date} · {ACTIVITY[0].type}</p>
-        <h3>{ACTIVITY[0].title}</h3>
-        <a class="text-link" href={ACTIVITY[0].href} target="_blank" rel="noopener noreferrer">Read the announcement <span aria-hidden="true">↗</span></a>
+        <p>{latestActivity.date} · {latestActivity.type}</p>
+        <h3>{latestActivity.title}</h3>
+        <a class="text-link" href={latestActivity.href} target="_blank" rel="noopener noreferrer">Read the announcement <span aria-hidden="true">↗</span></a>
       </div>
     </article>
     <div class="activity-links">

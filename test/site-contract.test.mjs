@@ -96,6 +96,22 @@ test("the published preview origin is redesign.rangeway.co", () => {
   assert.match(readme, /non-production/i);
 });
 
+test("the homepage announcement follows the latest Newsroom press RSS item", () => {
+  const home = read("src/pages/index.astro");
+  const loader = read("src/lib/newsroom-feed.ts");
+  const workflow = read(".github/workflows/deploy.yml");
+
+  assert.match(loader, /https:\/\/newsroom\.rangeway\.co\/feed-press\.xml/);
+  assert.match(home, /await loadLatestPressRelease\(ACTIVITY\[0\]\)/);
+  assert.match(home, /latestActivity\.image/);
+  assert.match(home, /latestActivity\.title/);
+  assert.match(home, /latestActivity\.href/);
+  const activityStory = home.match(/<article class="activity-story">[\s\S]*?<\/article>/)?.[0] ?? "";
+  assert.doesNotMatch(activityStory, /concept-label/);
+  assert.match(workflow, /schedule:\s*\n\s*-\s*cron:\s*"17 \* \* \* \*"/);
+  assert.match(workflow, /No Newsroom changes to publish/);
+});
+
 test("the shared footer exposes the approved social channels as accessible icon links", () => {
   const footer = read("src/components/SiteFooter.astro");
 
@@ -174,6 +190,7 @@ test("homepage feedback keeps proof, disclosures, and partner marks attached to 
   assert.doesNotMatch(reverseRule, /brightness\(0\)/);
 
   assert.match(css, /\.current-activity__intro\s*\{[^}]*position:\s*sticky/s);
+  assert.match(css, /\.closing-action > div:last-child\s*\{[^}]*align-self:\s*center/s);
 });
 
 test("final homepage polish centers desktop navigation, unifies format cards, and links partner logos", () => {
@@ -540,19 +557,23 @@ test("contact success, failure, and timeout states remain semantic without repla
 
 test("every unbuilt-place image carries visible concept disclosure and accurate alt framing", () => {
   const expectedByPage = new Map([
-    ["src/pages/index.astro", 6],
-    ["src/pages/network.astro", 1],
-    ["src/pages/network/waystation.astro", 1],
-    ["src/pages/network/basecamp.astro", 2],
-    ["src/pages/network/summit.astro", 2],
-    ["src/pages/our-story.astro", 1],
+    ["src/pages/index.astro", { labels: 5, staticAlts: 5 }],
+    ["src/pages/network.astro", { labels: 1, staticAlts: 1 }],
+    ["src/pages/network/waystation.astro", { labels: 1, staticAlts: 1 }],
+    ["src/pages/network/basecamp.astro", { labels: 2, staticAlts: 2 }],
+    ["src/pages/network/summit.astro", { labels: 2, staticAlts: 2 }],
+    ["src/pages/our-story.astro", { labels: 1, staticAlts: 1 }],
   ]);
 
   for (const [path, expected] of expectedByPage) {
     const source = read(path);
-    assert.equal((source.match(/>Concept rendering<\/p>/g) ?? []).length, expected, `${path} visible labels`);
-    assert.equal((source.match(/alt="Concept rendering of /g) ?? []).length, expected, `${path} concept-aware alt text`);
+    assert.equal((source.match(/>Concept rendering<\/p>/g) ?? []).length, expected.labels, `${path} visible labels`);
+    assert.equal((source.match(/alt="Concept rendering of /g) ?? []).length, expected.staticAlts, `${path} concept-aware alt text`);
   }
+
+  const home = read("src/pages/index.astro");
+  assert.match(home, /latestActivity\.imageLabel \? "Concept rendering for" : "Newsroom image for"/);
+  assert.match(home, /alt=\{latestActivityImageAlt\}/);
 
   const css = read("src/styles/global.css");
   assert.match(css, /\.concept-label\s*\{/);
