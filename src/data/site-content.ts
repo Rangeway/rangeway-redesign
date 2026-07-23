@@ -89,7 +89,7 @@ export const PROJECTS = [
     region: "Hawaiʻi Island",
     corridor: "Island development",
     activity:
-      "A relationship-development effort exploring how hospitality-first charging could fit Hawaiʻi Island travel.",
+      "Inspired by the Hawaiian practice of welcoming and caring for guests, the project will pair ultra-fast charging with a comfortable driver’s lounge and a strong sense of place for the island road.",
     href: EXTERNAL_LINKS.hawaii,
     linkLabel: "Hawaii project",
   },
