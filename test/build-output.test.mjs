@@ -32,13 +32,17 @@ test("every built page is non-indexing and free of prohibited people, formats, a
   ]) assert.doesNotMatch(all, new RegExp(prohibited, "i"));
 });
 
-test("built Team page includes James Regan and a unified grayscale portrait field", () => {
+test("built Team page uses the approved roster order and unified grayscale portrait grid", () => {
   const team = byPath["team/index.html"];
 
-  assert.match(team, /James Regan/);
+  const visibleOrder = ["Zak Winnick", "Luke Schuette", "James Regan", "Stephanie McGreevy", "Theo Reichgelt"]
+    .map((name) => team.indexOf(`>${name}</h2>`));
+  assert.ok(visibleOrder.every((index) => index >= 0));
+  assert.deepEqual(visibleOrder, [...visibleOrder].sort((a, b) => a - b));
   assert.match(team, /Finance and Strategy/);
   assert.match(team, /\/images\/team\/james-regan\.webp/);
   assert.match(team, /filter:grayscale\((?:1)?\)/);
+  assert.match(team, /grid-template-columns:repeat\(6,minmax\(0,1fr\)\)/);
 });
 
 test("built Partners page uses the dark Pebble logo", () => {
