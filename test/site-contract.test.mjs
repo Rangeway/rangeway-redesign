@@ -163,6 +163,10 @@ test("final homepage polish centers desktop navigation, reduces format cards, an
   const home = read("src/pages/index.astro");
   const css = read("src/styles/global.css");
 
+  assert.match(css, /\.site-header\s*\{[^}]*position:\s*fixed/s);
+  assert.doesNotMatch(css, /\.site-header\s*\{[^}]*position:\s*absolute/s);
+  assert.match(css, /html\s*\{[^}]*scroll-padding-top:\s*116px/s);
+  assert.match(css, /@media \(max-width:\s*820px\)[\s\S]*html\s*\{[^}]*scroll-padding-top:\s*90px/s);
   assert.match(css, /\.site-header__nav--left\s*\{[^}]*justify-content:\s*center/s);
   assert.match(css, /\.site-header__nav--right\s*\{[^}]*justify-content:\s*center/s);
 
