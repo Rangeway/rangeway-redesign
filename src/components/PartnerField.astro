@@ -16,7 +16,7 @@ import { PARTNER_GROUPS } from "../data/site-content";
           <a href={partner.href} target="_blank" rel="noopener noreferrer" aria-label={`Visit ${partner.name}`}>
             <span class="partner-field__logo">
               <img
-                src={partner.logo}
+                src={"partnerPageLogo" in partner ? partner.partnerPageLogo : partner.logo}
                 alt={`${partner.name} logo`}
                 width={partner.logoWidth}
                 height={partner.logoHeight}

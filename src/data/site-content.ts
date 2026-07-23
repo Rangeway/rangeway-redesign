@@ -176,7 +176,7 @@ export const PARTNER_GROUPS = [
     title: "Amenities",
     promise: "Comfort, food, and the physical experience around the charge.",
     partners: [
-      { name: "Pebble", role: "Mobile driver lounges", logo: "/images/partners/pebble-trans.png", logoWidth: 1024, logoHeight: 681, href: "https://pebblelife.com" },
+      { name: "Pebble", role: "Mobile driver lounges", logo: "/images/partners/pebble-trans.png", partnerPageLogo: "/images/partners/pebble.png", logoWidth: 1024, logoHeight: 681, href: "https://pebblelife.com" },
       { name: "Rivian", role: "Early-site amenity vehicles", logo: "/images/partners/rivian.png", logoWidth: 1375, logoHeight: 1334, href: "https://rivian.com" },
     ],
   },
