@@ -86,13 +86,13 @@ test("public projects are Mojave, St. Louis, and Hawaii with their current proje
   assert.doesNotMatch(publicSite, /west\s*(?:\/|to)\s*east/i);
 });
 
-test("the published preview origin is redesign.rangeway.co", () => {
+test("the published preview origin is preview.rangeway.co", () => {
   const astroConfig = read("astro.config.mjs");
   const readme = read("README.md");
 
-  assert.match(astroConfig, /site:\s*"https:\/\/redesign\.rangeway\.co"/);
+  assert.match(astroConfig, /site:\s*"https:\/\/preview\.rangeway\.co"/);
   assert.doesNotMatch(astroConfig, /preview\.rangeway\.invalid/);
-  assert.match(readme, /https:\/\/redesign\.rangeway\.co/);
+  assert.match(readme, /https:\/\/preview\.rangeway\.co/);
   assert.match(readme, /non-production/i);
 });
 

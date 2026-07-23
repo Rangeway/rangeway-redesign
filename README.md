@@ -2,7 +2,7 @@
 
 This repository contains a non-production, static Astro preview for a fresh Rangeway website. It uses Rangeway's approved facts and media inside an IONNA-inspired operating-company architecture, without reusing the rejected preview site's components, page shells, or section grammar.
 
-The preview is intentionally non-indexing. Its configured site URL is `https://redesign.rangeway.co`; this is a temporary review hostname, not the production Rangeway site.
+The preview is intentionally non-indexing. Its configured site URL is `https://preview.rangeway.co`; this is a temporary review hostname, not the production Rangeway site.
 
 ## Local review
 
@@ -26,7 +26,7 @@ npm test && npm run check && npm run build && node --test test/build-output.test
 
 ## Deployment
 
-The static `dist/` output is served from the Rangeway VPS at `https://redesign.rangeway.co`. The hostname remains `noindex, nofollow` while this version is under review.
+The static `dist/` output is served from the Rangeway VPS at `https://preview.rangeway.co`. The hostname remains `noindex, nofollow` while this version is under review.
 
 ## Routes
 
