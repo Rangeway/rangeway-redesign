@@ -89,7 +89,7 @@ export const PROJECTS = [
     region: "Hawaiʻi Island",
     corridor: "Island development",
     activity:
-      "Rooted in hoʻokipa—Hawaiian hospitality—the project pairs ultra-fast charging with a driver’s lounge and a strong sense of place.",
+      "Rooted in hoʻokipa—Hawaiian hospitality—the project will create a welcoming stop shaped by local culture and a strong sense of place.",
     href: EXTERNAL_LINKS.hawaii,
     linkLabel: "Hawaii project",
   },
