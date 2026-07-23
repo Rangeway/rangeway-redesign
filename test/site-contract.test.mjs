@@ -72,6 +72,10 @@ test("public projects are Mojave, St. Louis, and Hawaii with their current proje
 
   assert.match(data, /mojave:\s*"https:\/\/mojave\.rangeway\.co"/);
   assert.match(data, /hawaii:\s*"https:\/\/hawaii\.rangeway\.co"/);
+  assert.match(
+    data,
+    /Inspired by the Hawaiian practice of welcoming and caring for guests, the project will pair ultra-fast charging with a comfortable driver’s lounge and a strong sense of place for the island road\./,
+  );
   assert.equal((data.match(/\bplace:\s*"/g) ?? []).length, 3);
   assert.doesNotMatch(publicSite, /Bozeman|rangewaybozeman|Yellowstone|I-90/i);
 
