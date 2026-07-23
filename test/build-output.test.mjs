@@ -41,6 +41,15 @@ test("built Team page includes James Regan and a unified grayscale portrait fiel
   assert.match(team, /filter:grayscale\((?:1)?\)/);
 });
 
+test("built Partners page uses the dark Pebble logo", () => {
+  const partners = byPath["partners/index.html"];
+  const home = byPath["index.html"];
+
+  assert.match(partners, /\/images\/partners\/pebble\.png/);
+  assert.doesNotMatch(partners, /\/images\/partners\/pebble-trans\.png/);
+  assert.match(home, /\/images\/partners\/pebble-trans\.png/);
+});
+
 test("built project surfaces publish Mojave, St. Louis, and Hawaii in the approved order", () => {
   const all = htmlFiles.map(({ html }) => html).join("\n");
   assert.doesNotMatch(all, /Bozeman|rangewaybozeman|rangewaymojave\.com|Yellowstone|I-90/i);

@@ -336,6 +336,7 @@ test("company people include James Regan once and use smaller grayscale portrait
 test("partner family leads with visible logos and role context", () => {
   const field = read("src/components/PartnerField.astro");
   const partners = read("src/pages/partners.astro");
+  const data = read("src/data/site-content.ts");
 
   assert.match(partners, /<PartnerField/);
   assert.match(field, /PARTNER_GROUPS\.map/);
@@ -343,6 +344,8 @@ test("partner family leads with visible logos and role context", () => {
   assert.match(field, /partner\.role/);
   assert.match(field, /Site-specific configurations vary by project phase/);
   assert.doesNotMatch(field, /partner-row|index-row|reveal/);
+  assert.match(data, /name:\s*"Pebble"[\s\S]*logo:\s*"\/images\/partners\/pebble-trans\.png"[\s\S]*partnerPageLogo:\s*"\/images\/partners\/pebble\.png"/);
+  assert.match(field, /"partnerPageLogo" in partner \? partner\.partnerPageLogo : partner\.logo/);
 });
 
 test("deferred asset cleanup removes duplicate font CSS and reserves partner logo space", () => {
