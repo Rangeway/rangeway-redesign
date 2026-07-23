@@ -115,16 +115,6 @@ export const TEAM = [
     linkedin: "https://www.linkedin.com/in/luke-d-sch%C3%BCette/",
   },
   {
-    name: "Theo Reichgelt",
-    role: "Brand and Growth",
-    bio: "Theo founded Nexxt Industry, an eMobility marketing agency, and specializes in charging-network brand development and market positioning. He also hosts The eMobility Marketing Podcast.",
-    image: "/images/team/theo-reichgelt.webp",
-    imageSmall: "/images/team/theo-reichgelt-640.webp",
-    imageWidth: 800,
-    imageHeight: 800,
-    linkedin: "https://www.linkedin.com/in/theoreichgelt/",
-  },
-  {
     name: "James Regan",
     role: "Finance and Strategy",
     bio: "James has built his career in corporate development and business analytics, and serves as Managing Partner at CapitalWorks. He specializes in infrastructure project financing and capital strategy for the buildout of the Rangeway network.",
@@ -141,6 +131,16 @@ export const TEAM = [
     imageWidth: 352,
     imageHeight: 352,
     linkedin: "https://www.linkedin.com/in/smcgreevy/",
+  },
+  {
+    name: "Theo Reichgelt",
+    role: "Brand and Growth",
+    bio: "Theo founded Nexxt Industry, an eMobility marketing agency, and specializes in charging-network brand development and market positioning. He also hosts The eMobility Marketing Podcast.",
+    image: "/images/team/theo-reichgelt.webp",
+    imageSmall: "/images/team/theo-reichgelt-640.webp",
+    imageWidth: 800,
+    imageHeight: 800,
+    linkedin: "https://www.linkedin.com/in/theoreichgelt/",
   },
 ] as const;
 

@@ -313,7 +313,7 @@ test("Company hero uses the desert mountain charging plaza media", () => {
   assert.doesNotMatch(hero, /hero-mountain-waystation/);
 });
 
-test("company people include James Regan once and use smaller grayscale portraits", () => {
+test("company people use the approved order and a balanced grayscale portrait grid", () => {
   const data = read("src/data/site-content.ts");
   const field = read("src/components/PeopleField.astro");
   const team = read("src/pages/team.astro");
@@ -327,8 +327,14 @@ test("company people include James Regan once and use smaller grayscale portrait
   }
   assert.match(data, /role:\s*"Finance and Strategy"/);
   assert.match(data, /image:\s*"\/images\/team\/james-regan\.webp"/);
-  assert.match(field, /\.people-field__person\s*\{[^}]*grid-column:\s*span 5/s);
-  assert.match(field, /\.people-field__person--5\s*\{[^}]*grid-column:\s*4\s*\/\s*span 5/s);
+  const rosterOrder = ["Zak Winnick", "Luke Schuette", "James Regan", "Stephanie McGreevy", "Theo Reichgelt"]
+    .map((name) => data.indexOf(`name: "${name}"`));
+  assert.deepEqual(rosterOrder, [...rosterOrder].sort((a, b) => a - b));
+  assert.match(field, /\.people-field\s*\{[^}]*grid-template-columns:\s*repeat\(6,minmax\(0,1fr\)\)[^}]*max-width:\s*1320px/s);
+  assert.match(field, /\.people-field__person\s*\{[^}]*grid-column:\s*span 2/s);
+  assert.match(field, /\.people-field__person--4\s*\{[^}]*grid-column:\s*2\s*\/\s*span 2/s);
+  assert.match(field, /\.people-field__person--5\s*\{[^}]*grid-column:\s*4\s*\/\s*span 2/s);
+  assert.doesNotMatch(field, /transform:\s*translateY/);
   assert.match(field, /:global\(\.people-field__portrait img\)\s*\{[^}]*filter:\s*grayscale\(1\)/s);
   assert.doesNotMatch(`${data}\n${field}\n${team}`, /Raul Dominguez|Paul Devon/i);
 });
