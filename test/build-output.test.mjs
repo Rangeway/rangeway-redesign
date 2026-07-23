@@ -27,9 +27,18 @@ test("every built page is non-indexing and free of prohibited people, formats, a
     assert.doesNotMatch(html, /\.reveal[^}]*opacity\s*:\s*0/s, `${path} cannot gate content behind reveal CSS`);
   }
   for (const prohibited of [
-    "Trailhead", "James Regan", "Jim Regan", "Raul Dominguez", "Paul Devon",
+    "Trailhead", "Raul Dominguez", "Paul Devon",
     "serving drivers today", "live availability", "available now", "location finder",
   ]) assert.doesNotMatch(all, new RegExp(prohibited, "i"));
+});
+
+test("built Team page includes James Regan and a unified grayscale portrait field", () => {
+  const team = byPath["team/index.html"];
+
+  assert.match(team, /James Regan/);
+  assert.match(team, /Finance and Strategy/);
+  assert.match(team, /\/images\/team\/james-regan\.webp/);
+  assert.match(team, /filter:grayscale\((?:1)?\)/);
 });
 
 test("built project surfaces publish Mojave, St. Louis, and Hawaii in the approved order", () => {

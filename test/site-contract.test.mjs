@@ -24,6 +24,7 @@ test("fresh operating homepage contract", () => {
     "Zak Winnick",
     "Luke Schuette",
     "Theo Reichgelt",
+    "James Regan",
     "Stephanie McGreevy",
   ]) {
     assert.match(data, new RegExp(name));
@@ -31,8 +32,6 @@ test("fresh operating homepage contract", () => {
 
   for (const forbidden of [
     "Trailhead",
-    "James Regan",
-    "Jim Regan",
     "Raul Dominguez",
     "Paul Devon",
     "Host a",
@@ -314,7 +313,7 @@ test("Company hero uses the desert mountain charging plaza media", () => {
   assert.doesNotMatch(hero, /hero-mountain-waystation/);
 });
 
-test("company people are visible once and limited to the approved roster", () => {
+test("company people include James Regan once and use smaller grayscale portraits", () => {
   const data = read("src/data/site-content.ts");
   const field = read("src/components/PeopleField.astro");
   const team = read("src/pages/team.astro");
@@ -323,10 +322,15 @@ test("company people are visible once and limited to the approved roster", () =>
   assert.match(field, /<article/);
   assert.match(field, /<h2>{person\.name}<\/h2>/);
   assert.match(team, /<PeopleField/);
-  for (const approved of ["Zak Winnick", "Luke Schuette", "Theo Reichgelt", "Stephanie McGreevy"]) {
+  for (const approved of ["Zak Winnick", "Luke Schuette", "Theo Reichgelt", "James Regan", "Stephanie McGreevy"]) {
     assert.equal((data.match(new RegExp(approved, "g")) ?? []).length, 1);
   }
-  assert.doesNotMatch(`${data}\n${field}\n${team}`, /James|Jim Regan|Raul Dominguez|Paul Devon/i);
+  assert.match(data, /role:\s*"Finance and Strategy"/);
+  assert.match(data, /image:\s*"\/images\/team\/james-regan\.webp"/);
+  assert.match(field, /\.people-field__person\s*\{[^}]*grid-column:\s*span 5/s);
+  assert.match(field, /\.people-field__person--5\s*\{[^}]*grid-column:\s*4\s*\/\s*span 5/s);
+  assert.match(field, /:global\(\.people-field__portrait img\)\s*\{[^}]*filter:\s*grayscale\(1\)/s);
+  assert.doesNotMatch(`${data}\n${field}\n${team}`, /Raul Dominguez|Paul Devon/i);
 });
 
 test("partner family leads with visible logos and role context", () => {
