@@ -12,6 +12,7 @@ export const NAV_LINKS = [
   { label: "Network", href: "/network", external: false },
   { label: "Projects", href: "/#projects", external: false },
   { label: "Company", href: "/our-story", external: false },
+  { label: "Team", href: "/team", external: false },
   { label: "Partners", href: "/partners", external: false },
   { label: "Investors", href: "/investors", external: false },
   { label: "Newsroom", href: "https://newsroom.rangeway.co", external: true },
