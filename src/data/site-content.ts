@@ -89,7 +89,7 @@ export const PROJECTS = [
     region: "Hawaiʻi Island",
     corridor: "Island development",
     activity:
-      "Inspired by Hawaiian hospitality, the project pairs ultra-fast charging with a comfortable driver’s lounge and a sense of place.",
+      "Rooted in hoʻokipa—Hawaiian hospitality—the project pairs ultra-fast charging with a driver’s lounge and a strong sense of place.",
     href: EXTERNAL_LINKS.hawaii,
     linkLabel: "Hawaii project",
   },
