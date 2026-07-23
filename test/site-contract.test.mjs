@@ -14,8 +14,8 @@ test("fresh operating homepage contract", () => {
   assert.match(home, /Travel farther\. Stop better\./);
   assert.match(header, /site-header__capsule/);
   assert.match(header, /site-header__brand/);
-  assert.ok(data.indexOf("Bozeman") < data.indexOf("Mojave"));
-  assert.ok(data.indexOf("Mojave") < data.indexOf("St. Louis"));
+  assert.ok(data.indexOf('place: "Mojave"') < data.indexOf('place: "St. Louis"'));
+  assert.ok(data.indexOf('place: "St. Louis"') < data.indexOf('place: "Hawaii"'));
 
   for (const name of [
     "Waystation",
@@ -56,6 +56,28 @@ test("fresh operating homepage contract", () => {
   }
 
   assert.doesNotMatch(css, /\.reveal[^}]*opacity\s*:\s*0/s);
+});
+
+test("public projects are Mojave, St. Louis, and Hawaii with their current project links", () => {
+  const data = read("src/data/site-content.ts");
+  const home = read("src/pages/index.astro");
+  const story = read("src/pages/our-story.astro");
+  const investors = read("src/pages/investors.astro");
+  const routeBoard = read("src/components/RouteBoard.astro");
+  const css = read("src/styles/global.css");
+  const readme = read("README.md");
+  const publicSite = `${data}\n${home}\n${story}\n${investors}\n${routeBoard}\n${css}\n${readme}`;
+
+  assert.match(data, /mojave:\s*"https:\/\/mojave\.rangeway\.co"/);
+  assert.match(data, /hawaii:\s*"https:\/\/hawaii\.rangeway\.co"/);
+  assert.equal((data.match(/\bplace:\s*"/g) ?? []).length, 3);
+  assert.doesNotMatch(publicSite, /Bozeman|rangewaybozeman|Yellowstone|I-90/i);
+
+  const mojave = data.indexOf('place: "Mojave"');
+  const stLouis = data.indexOf('place: "St. Louis"');
+  const hawaii = data.indexOf('place: "Hawaii"');
+  assert.ok(mojave > -1 && mojave < stLouis && stLouis < hawaii);
+  assert.doesNotMatch(publicSite, /west\s*(?:\/|to)\s*east/i);
 });
 
 test("the published preview origin is redesign.rangeway.co", () => {
@@ -100,7 +122,7 @@ test("homepage feedback keeps proof, disclosures, and partner marks attached to 
 
   assert.match(home, /src="\/images\/hero-mountain-waystation\.webp"/);
   assert.match(home, /srcSmall="\/images\/hero-mountain-waystation-640\.webp"/);
-  assert.match(home, /alt="Concept rendering of a Rangeway Waystation in Bozeman, Montana,[^"]+"/);
+  assert.match(home, /alt="Concept rendering of a Rangeway Waystation with a timber solar canopy,[^"]+"/);
   assert.match(home, /width=\{1672\}[\s\S]*height=\{941\}/);
 
   const proofRail = home.match(/<section class="proof-rail"[\s\S]*?<\/section>/)?.[0] ?? "";

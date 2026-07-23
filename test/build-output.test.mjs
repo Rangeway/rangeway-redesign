@@ -32,6 +32,21 @@ test("every built page is non-indexing and free of prohibited people, formats, a
   ]) assert.doesNotMatch(all, new RegExp(prohibited, "i"));
 });
 
+test("built project surfaces publish Mojave, St. Louis, and Hawaii in the approved order", () => {
+  const all = htmlFiles.map(({ html }) => html).join("\n");
+  assert.doesNotMatch(all, /Bozeman|rangewaybozeman|rangewaymojave\.com|Yellowstone|I-90/i);
+
+  for (const path of ["index.html", "network/index.html", "our-story/index.html", "investors/index.html"]) {
+    const html = byPath[path];
+    const mojave = html.indexOf("Mojave");
+    const stLouis = html.indexOf("St. Louis");
+    const hawaii = html.indexOf("Hawaii");
+    assert.ok(mojave > -1 && mojave < stLouis && stLouis < hawaii, `${path} project order`);
+    assert.match(html, /href="https:\/\/mojave\.rangeway\.co"/, `${path} Mojave link`);
+    assert.match(html, /href="https:\/\/hawaii\.rangeway\.co"/, `${path} Hawaii link`);
+  }
+});
+
 test("primary routes expose distinct main families and multiple visible route-defining sections", () => {
   const routes = {
     "index.html": ["home-page", ["Travel farther.", "Indoor comfort", "Public project announcements"]],

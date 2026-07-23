@@ -19,9 +19,9 @@ export const NAV_LINKS = [
 ] as const;
 
 export const EXTERNAL_LINKS = {
-  bozeman: "https://rangewaybozeman.com",
-  mojave: "https://rangewaymojave.com",
+  mojave: "https://mojave.rangeway.co",
   stLouis: "https://newsroom.rangeway.co/press/luke-schuette-louteq/",
+  hawaii: "https://hawaii.rangeway.co",
   fieldNotes: "https://fieldnotes.rangeway.co",
   newsroom: "https://newsroom.rangeway.co",
   investorHub: "https://investors.rangeway.co",
@@ -66,16 +66,7 @@ export const FORMATS = [
 
 export const PROJECTS = [
   {
-    place: "Bozeman",
-    region: "Montana",
-    corridor: "I-90 · Exit 299",
-    activity:
-      "A premium charging plaza in development near Bozeman Yellowstone International Airport, planned to grow into a Basecamp.",
-    href: EXTERNAL_LINKS.bozeman,
-    linkLabel: "Bozeman project",
-  },
-  {
-    place: "Mojave / Antelope Valley",
+    place: "Mojave",
     region: "California",
     corridor: "CA-14",
     activity:
@@ -91,6 +82,15 @@ export const PROJECTS = [
       "A joint venture with LoüTeq to develop premium charging locations across the St. Louis region.",
     href: EXTERNAL_LINKS.stLouis,
     linkLabel: "St. Louis announcement",
+  },
+  {
+    place: "Hawaii",
+    region: "Hawaiʻi Island",
+    corridor: "Island development",
+    activity:
+      "A relationship-development effort exploring how hospitality-first charging could fit Hawaiʻi Island travel.",
+    href: EXTERNAL_LINKS.hawaii,
+    linkLabel: "Hawaii project",
   },
 ] as const;
 
