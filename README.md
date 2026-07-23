@@ -62,7 +62,7 @@ The header uses a native `details`/`summary` mobile menu, so navigation remains 
 
 The site may describe Rangeway as designing, developing, publishing, partnering, hiring, raising, and building. It does not claim that a Rangeway location is open, that drivers are being served today, or that live status, pricing, hours, uptime, connector availability, or opening dates exist.
 
-Public project order is Mojave, St. Louis, then Hawaii. Formats are Waystation, Basecamp, and Summit only. Waystation is automated and unstaffed; Basecamp is staffed; Summit uses Lookouts. The team is limited to Zak Winnick, Luke Schuette, Theo Reichgelt, and Stephanie McGreevy. Partner configurations are explicitly project-phase-specific.
+Public project order is Mojave, St. Louis, then Hawaii. Formats are Waystation, Basecamp, and Summit only. Waystation is automated and unstaffed; Basecamp is staffed; Summit uses Lookouts. The team is limited to Zak Winnick, Luke Schuette, Theo Reichgelt, James Regan, and Stephanie McGreevy. Partner configurations are explicitly project-phase-specific.
 
 ## Contact form
 

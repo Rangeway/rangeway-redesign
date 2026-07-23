@@ -125,6 +125,15 @@ export const TEAM = [
     linkedin: "https://www.linkedin.com/in/theoreichgelt/",
   },
   {
+    name: "James Regan",
+    role: "Finance and Strategy",
+    bio: "James has built his career in corporate development and business analytics, and serves as Managing Partner at CapitalWorks. He specializes in infrastructure project financing and capital strategy for the buildout of the Rangeway network.",
+    image: "/images/team/james-regan.webp",
+    imageWidth: 276,
+    imageHeight: 276,
+    linkedin: "https://www.linkedin.com/in/james-regan-913915a/",
+  },
+  {
     name: "Stephanie McGreevy",
     role: "Policy and Public Capital",
     bio: "Stephanie's career has focused on zero-emission vehicle infrastructure. She founded Open Energy Alliance and specializes in LCFS optimization and public funding strategies, including NEVI and state programs.",
