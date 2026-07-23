@@ -61,8 +61,8 @@ test("built project surfaces publish Mojave, St. Louis, and Hawaii in the approv
   for (const path of ["index.html", "network/index.html", "our-story/index.html", "investors/index.html"]) {
     const html = byPath[path];
     const mojave = html.indexOf("Mojave");
-    const stLouis = html.indexOf("St. Louis");
-    const hawaii = html.indexOf("Hawaii");
+    const stLouis = html.indexOf("St. Louis", mojave + 1);
+    const hawaii = html.indexOf("Hawaii", stLouis + 1);
     assert.ok(mojave > -1 && mojave < stLouis && stLouis < hawaii, `${path} project order`);
     assert.match(html, /href="https:\/\/mojave\.rangeway\.co"/, `${path} Mojave link`);
     assert.match(html, /href="https:\/\/hawaii\.rangeway\.co"/, `${path} Hawaii link`);

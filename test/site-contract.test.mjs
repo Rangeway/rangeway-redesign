@@ -126,10 +126,14 @@ test("homepage feedback keeps proof, disclosures, and partner marks attached to 
   const home = read("src/pages/index.astro");
   const css = read("src/styles/global.css");
 
-  assert.match(home, /src="\/images\/hero-mountain-waystation\.webp"/);
-  assert.match(home, /srcSmall="\/images\/hero-mountain-waystation-640\.webp"/);
-  assert.match(home, /alt="Concept rendering of a Rangeway Waystation with a timber solar canopy,[^"]+"/);
-  assert.match(home, /width=\{1672\}[\s\S]*height=\{941\}/);
+  assert.match(home, /<div class="home-hero__split">[\s\S]*<div class="home-hero__story">[\s\S]*<figure class="home-hero__media">/);
+  assert.match(home, /src="\/images\/waystation-hawaii\.webp"/);
+  assert.match(home, /srcSmall="\/images\/waystation-hawaii-640\.webp"/);
+  assert.match(home, /alt="Concept rendering of a Rangeway Waystation in Hawaii[^"]+"/);
+  assert.match(home, /width=\{2048\}[\s\S]*height=\{2048\}/);
+  assert.match(css, /\.home-hero__split\s*\{[^}]*grid-template-columns:\s*minmax\(0,40fr\)\s+minmax\(0,60fr\)/s);
+  assert.match(css, /\.home-hero__story\s*\{[^}]*background:\s*var\(--sun\)/s);
+  assert.match(css, /\.home-hero__media\s*\{[^}]*clip-path:\s*ellipse\(88% 83% at 100% 48%\)/s);
 
   assert.doesNotMatch(home, /proof-rail|network formats|public project regions/i);
   assert.doesNotMatch(css, /\.proof-rail/);
@@ -141,8 +145,9 @@ test("homepage feedback keeps proof, disclosures, and partner marks attached to 
   assert.match(operatingStrip, /Building partnerships/);
   assert.match(operatingStrip, /Raising capital/);
   assert.match(operatingStrip, /href="\/contact"/);
-  assert.match(home, /href="#activity-status"><span>Scroll to activity<\/span>/);
+  assert.match(home, /class="home-hero__action" href="\/network">[\s\S]*Discover the Network/);
   assert.match(css, /\.operating-strip\s*\{[^}]*grid-template-columns:\s*auto 1fr auto/s);
+  assert.match(css, /\.operating-strip\s*\{[^}]*background:\s*var\(--navy\);[^}]*color:\s*white/s);
 
   assert.match(css, /\.site-header__nav--left\s*\{[^}]*justify-content:\s*center/s);
   assert.match(css, /\.site-header__nav--right\s*\{[^}]*justify-content:\s*center/s);
@@ -181,6 +186,10 @@ test("final homepage polish centers desktop navigation, unifies format cards, an
   assert.match(css, /@media \(max-width:\s*820px\)[\s\S]*html\s*\{[^}]*scroll-padding-top:\s*90px/s);
   assert.match(css, /\.site-header__nav--left\s*\{[^}]*justify-content:\s*center/s);
   assert.match(css, /\.site-header__nav--right\s*\{[^}]*justify-content:\s*center/s);
+  assert.match(css, /\.formats__head\s*\{[^}]*grid-template-columns:\s*1fr 2fr/s);
+  assert.match(css, /\.formats__head\s*\{[^}]*row-gap:\s*clamp\(44px,4vw,64px\)/s);
+  assert.match(css, /\.formats__head\s*\{[^}]*padding:\s*0 var\(--page-pad\) clamp\(64px,6vw,96px\)/s);
+  assert.match(css, /\.formats__head > p:last-child\s*\{[^}]*grid-column:\s*2;[^}]*max-width:\s*48ch/s);
 
   const formatCardRule = css.match(/\.format-card\s*\{(?<rule>[^}]*)\}/)?.groups?.rule ?? "";
   assert.match(formatCardRule, /width:\s*calc\(100%\s*-\s*\(2\s*\*\s*var\(--page-pad\)\)\)/);

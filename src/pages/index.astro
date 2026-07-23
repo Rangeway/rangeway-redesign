@@ -1,5 +1,5 @@
 ---
-// HERO: A cinematic charging place gives way to a live-feeling route board of current projects.
+// HERO: The bright story panel and elliptical Hawaii landscape create a distinct roadside arrival.
 import ResponsiveImage from "../components/ResponsiveImage.astro";
 import RouteBoard from "../components/RouteBoard.astro";
 import SiteLayout from "../layouts/SiteLayout.astro";
@@ -12,34 +12,39 @@ import { ACTIVITY, EXTERNAL_LINKS, FORMATS, PARTNER_GROUPS } from "../data/site-
   class="home-page"
 >
   <section class="home-hero" aria-labelledby="home-hero-title">
-    <ResponsiveImage
-      src="/images/hero-mountain-waystation.webp"
-      srcSmall="/images/hero-mountain-waystation-640.webp"
-      alt="Concept rendering of a Rangeway Waystation with a timber solar canopy, glass lounge, EV chargers, and mountain backdrop"
-      width={1672}
-      height={941}
-      sizes="100vw"
-      class="home-hero__image"
-      position="center 58%"
-      loading="eager"
-    />
-    <p class="concept-label concept-label--hero">Concept rendering</p>
-    <div class="home-hero__veil"></div>
-    <div class="home-hero__content">
-      <p class="eyebrow eyebrow--sun">Hospitality-driven EV charging</p>
-      <h1 id="home-hero-title">Travel farther.<br />Stop better.</h1>
-      <div class="home-hero__bottom">
-        <p>
-          Rangeway is designing charging places around the people making the trip—good light,
-          real comfort, and an easier return to the road.
+    <div class="home-hero__nav-field" aria-hidden="true"></div>
+    <div class="home-hero__split">
+      <div class="home-hero__story">
+        <p class="home-hero__kicker">America’s first hospitality-driven EV charging network</p>
+        <h1 class="home-hero__headline" id="home-hero-title">
+          <span>Travel farther.</span>
+          <span>Stop better.</span>
+        </h1>
+        <p class="home-hero__lede">
+          Built around drivers who plan their journeys with care. Every Rangeway location is
+          designed to a hospitality standard. The stop, not the charger, is the point.
         </p>
-        <div class="button-row">
-          <a class="button button--sun" href="#projects">See where we’re building</a>
-          <a class="button button--glass" href="#experience">Explore the experience</a>
-        </div>
+        <a class="home-hero__action" href="/network">
+          Discover the Network
+          <span aria-hidden="true">→</span>
+        </a>
       </div>
+      <figure class="home-hero__media">
+        <ResponsiveImage
+          src="/images/waystation-hawaii.webp"
+          srcSmall="/images/waystation-hawaii-640.webp"
+          alt="Concept rendering of a Rangeway Waystation in Hawaii with a solar canopy, glass lounge, tropical landscaping, and ocean beyond"
+          width={2048}
+          height={2048}
+          sizes="(max-width: 820px) 100vw, 60vw"
+          class="home-hero__image"
+          position="56% 68%"
+          loading="eager"
+        />
+        <p class="concept-label">Concept rendering</p>
+        <figcaption>Waystation · Hawaii</figcaption>
+      </figure>
     </div>
-    <a class="home-hero__scroll" href="#activity-status"><span>Scroll to activity</span><i aria-hidden="true"></i></a>
   </section>
 
   <section class="operating-strip" id="activity-status" aria-label="Current company activity">
