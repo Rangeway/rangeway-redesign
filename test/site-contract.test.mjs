@@ -14,6 +14,9 @@ test("fresh operating homepage contract", () => {
   assert.match(home, /Travel farther\. Stop better\./);
   assert.match(header, /site-header__capsule/);
   assert.match(header, /site-header__brand/);
+  assert.match(data, /label:\s*"Company"[\s\S]*label:\s*"Team"[\s\S]*label:\s*"Partners"/);
+  assert.match(header, /NAV_LINKS\.slice\(0,\s*4\)/);
+  assert.match(header, /NAV_LINKS\.slice\(4\)/);
   assert.ok(data.indexOf('place: "Mojave"') < data.indexOf('place: "St. Louis"'));
   assert.ok(data.indexOf('place: "St. Louis"') < data.indexOf('place: "Hawaii"'));
 

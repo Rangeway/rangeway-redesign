@@ -192,7 +192,7 @@ test("built pages keep no-JavaScript navigation, reduced-motion safety, and stab
     const menu = html.match(/<details class="site-header__mobile-menu"[\s\S]*?<\/details>/)?.[0] ?? "";
     assert.match(menu, /<summary>/, `${path} keeps a native menu disclosure`);
     assert.match(menu, /<nav aria-label="Mobile navigation">/, `${path} keeps static mobile navigation`);
-    assert.equal((menu.match(/<a\b/g) ?? []).length, 7, `${path} exposes all seven mobile links without JavaScript`);
+    assert.equal((menu.match(/<a\b/g) ?? []).length, 8, `${path} exposes all eight mobile links without JavaScript`);
     assert.equal((html.match(/fonts\.googleapis\.com\/css2/g) ?? []).length, 1, `${path} loads the shared Google stylesheet once`);
 
     for (const image of html.match(/<img\b[^>]*>/g) ?? []) {
@@ -255,7 +255,7 @@ test("every built local image declares its exact intrinsic file geometry", () =>
 test("built mobile navigation marks only the real external destination", () => {
   const menu = byPath["index.html"].match(/<details class="site-header__mobile-menu"[\s\S]*?<\/details>/)?.[0] ?? "";
   const links = [...menu.matchAll(/<a\b([^>]*)>([\s\S]*?)<\/a>/g)].map((match) => ({ attrs: match[1], body: match[2] }));
-  assert.equal(links.length, 7);
+  assert.equal(links.length, 8);
 
   for (const link of links) {
     const external = /target="_blank"/.test(link.attrs);
@@ -267,4 +267,15 @@ test("built mobile navigation marks only the real external destination", () => {
     }
   }
   assert.equal(links.filter((link) => /target="_blank"/.test(link.attrs)).length, 1);
+});
+
+test("built desktop header balances Team after Company with four links per side", () => {
+  const home = byPath["index.html"];
+  const left = home.match(/<nav class="site-header__nav site-header__nav--left"[\s\S]*?<\/nav>/)?.[0] ?? "";
+  const right = home.match(/<nav class="site-header__nav site-header__nav--right"[\s\S]*?<\/nav>/)?.[0] ?? "";
+
+  assert.equal((left.match(/<a\b/g) ?? []).length, 4);
+  assert.equal((right.match(/<a\b/g) ?? []).length, 4);
+  assert.match(left, /Company[\s\S]*href="\/team"[\s\S]*Team/);
+  assert.doesNotMatch(right, /href="\/team"/);
 });
