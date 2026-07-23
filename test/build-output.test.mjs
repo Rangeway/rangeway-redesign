@@ -279,3 +279,15 @@ test("built desktop header balances Team after Company with four links per side"
   assert.match(left, /Company[\s\S]*href="\/team"[\s\S]*Team/);
   assert.doesNotMatch(right, /href="\/team"/);
 });
+
+test("built site keeps the shared header fixed and anchor-safe", () => {
+  const css = readdirSync(new URL("_astro/", root), { recursive: true })
+    .filter((path) => path.endsWith(".css"))
+    .map((path) => readFileSync(new URL(`_astro/${String(path)}`, root), "utf8"))
+    .join("\n");
+
+  assert.match(css, /\.site-header\{[^}]*position:fixed/);
+  assert.doesNotMatch(css, /\.site-header\{[^}]*position:absolute/);
+  assert.match(css, /scroll-padding-top:116px/);
+  assert.match(css, /scroll-padding-top:90px/);
+});
