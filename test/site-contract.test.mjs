@@ -149,7 +149,10 @@ test("homepage feedback keeps proof, disclosures, and partner marks attached to 
   assert.match(home, /width=\{2048\}[\s\S]*height=\{2048\}/);
   assert.match(css, /\.home-hero__split\s*\{[^}]*grid-template-columns:\s*minmax\(0,40fr\)\s+minmax\(0,60fr\)/s);
   assert.match(css, /\.home-hero__story\s*\{[^}]*background:\s*var\(--sun\)/s);
-  assert.match(css, /\.home-hero__media\s*\{[^}]*clip-path:\s*ellipse\(88% 83% at 100% 48%\)/s);
+  assert.match(css, /\.home-hero__media\s*\{[^}]*min-height:\s*0;[^}]*clip-path:\s*ellipse\(88% 83% at 100% 48%\)/s);
+  assert.match(css, /\.home-hero__media \.home-hero__image\s*\{[^}]*position:\s*absolute;[^}]*inset:\s*0;/s);
+  assert.match(css, /\.home-hero\s*\{[^}]*min-height:\s*clamp\(840px,100svh,1040px\)/s);
+  assert.match(css, /\.home-hero__headline\s*\{[^}]*font-size:\s*clamp\(4rem,7\.8vw,8\.4rem\)/s);
 
   assert.doesNotMatch(home, /proof-rail|network formats|public project regions/i);
   assert.doesNotMatch(css, /\.proof-rail/);
