@@ -213,6 +213,8 @@ test("final homepage polish centers desktop navigation, unifies format cards, an
   assert.match(css, /@media \(max-width:\s*820px\)[\s\S]*\.site-header__capsule\s*\{[^}]*min-height:\s*82px;[^}]*border-radius:\s*0/s);
   assert.match(css, /@media \(max-width:\s*820px\)[\s\S]*\.site-header--scrolled\s*\{[^}]*padding:\s*12px/s);
   assert.match(css, /@media \(max-width:\s*820px\)[\s\S]*\.site-header--scrolled \.site-header__capsule\s*\{[^}]*min-height:\s*58px;[^}]*border-radius:\s*28px/s);
+  assert.match(css, /\.home-hero\s*\{[^}]*grid-template-rows:\s*114px minmax\(0,1fr\)/s);
+  assert.match(css, /@media \(max-width:\s*820px\)[\s\S]*\.home-hero\s*\{[^}]*grid-template-rows:\s*89px auto/s);
   assert.match(css, /html\s*\{[^}]*scroll-padding-top:\s*116px/s);
   assert.match(css, /@media \(max-width:\s*820px\)[\s\S]*html\s*\{[^}]*scroll-padding-top:\s*90px/s);
   assert.match(css, /\.site-header__nav--left\s*\{[^}]*justify-content:\s*center/s);
