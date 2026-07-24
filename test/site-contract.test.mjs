@@ -198,10 +198,21 @@ test("homepage feedback keeps proof, disclosures, and partner marks attached to 
 
 test("final homepage polish centers desktop navigation, unifies format cards, and links partner logos", () => {
   const home = read("src/pages/index.astro");
+  const header = read("src/components/SiteHeader.astro");
   const css = read("src/styles/global.css");
 
   assert.match(css, /\.site-header\s*\{[^}]*position:\s*fixed/s);
   assert.doesNotMatch(css, /\.site-header\s*\{[^}]*position:\s*absolute/s);
+  assert.match(header, /<header class="site-header" data-site-header>/);
+  assert.match(header, /classList\.toggle\("site-header--scrolled", window\.scrollY > 8\)/);
+  assert.match(header, /addEventListener\("scroll", requestHeaderSync, \{ passive: true \}\)/);
+  assert.match(css, /\.site-header\s*\{[^}]*padding:\s*0/s);
+  assert.match(css, /\.site-header__capsule\s*\{[^}]*min-height:\s*104px;[^}]*max-width:\s*100vw;[^}]*border-radius:\s*0/s);
+  assert.match(css, /\.site-header--scrolled\s*\{[^}]*padding:\s*18px var\(--page-pad\)/s);
+  assert.match(css, /\.site-header--scrolled \.site-header__capsule\s*\{[^}]*min-height:\s*68px;[^}]*max-width:\s*1440px;[^}]*border-radius:\s*999px/s);
+  assert.match(css, /@media \(max-width:\s*820px\)[\s\S]*\.site-header__capsule\s*\{[^}]*min-height:\s*82px;[^}]*border-radius:\s*0/s);
+  assert.match(css, /@media \(max-width:\s*820px\)[\s\S]*\.site-header--scrolled\s*\{[^}]*padding:\s*12px/s);
+  assert.match(css, /@media \(max-width:\s*820px\)[\s\S]*\.site-header--scrolled \.site-header__capsule\s*\{[^}]*min-height:\s*58px;[^}]*border-radius:\s*28px/s);
   assert.match(css, /html\s*\{[^}]*scroll-padding-top:\s*116px/s);
   assert.match(css, /@media \(max-width:\s*820px\)[\s\S]*html\s*\{[^}]*scroll-padding-top:\s*90px/s);
   assert.match(css, /\.site-header__nav--left\s*\{[^}]*justify-content:\s*center/s);

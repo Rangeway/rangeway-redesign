@@ -281,13 +281,26 @@ test("built desktop header balances Team after Company with four links per side"
 });
 
 test("built site keeps the shared header fixed and anchor-safe", () => {
+  const home = readFileSync(new URL("index.html", root), "utf8");
   const css = readdirSync(new URL("_astro/", root), { recursive: true })
     .filter((path) => path.endsWith(".css"))
     .map((path) => readFileSync(new URL(`_astro/${String(path)}`, root), "utf8"))
     .join("\n");
 
+  assert.match(home, /<header class="site-header" data-site-header>/);
+  assert.match(home, /site-header--scrolled/);
   assert.match(css, /\.site-header\{[^}]*position:fixed/);
   assert.doesNotMatch(css, /\.site-header\{[^}]*position:absolute/);
+  assert.match(css, /\.site-header\{[^}]*padding:0/);
+  const restingHeader = css.match(/\.site-header__capsule\{(?<rule>[^}]*)\}/)?.groups?.rule ?? "";
+  assert.match(restingHeader, /min-height:104px/);
+  assert.match(restingHeader, /max-width:100vw/);
+  assert.match(restingHeader, /border-radius:0/);
+  assert.match(css, /\.site-header--scrolled\{[^}]*padding:18px var\(--page-pad\)/);
+  const floatingHeader = css.match(/\.site-header--scrolled \.site-header__capsule\{(?<rule>[^}]*)\}/)?.groups?.rule ?? "";
+  assert.match(floatingHeader, /min-height:68px/);
+  assert.match(floatingHeader, /max-width:1440px/);
+  assert.match(floatingHeader, /border-radius:999px/);
   assert.match(css, /scroll-padding-top:116px/);
   assert.match(css, /scroll-padding-top:90px/);
 });
