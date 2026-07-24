@@ -11,7 +11,9 @@ test("fresh operating homepage contract", () => {
   const css = read("src/styles/global.css");
   const header = read("src/components/SiteHeader.astro");
 
-  assert.match(home, /Travel farther\. Stop better\./);
+  assert.match(home, /title="Rangeway \| Travel farther\. Stop better\."/);
+  assert.doesNotMatch(home, /Rangeway · Travel farther\. Stop better\./);
+  assert.match(data, /tagline:\s*"Travel farther\. Stop better\."/);
   assert.match(header, /site-header__capsule/);
   assert.match(header, /site-header__brand/);
   assert.match(data, /label:\s*"Company"[\s\S]*label:\s*"Team"[\s\S]*label:\s*"Partners"/);

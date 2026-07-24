@@ -20,6 +20,14 @@ test("static build contains all fifteen intentionally authored routes", () => {
   ]) assert.ok(byPath[path], `missing ${path}`);
 });
 
+test("homepage title and tagline use the approved phrase", () => {
+  const home = byPath["index.html"];
+
+  assert.match(home, /<title>Rangeway \| Travel farther\. Stop better\.<\/title>/);
+  assert.doesNotMatch(home, /<title>Rangeway · Travel farther\. Stop better\.<\/title>/);
+  assert.match(home, /<span>Travel farther\.<\/span>\s*<span>Stop better\.<\/span>/);
+});
+
 test("every built page is non-indexing and free of prohibited people, formats, and operating claims", () => {
   const all = htmlFiles.map(({ html }) => html).join("\n");
   for (const { path, html } of htmlFiles) {
