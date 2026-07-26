@@ -164,6 +164,7 @@ test("homepage feedback keeps proof, disclosures, and partner marks attached to 
   assert.doesNotMatch(home, /Company activity|Developing sites|Building partnerships|Raising capital/i);
   assert.match(home, /<\/section>\s*<section class="stop-product"/);
   assert.doesNotMatch(css, /\.operating-strip|\.site-navigator/);
+  assert.match(css, /\.home-hero\s*\{[^}]*border-bottom:\s*10px solid var\(--navy\)/s);
   assert.match(home, /class="home-hero__action" href="\/network">[\s\S]*Discover the Network/);
 
   assert.match(css, /\.site-header__nav--left\s*\{[^}]*justify-content:\s*center/s);
