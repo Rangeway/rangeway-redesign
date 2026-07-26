@@ -10,6 +10,19 @@ const htmlFiles = readdirSync(root, { recursive: true })
 
 const byPath = Object.fromEntries(htmlFiles.map((file) => [file.path, file.html]));
 
+test("built homepage flows directly from hero to the experience section", () => {
+  const home = readFileSync(new URL("index.html", root), "utf8");
+  const css = readdirSync(new URL("_astro/", root), { recursive: true })
+    .filter((path) => path.endsWith(".css"))
+    .map((path) => readFileSync(new URL(`_astro/${String(path)}`, root), "utf8"))
+    .join("\n");
+
+  assert.doesNotMatch(home, /class="operating-strip"|class="site-navigator"|id="activity-status"/);
+  assert.doesNotMatch(home, /Company activity|Developing sites|Building partnerships|Raising capital/i);
+  assert.match(home, /<\/section>\s*<section class="stop-product"/);
+  assert.doesNotMatch(css, /\.operating-strip|\.site-navigator/);
+});
+
 test("static build contains all fifteen intentionally authored routes", () => {
   assert.equal(htmlFiles.length, 15);
   for (const path of [

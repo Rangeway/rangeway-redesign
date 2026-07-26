@@ -160,16 +160,11 @@ test("homepage feedback keeps proof, disclosures, and partner marks attached to 
   assert.doesNotMatch(home, /proof-rail|network formats|public project regions/i);
   assert.doesNotMatch(css, /\.proof-rail/);
 
-  const operatingStrip = home.match(/<section class="operating-strip"[\s\S]*?<\/section>/)?.[0] ?? "";
-  assert.match(operatingStrip, /id="activity-status"/);
-  assert.match(operatingStrip, /Company activity/);
-  assert.match(operatingStrip, /Developing sites/);
-  assert.match(operatingStrip, /Building partnerships/);
-  assert.match(operatingStrip, /Raising capital/);
-  assert.match(operatingStrip, /href="\/contact"/);
+  assert.doesNotMatch(home, /class="operating-strip"|class="site-navigator"|id="activity-status"/);
+  assert.doesNotMatch(home, /Company activity|Developing sites|Building partnerships|Raising capital/i);
+  assert.match(home, /<\/section>\s*<section class="stop-product"/);
+  assert.doesNotMatch(css, /\.operating-strip|\.site-navigator/);
   assert.match(home, /class="home-hero__action" href="\/network">[\s\S]*Discover the Network/);
-  assert.match(css, /\.operating-strip\s*\{[^}]*grid-template-columns:\s*auto 1fr auto/s);
-  assert.match(css, /\.operating-strip\s*\{[^}]*background:\s*var\(--navy\);[^}]*color:\s*white/s);
 
   assert.match(css, /\.site-header__nav--left\s*\{[^}]*justify-content:\s*center/s);
   assert.match(css, /\.site-header__nav--right\s*\{[^}]*justify-content:\s*center/s);
