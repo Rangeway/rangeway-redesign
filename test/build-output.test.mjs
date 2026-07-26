@@ -311,6 +311,9 @@ test("built site keeps the shared header fixed and anchor-safe", () => {
   assert.match(floatingHeader, /border-radius:999px/);
   assert.match(css, /\.home-hero\{[^}]*grid-template-rows:114px minmax\(0,1fr\)/);
   assert.match(css, /@media \(width<=820px\)[\s\S]*\.home-hero\{[^}]*grid-template-rows:89px auto/);
+  assert.match(css, /--sun:#f4a855/);
+  assert.match(css, /\.home-hero__story\{[^}]*background:var\(--sun\);[^}]*color:var\(--navy-deep\)/);
+  assert.match(css, /\.home-hero__headline\{[^}]*color:var\(--navy-deep\)/);
   assert.match(css, /scroll-padding-top:116px/);
   assert.match(css, /scroll-padding-top:90px/);
 });

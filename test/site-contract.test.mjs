@@ -48,7 +48,7 @@ test("fresh operating homepage contract", () => {
   for (const token of [
     "#17313E",
     "#142B35",
-    "#F2B64C",
+    "#F4A855",
     "#993A28",
     "#F7E6C4",
     "#52636B",
@@ -150,6 +150,7 @@ test("homepage feedback keeps proof, disclosures, and partner marks attached to 
   assert.match(home, /alt="Concept rendering of a Rangeway Waystation in Hawaii[^"]+"/);
   assert.match(home, /width=\{2048\}[\s\S]*height=\{2048\}/);
   assert.match(css, /\.home-hero__split\s*\{[^}]*grid-template-columns:\s*minmax\(0,40fr\)\s+minmax\(0,60fr\)/s);
+  assert.match(css, /--sun:\s*#F4A855/);
   assert.match(css, /\.home-hero__story\s*\{[^}]*background:\s*var\(--sun\)/s);
   assert.match(css, /\.home-hero__media\s*\{[^}]*min-height:\s*0;[^}]*clip-path:\s*ellipse\(88% 83% at 100% 48%\)/s);
   assert.match(css, /\.home-hero__media \.home-hero__image\s*\{[^}]*position:\s*absolute;[^}]*inset:\s*0;/s);
@@ -217,6 +218,8 @@ test("final homepage polish centers desktop navigation, unifies format cards, an
   assert.match(css, /@media \(max-width:\s*820px\)[\s\S]*\.site-header--scrolled \.site-header__capsule\s*\{[^}]*min-height:\s*58px;[^}]*border-radius:\s*28px/s);
   assert.match(css, /\.home-hero\s*\{[^}]*grid-template-rows:\s*114px minmax\(0,1fr\)/s);
   assert.match(css, /@media \(max-width:\s*820px\)[\s\S]*\.home-hero\s*\{[^}]*grid-template-rows:\s*89px auto/s);
+  assert.match(css, /\.home-hero__story\s*\{[^}]*background:\s*var\(--sun\);[^}]*color:\s*var\(--navy-deep\)/s);
+  assert.match(css, /\.home-hero__headline\s*\{[^}]*color:\s*var\(--navy-deep\)/s);
   assert.match(css, /html\s*\{[^}]*scroll-padding-top:\s*116px/s);
   assert.match(css, /@media \(max-width:\s*820px\)[\s\S]*html\s*\{[^}]*scroll-padding-top:\s*90px/s);
   assert.match(css, /\.site-header__nav--left\s*\{[^}]*justify-content:\s*center/s);
